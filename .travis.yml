@@ -1,13 +1,11 @@
-language: c
+language: objective-c
 
 before_install:
  # Make sure mono is installed,
  # pipe stdout to dev/null because qq is still too chatty
- - echo "deb http://debian.meebey.net/experimental/mono /" | sudo tee -a /etc/apt/sources.list
- - sudo apt-get update -qq > /dev/null
- - sudo apt-get install -qq --force-yes mono-devel > /dev/null
- - sudo apt-get install -qq --force-yes fsharp
-
+ - wget http://download.mono-project.com/archive/3.0.10/macos-10-x86/MonoFramework-MDK-3.0.10.macos10.xamarin.x86.dmg
+ - hdid MonoFramework-MDK-3.0.10.macos10.xamarin.x86.dmg
+ - sudo installer -verbose -pkg "/Volumes/Mono Framework MDK 3.0.10/MonoFramework-MDK-3.0.10.macos10.xamarin.x86.pkg" -target /
 env:
   - EnableNuGetPackageRestore=true
 
