@@ -10,11 +10,14 @@
     <RootNamespace>FSharp.Dynamic</RootNamespace>
     <AssemblyName>FSharp.Dynamic</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile47</TargetFrameworkProfile>
     <Name>FSharp.Dynamic</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
+  <PropertyGroup Condition="$(OS) == 'Windows_NT'">
+     <TargetFrameworkProfile>Profile47</TargetFrameworkProfile>
+  </PropertyGroup>
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -37,12 +40,14 @@
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets" />
-  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets" Condition="$(OS) == 'Windows_NT'" />
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition="$(OS) != 'Windows_NT' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
+
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Util.fs" />
-    <Compile Include="Dyamic.fs" />
+    <Compile Include="Dynamic.fs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +60,14 @@
       <AssemblyName>FSharp.Core.dll</AssemblyName>
       <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\.NETPortable\FSharp.Core.dll</HintPath>
     </Reference>
+  </ItemGroup>
+<ItemGroup Condition="$(OS) != 'Windows_NT'">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
