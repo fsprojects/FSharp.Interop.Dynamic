@@ -6,8 +6,8 @@ before_install:
  - echo "deb http://http.us.debian.org/debian/ unstable main contrib non-free" | sudo tee -a /etc/apt/sources.list
  - echo "deb-src http://http.us.debian.org/debian/ unstable main contrib non-free " | sudo tee -a /etc/apt/sources.list
  - sudo apt-get update -qq > /dev/null
- - sudo apt-get install -qq --force-yes mono-devel > /dev/null
- - sudo apt-get install -qq --force-yes fsharp > /dev/null
+ - sudo apt-get install -qq --force-yes mono-devel
+ - sudo apt-get install -qq --force-yes fsharp
  
 
 env:
