@@ -36,10 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dynamitey">
-      <HintPath>..\packages\Dynamitey.0.8.0.5\lib\portable-win+net45+sl40\Dynamitey.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Dynamitey, Version=0.8.0.4, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6">
+      <HintPath>..\packages\Dynamitey.0.8.0.6\lib\portable-win+net45+sl40\Dynamitey.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FsUnit.NUnit">

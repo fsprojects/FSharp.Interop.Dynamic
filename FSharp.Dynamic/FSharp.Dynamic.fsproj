@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Dynamitey">
-      <HintPath>..\packages\Dynamitey.0.8.0.5\lib\portable-win+net45+sl40\Dynamitey.dll</HintPath>
+      <HintPath>..\packages\Dynamitey.0.8.0.6\lib\portable-win+net45+sl40\Dynamitey.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Core">
