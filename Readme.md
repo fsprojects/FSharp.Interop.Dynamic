@@ -1,4 +1,4 @@
-# FSharp.Dynamic
+# FSharp.Dynamic [![Build Status](https://travis-ci.org/ekonbenefits/FSharp.Dynamic.png?branch=master)](https://travis-ci.org/ekonbenefits/FSharp.Dynamic)
 
 F# Dynamic Operator using the DLR (Portable Class Library WinRT, .NET 4.5, Silverlight 5)
 
