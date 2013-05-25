@@ -35,7 +35,11 @@
     <DocumentationFile>bin\Release\Tests.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dynamitey, Version=0.5.0.1, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="Dynamitey">
+      <HintPath>..\packages\Dynamitey.0.8.0.5\lib\portable-win+net45+sl40\Dynamitey.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Dynamitey, Version=0.8.0.4, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6">
       <Private>True</Private>
     </Reference>
     <Reference Include="FsUnit.NUnit">

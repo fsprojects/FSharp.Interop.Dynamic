@@ -15,6 +15,17 @@ open FsUnit
 
 module Tests=
 
+    type TestEvent()=
+        let event1 = new Event<EventHandler<EventArgs>, EventArgs>()
+        [<CLIEvent>]
+        member this.Event = event1.Publish
+        member this.OnEvent(obj:Object, args:EventArgs)= 
+           event1.Trigger(obj,args)
+       
+    type TestFuncs()=
+        static member Plus3:Func<int,int> =
+          Return<int>.Arguments<int>(fun x-> x + 3)
+
 
     [<TestFixture>] 
     type ``Basic Dynamic Operator Tests`` ()=
@@ -48,14 +59,14 @@ module Tests=
                         e1?Two |> should equal 2
 
 
-//        [<Test>] member basic.``Test Lambda methods`` ()=
-//                        let ex1 = DynamicObjects.Dictionary()
-//                        ex1?TestLam<- (fun x -> 42 + x)
-//                        ex1?TestLam2<- (fun x y -> y+ 42 + x)
-//                        ex1?TestDel<- TestFuncs.Plus3
-//                        test <@ ex1?TestLam(1) = 43 @>
-//                        test <@ ex1?TestLam2(1, 2) = 45 @>
-//                        test <@ ex1?TestDel(2) = 5 @>
+        [<Test>] member basic.``Test Lambda methods`` ()=
+                        let ex1 = DynamicObjects.Dictionary()
+                        ex1?TestLam<- (fun x -> 42 + x)
+                        ex1?TestLam2<- (fun x y -> y+ 42 + x)
+                        ex1?TestDel<- TestFuncs.Plus3
+                        ex1?TestLam(1) |> should equal 43
+                        ex1?TestLam2(1, 2) |> should equal 45
+                        ex1?TestDel(2) |> should equal 5
 
 
         [<Test>] member basic.``Test FSharp Lambda 3 arg `` ()=
@@ -73,20 +84,20 @@ module Tests=
                         !?unknownfunc (3, 2, 1, 5, 9) |> should equal 8
 
 
-//        [<Test>] member basic.``Test Events`` ()=
-//                        let pocoObj = TestEvent()
-//                        let refBool = ref false
-//                        let myevent = EventHandler<EventArgs>(fun obj arg -> (refBool := true))
-//                    
-//                        //Add event dynamically
-//                        dynAddAssign(pocoObj)?Event <- myevent
-//                        pocoObj.OnEvent(null,null)
-//                        test <@ !refBool @>
-//                   
-//                        //Remove event dynamically
-//                        refBool :=false
-//                        dynSubtractAssign(pocoObj)?Event <- myevent
-//                        test <@ not !refBool@>
+        [<Test>] member basic.``Test Events`` ()=
+                        let pocoObj = TestEvent()
+                        let refBool = ref false
+                        let myevent = EventHandler<EventArgs>(fun obj arg -> (refBool := true))
+                    
+                        //Add event dynamically
+                        dynAddAssign(pocoObj)?Event <- myevent
+                        pocoObj.OnEvent(null,null)
+                        !refBool |> should equal true
+                   
+                        //Remove event dynamically
+                        refBool :=false
+                        dynSubtractAssign(pocoObj)?Event <- myevent
+                        !refBool |> should equal false
 
                    
         [<Test>] member basic.``Test NamedArgs`` ()=
@@ -107,10 +118,10 @@ module Tests=
                         let ele = 50
                         ele >?> typeof<decimal> |> should equal (decimal 50)
 
-
         [<Test>] member basic.``Test Explicit Conversion`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
-                        ele |> dynExplicit  |> should equal 50 
+                        let elet:int = ele |> dynExplicit 
+                        elet |> should equal 50 
 
 
         [<Test>] member basic.``Test Implicit Conversion`` ()=
@@ -120,4 +131,4 @@ module Tests=
 
         [<Test>] member basic.``Test Implicit Conversion Fail`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
-                        (fun x -> dynImplicit(ele) = 50 |> ignore) |> should throw typeof<RuntimeBinderException>
+                        (fun () -> dynImplicit(ele) = 50 |> ignore) |> should throw typeof<RuntimeBinderException>

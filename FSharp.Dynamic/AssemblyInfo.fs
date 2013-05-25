@@ -12,7 +12,7 @@ open System.Runtime.InteropServices;
 [<assembly: AssemblyDescription("portable class library, dynamic operator using the DLR")>]
 [<assembly: AssemblyConfiguration("")>]
 [<assembly: AssemblyCompany("Ekon Benefits")>]
-[<assembly: AssemblyProduct("ImpromptuInterface.FSharp")>]
+[<assembly: AssemblyProduct("EkonBenefits.FSharp.Dynamic")>]
 [<assembly: AssemblyCopyright("Copyright © Ekon Benefits 2011-2013")>]
 [<assembly: AssemblyTrademark("")>]
 [<assembly: AssemblyCulture("")>]
@@ -32,5 +32,5 @@ open System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the ‘*’ as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[<assembly: AssemblyVersion("1.3.0.a1")>]
+[<assembly: AssemblyVersion("1.3.2.0")>]
 ()
