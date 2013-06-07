@@ -9,9 +9,6 @@ PM> Install-Package FSharp.Dynamic
 
 `target?Property`, `target?Property<-value`, and `target?Method(arg,arg2)` allow you to dynamically get/set properties and call methods
 
-# To Do:
-
- - Backport to .net 4.0
 
 # Examples:
 
