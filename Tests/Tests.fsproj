@@ -39,13 +39,13 @@
   </PropertyGroup>
   <ItemGroup  Condition=" $(UseNet40) == false ">
       <Reference Include="Dynamitey, Version=1.0.2.0, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6">
-       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\portable-win+net45+sl40+wp80\FsUnit.NUnit.dll</HintPath>
+       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\portable-win+net45+sl40+wp80\Dynamitey.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup  Condition=" $(UseNet40) == true ">
       <Reference Include="Dynamitey, Version=1.0.2.0, Culture=neutral, PublicKeyToken=cbf53ea3aeb972c6">
-       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\Net40\FsUnit.NUnit.dll</HintPath>
+       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\Net40\Dynamitey.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
