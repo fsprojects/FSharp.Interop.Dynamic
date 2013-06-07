@@ -10,14 +10,13 @@
     <RootNamespace>FSharp.Dynamic</RootNamespace>
     <AssemblyName>FSharp.Dynamic</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseNet40 Condition=" '$(UseNet40)' == '' ">false</UseNet40>
+    <UseNet40 Condition=" $(OS) != 'Windows_NT' ">true</UseNet40>
+    <TargetFrameworkProfile Condition=" $(UseNet40) == false ">Profile47</TargetFrameworkProfile>
     <Name>FSharp.Dynamic</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <PropertyGroup Condition="$(OS) == 'Windows_NT'">
-     <TargetFrameworkProfile>Profile47</TargetFrameworkProfile>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -37,12 +36,14 @@
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Release\FSharp.Dynamic.XML</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition=" $(UseNet40) == true ">
+    <DocumentationFile>bin\Release.net40\FSharp.Dynamic.XML</DocumentationFile>
+  </PropertyGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets" Condition="$(OS) == 'Windows_NT'" />
-  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition="$(OS) != 'Windows_NT' And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
-
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets" Condition=" $(UseNet40) == false " />
+  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition="$(UseNet40) == true  And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
@@ -50,18 +51,30 @@
     <Compile Include="Dynamic.fs" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
+
+  <ItemGroup Condition=" $(UseNet40) == true " >
     <Reference Include="Dynamitey">
-      <HintPath>..\packages\Dynamitey.0.8.0.6\lib\portable-win+net45+sl40\Dynamitey.dll</HintPath>
+      <HintPath>..\packages\Dynamitey.1.0.2.0\lib\net40\Dynamitey.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Core">
       <Name>FSharp.Core</Name>
       <AssemblyName>FSharp.Core.dll</AssemblyName>
-      <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\.NETPortable\FSharp.Core.dll</HintPath>
+      <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0\FSharp.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
-<ItemGroup Condition="$(OS) != 'Windows_NT'">
+  <ItemGroup Condition=" $(UseNet40) == false ">
+    <Reference Include="FSharp.Core">
+      <Name>FSharp.Core</Name>
+      <AssemblyName>FSharp.Core.dll</AssemblyName>
+      <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\.NETPortable\FSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Dynamitey">
+      <HintPath>..\packages\Dynamitey.1.0.2.0\lib\portable-win+net45+sl40+wp80\Dynamitey.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />

@@ -9,10 +9,15 @@
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/ekonbenefits/FSharp.Dynamic</projectUrl>
     <!--<iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>-->
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>PCL port.</releaseNotes>
     <copyright>Copyright 2013</copyright>
     <tags>fsharp dynamic dlr pcl</tags>
   </metadata>
+    <files>
+    <file src="bin\Release.net40\FSharp.Dynamic.dll" target="lib\net40\FSharp.Dynamic.dll" />
+    <file src="bin\Release.net40\FSharp.Dynamic.pdb" target="lib\net40\FSharp.Dynamic.pdb" />
+    <file src="bin\Release.net40\FSharp.Dynamic.XML" target="lib\net40\FSharp.Dynamic.XML" />
+  </files>
 </package>
