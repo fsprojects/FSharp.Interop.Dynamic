@@ -85,6 +85,7 @@
       <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0\FSharp.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
+  </When>
    <Otherwise>
     <Reference Include="FSharp.Core">
       <Name>FSharp.Core</Name>
