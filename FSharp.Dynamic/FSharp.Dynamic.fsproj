@@ -42,8 +42,29 @@
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets" Condition=" $(UseNet40) == false " />
-  <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition="$(UseNet40) == true  And Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
+
+  <Choose>
+  <When Condition=" $(UseNet40) == true ">
+    <PropertyGroup>
+        <FSharpTargetsPath>
+          $(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets
+        </FSharpTargetsPath>
+      </PropertyGroup>
+ </When>
+  <When Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets')">
+    <PropertyGroup>
+        <FSharpTargetsPath>
+          $(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets
+        </FSharpTargetsPath>
+      </PropertyGroup>
+ </When>
+ <Otherwise>
+    <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.Portable.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+ </Otherwise>
+</Choose>
+ <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
@@ -51,7 +72,8 @@
     <Compile Include="Dynamic.fs" />
     <None Include="packages.config" />
   </ItemGroup>
-
+  <Choose>
+  <When Condition=" $(UseNet40) == true ">
   <ItemGroup Condition=" $(UseNet40) == true " >
     <Reference Include="Dynamitey">
       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\net40\Dynamitey.dll</HintPath>
@@ -63,7 +85,7 @@
       <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0\FSharp.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup Condition=" $(UseNet40) == false ">
+   <Otherwise>
     <Reference Include="FSharp.Core">
       <Name>FSharp.Core</Name>
       <AssemblyName>FSharp.Core.dll</AssemblyName>
@@ -73,7 +95,8 @@
       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\portable-win+net45+sl40+wp80\Dynamitey.dll</HintPath>
       <Private>True</Private>
     </Reference>
-  </ItemGroup>
+   </Otherwise>
+</Choose>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
