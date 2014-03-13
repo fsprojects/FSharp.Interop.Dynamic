@@ -74,7 +74,7 @@
   </ItemGroup>
   <Choose>
   <When Condition=" $(UseNet40) == true ">
-  <ItemGroup Condition=" $(UseNet40) == true " >
+  <ItemGroup>
     <Reference Include="Dynamitey">
       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\net40\Dynamitey.dll</HintPath>
       <Private>True</Private>
@@ -87,6 +87,7 @@
   </ItemGroup>
   </When>
    <Otherwise>
+     <ItemGroup>
     <Reference Include="FSharp.Core">
       <Name>FSharp.Core</Name>
       <AssemblyName>FSharp.Core.dll</AssemblyName>
@@ -96,6 +97,7 @@
       <HintPath>..\packages\Dynamitey.1.0.2.0\lib\portable-win+net45+sl40+wp80\Dynamitey.dll</HintPath>
       <Private>True</Private>
     </Reference>
+      </ItemGroup>
    </Otherwise>
 </Choose>
   <ItemGroup>
