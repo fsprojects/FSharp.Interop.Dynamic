@@ -87,15 +87,12 @@ module Dynamic=
                                             try
                                                 let invokeName =InvokeMemberName("Invoke", null) //FSharpFunc Invoke
                                                 let invokeContext t = InvokeContext(t,typeof<obj>) //Improve cache hits by using the same context
-                                                let invokeFSharpFoldBack (a:obj) t =
+                                                let invokeFSharpFold t (a:obj) =
                                                     Dynamic.InvokeMember(invokeContext(t),invokeName,a)
                                                 let seed = match name with
                                                            |InvokeMember -> Dynamic.InvokeGet(target,name)
                                                            |Invoke       -> target
-                                                let reverseArgList = argArray
-                                                                      |> List.ofArray
-                                                                      |> List.rev
-                                                List.foldBack invokeFSharpFoldBack reverseArgList seed
+                                                Array.fold invokeFSharpFold seed argArray
                                             with
                                             #if SILVERLIGHT
                                                 | :? RuntimeBinderException
