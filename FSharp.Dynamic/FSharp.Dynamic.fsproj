@@ -46,16 +46,12 @@
   <Choose>
   <When Condition=" $(UseNet40) == true ">
     <PropertyGroup>
-        <FSharpTargetsPath>
-          $(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets
-        </FSharpTargetsPath>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
       </PropertyGroup>
  </When>
   <When Condition="Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets')">
     <PropertyGroup>
-        <FSharpTargetsPath>
-          $(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets
-        </FSharpTargetsPath>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.Portable.FSharp.Targets</FSharpTargetsPath>
       </PropertyGroup>
  </When>
  <Otherwise>
@@ -64,7 +60,7 @@
       </PropertyGroup>
  </Otherwise>
 </Choose>
- <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <Import Project="$(FSharpTargetsPath)" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" />
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
