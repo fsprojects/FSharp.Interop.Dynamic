@@ -106,12 +106,12 @@
   </Reference>
 </ItemGroup>
 </When>
-<When Condition="Exists('$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0\FSharp.Core.dll')">
+<When Condition="Exists('$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\.NETPortable\FSharp.Core.dll')">
 <ItemGroup>
   <Reference Include="FSharp.Core">
     <Name>FSharp.Core</Name>
     <AssemblyName>FSharp.Core.dll</AssemblyName>
-    <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\v4.0\FSharp.Core.dll</HintPath>
+    <HintPath>$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\.NETPortable\FSharp.Core.dll</HintPath>
   </Reference>
 </ItemGroup>
 </When>
@@ -127,7 +127,6 @@
 </Choose>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
