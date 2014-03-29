@@ -36,4 +36,4 @@ Also `>?>` (`dynImplicit`), `>>?>>` (`dynExplicit`) and more.
 
 #Caveats:
 
-`dlr` is incompatible with interface explicit members [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
+The `dlr` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
