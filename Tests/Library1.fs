@@ -1,6 +1,6 @@
 ﻿// Learn more about F# at http://fsharp.net
 
-namespace EkonBenefits.FSharp.Dynamic
+namespace Tests
 
 
 open NUnit.Framework
@@ -11,6 +11,7 @@ open System.Collections.Generic
 open System.Xml.Linq
 open System.Numerics
 open Microsoft.CSharp.RuntimeBinder
+open FSharp.Dynamic
 open FsUnit
 
 module Tests=
@@ -19,17 +20,17 @@ module Tests=
         let event1 = new Event<EventHandler<EventArgs>, EventArgs>()
         [<CLIEvent>]
         member this.Event = event1.Publish
-        member this.OnEvent(obj:Object, args:EventArgs)= 
+        member this.OnEvent(obj:Object, args:EventArgs)=
            event1.Trigger(obj,args)
-       
+
     type TestFuncs()=
         static member Plus3:Func<int,int> =
           Return<int>.Arguments<int>(fun x-> x + 3)
 
 
-    [<TestFixture>] 
+    [<TestFixture>]
     type ``Basic Dynamic Operator Tests`` ()=
-                       
+
 
         [<Test>] member basic.``Call method off of an object dynamically`` ()=
                        "HelloWorld"?Substring(0,5) |> should equal "Hello"
@@ -41,18 +42,18 @@ module Tests=
                         ex1?Test |> should equal "Hi"
 
 
-        [<Test>] member basic.``Test Direct Invoke`` ()=   
+        [<Test>] member basic.``Test Direct Invoke`` ()=
                         !?Dynamic.Curry(dynStaticContext(typeof<string>))?Format("Test {0} {1}") (1,2) |>
                             should equal "Test 1 2"
 
 
-        [<Test>] member basic.``Test Void Method`` ()=   
+        [<Test>] member basic.``Test Void Method`` ()=
                         let array = List<string>()
                         array?Add("1");
-                        array.[0] |> should equal "1" 
+                        array.[0] |> should equal "1"
 
 
-        [<Test>] member basic.``Test SetAll`` ()=   
+        [<Test>] member basic.``Test SetAll`` ()=
                         let e1 = ExpandoObject()
                         !?Dynamic.InvokeSetAll (e1, [("One",1);("Two",2)])
                         e1?One |> should equal 1
@@ -72,7 +73,7 @@ module Tests=
         [<Test>] member basic.``Test FSharp Lambda 3 arg `` ()=
                         let dyn = (fun x y z -> x + y - z) :> obj
                         !?dyn (3,2,1) |> should equal 4
-                    
+
 
         [<Test>] member basic.``Test FSharp Lambda 4 arg`` ()=
                         let dyn = (fun x y z bbq -> x + y - z - bbq) :> obj  in
@@ -88,30 +89,30 @@ module Tests=
                         let pocoObj = TestEvent()
                         let refBool = ref false
                         let myevent = EventHandler<EventArgs>(fun obj arg -> (refBool := true))
-                    
+
                         //Add event dynamically
                         dynAddAssign(pocoObj)?Event <- myevent
                         pocoObj.OnEvent(null,null)
                         !refBool |> should equal true
-                   
+
                         //Remove event dynamically
                         refBool :=false
                         dynSubtractAssign(pocoObj)?Event <- myevent
                         !refBool |> should equal false
 
-                   
+
         [<Test>] member basic.``Test NamedArgs`` ()=
                         let buildObj = !?Build<ExpandoObject>.NewObject (
                                                                             dynArg(1) ? One,
                                                                             dynArg(2) ? Two
                                                                         )
-                        buildObj?One |> should equal 1 
-                        buildObj?Two |> should equal 2 
+                        buildObj?One |> should equal 1
+                        buildObj?Two |> should equal 2
 
 
         [<Test>] member basic.``Test dynamic Explicit Conversion`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
-                        ele >>?>> typeof<Int32> |> should equal 50 
+                        ele >>?>> typeof<Int32> |> should equal 50
 
 
         [<Test>] member basic.``Test dynamic Implicit Conversion`` ()=
@@ -120,8 +121,8 @@ module Tests=
 
         [<Test>] member basic.``Test Explicit Conversion`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
-                        let elet:int = ele |> dynExplicit 
-                        elet |> should equal 50 
+                        let elet:int = dynExplicit ele
+                        elet |> should equal 50
 
 
         [<Test>] member basic.``Test Implicit Conversion`` ()=

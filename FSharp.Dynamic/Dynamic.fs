@@ -1,39 +1,40 @@
-﻿// 
+﻿//
 //  Copyright 2011  Ekon Benefits
-// 
+//
 //    Licensed under the Apache License, Version 2.0 (the "License");
 //    you may not use this file except in compliance with the License.
 //    You may obtain a copy of the License at
-// 
+//
 //        http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 //    Unless required by applicable law or agreed to in writing, software
 //    distributed under the License is distributed on an "AS IS" BASIS,
 //    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-namespace EkonBenefits.FSharp
+namespace FSharp.Dynamic
 
-module Dynamic=
+[<AutoOpen>]
+module TopLevelOperators=
     open System
     open Microsoft.CSharp.RuntimeBinder
     open Microsoft.FSharp.Reflection
     open Dynamitey
     open Util
 
-   
+
     type dynAddAssign = PropertySetCallsAddAssign
     type dynSubtractAssign = PropertySetCallsSubtractAssign
     type dynArg = PropertyGetCallsNamedArgument
-    
+
     ///Wrap type to dynamically call static methods
     let inline dynStaticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
 
     ///dynamic implict convert to type
     let (>?>) (target:obj) (convertType: Type) : 'TResult =
         Dynamic.InvokeConvert(target, convertType, explicit = false) :?> 'TResult
-     
+
     ///dynamic explicit convert to type dynamically
     let (>>?>>) (target:obj) (convertType: Type) : 'TResult =
         Dynamic.InvokeConvert(target, convertType, explicit = true) :?> 'TResult
@@ -41,18 +42,18 @@ module Dynamic=
     ///Use type inteference to dynamically convert implicitly
     let inline dynImplicit (target:obj) : 'TResult =
         target >?> typeof<'TResult>
-    
+
     ///Use type inteference to dynamically convert explicitly
     let inline dynExplicit (target:obj) : 'TResult =
         target >>?>> typeof<'TResult>
 
     ///Dynamic get property or method invocation
-    let (?)  (target : obj) (name:string)  : 'TResult = 
+    let (?)  (target : obj) (name:string)  : 'TResult =
         let resultType = typeof<'TResult>
         let (|NoConversion| Conversion|) t = if t = typeof<obj> then NoConversion else Conversion
 
         if not (FSharpType.IsFunction resultType)
-        then 
+        then
             let convert r = match resultType with
                                 | NoConversion -> r
                                 | ____________ -> dynImplicit(r)
@@ -64,7 +65,7 @@ module Dynamic=
             let lambda = fun arg ->
                                let argType,returnType = FSharpType.GetFunctionElements resultType
 
-                               let argArray = 
+                               let argArray =
                                     match argType with
                                     | a when FSharpType.IsTuple(a) -> FSharpValue.GetTupleFields(arg)
                                     | a when a = typeof<unit>      -> [| |]
@@ -74,7 +75,7 @@ module Dynamic=
 
                                let (|Action|Func|) t = if t = typeof<unit> then Action else Func
                                let (|Invoke|InvokeMember|) n = if n = "_" then Invoke else InvokeMember
-                               
+
                                let result =
                                     try //Either it has a member or it's something directly callable
                                         match (returnType, name) with
@@ -82,8 +83,8 @@ module Dynamic=
                                         | (Action,InvokeMember) -> invoker(InvocationKind.InvokeMemberAction)
                                         | (Func, Invoke) -> invoker(InvocationKind.Invoke)
                                         | (Func, InvokeMember) -> invoker(InvocationKind.InvokeMember)
-                                    with  //Last chance incase we are trying to invoke an fsharpfunc 
-                                        |  :? RuntimeBinderException as e  -> 
+                                    with  //Last chance incase we are trying to invoke an fsharpfunc
+                                        |  :? RuntimeBinderException as e  ->
                                             try
                                                 let invokeName =InvokeMemberName("Invoke", null) //FSharpFunc Invoke
                                                 let invokeContext t = InvokeContext(t,typeof<obj>) //Improve cache hits by using the same context
