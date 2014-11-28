@@ -37,3 +37,10 @@ Also `>?>` (`dynImplicit`), `>>?>>` (`dynExplicit`) and more.
 #Caveats:
 
 The `dlr` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
+
+## Maintainer(s)
+
+- [@jbtule](https://github.com/jbtule)
+- [@forki](https://github.com/forki)
+
+The default maintainer account for projects under "fsprojects" is [@fsgit](https://github.com/fsgit) - F# Community Project Incubation Space (repo management)
