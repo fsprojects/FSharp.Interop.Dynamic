@@ -1,4 +1,8 @@
-# FSharp.Dynamic [![Build Status](https://travis-ci.org/fsprojects/FSharp.Dynamic.svg?branch=master)](https://travis-ci.org/fsprojects/FSharp.Dynamic) [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832)
+[![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/issue)](http://issuestats.com/github/fsprojects/FSharp.Dynamic)
+[![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/pr)](http://issuestats.com/github/fsprojects/FSharp.Dynamic)
+
+# FSharp.Dynamic [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Dynamic/)
+
 
 F# Dynamic Operator using the DLR (Portable Class Library WinRT, .NET 4.5, Silverlight 5) + .NET 4.0 Library
 
@@ -6,6 +10,10 @@ Install from [nuget](https://nuget.org/packages/FSharp.Dynamic/)
 ```
 PM> Install-Package FSharp.Dynamic
 ```
+
+# Build Status
+
+[![Build Status](https://travis-ci.org/fsprojects/FSharp.Dynamic.svg?branch=master)](https://travis-ci.org/fsprojects/FSharp.Dynamic) [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832)
 
 # Usage
 
