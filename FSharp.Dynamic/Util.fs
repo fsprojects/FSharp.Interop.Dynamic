@@ -14,7 +14,7 @@
 //    limitations under the License.
 
 
-namespace FSharp.Dynamic
+namespace FSharp.Interop.Dynamic
 
 module Util=
     open Dynamitey

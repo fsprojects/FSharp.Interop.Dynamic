@@ -11,7 +11,7 @@ open System.Collections.Generic
 open System.Xml.Linq
 open System.Numerics
 open Microsoft.CSharp.RuntimeBinder
-open FSharp.Dynamic
+open FSharp.Interop.Dynamic
 open FsUnit
 
 module Tests=

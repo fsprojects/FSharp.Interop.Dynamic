@@ -25,14 +25,14 @@ Also `>?>` (`dynImplicit`), `>>?>>` (`dynExplicit`) and more.
 # Examples:
 
 ###System.Dynamic
-    open FSharp.Dynamic
+    open FSharp.Interop.Dynamic
     let ex1 = ExpandoObject()
     ex1?Test<-"Hi"//Set Dynamic Property
     ex1?Test //Get Dynamic
 
 ###SignalR
 
-    open FSharp.Dynamic
+    open FSharp.Interop.Dynamic
     type MyHub =
         inherit Hub
         member x.Send (name : string) (message : string) =
