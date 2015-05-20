@@ -13,7 +13,7 @@ PM> Install-Package FSharp.Dynamic
 
 # Build Status
 
-[![Build Status](https://travis-ci.org/fsprojects/FSharp.Dynamic.svg?branch=master)](https://travis-ci.org/fsprojects/FSharp.Dynamic) [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832)
+[![Build Status](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic.svg?branch=master)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic) [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832)
 
 # Usage
 
