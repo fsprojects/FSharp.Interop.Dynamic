@@ -1,10 +1,10 @@
 [![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/issue)](http://issuestats.com/github/fsprojects/FSharp.Dynamic)
 [![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/pr)](http://issuestats.com/github/fsprojects/FSharp.Dynamic)
 
-# FSharp.Dynamic [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Dynamic/)
+# FSharp.Dynamic [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Dynamic/)
 
 
-F# Dynamic Operator using the DLR (Portable Class Library WinRT, .NET 4.5, Silverlight 5) + .NET 4.0 Library
+F# Dynamic Operator using the DLR (Portable Class Library WinRT, .NET 4.5, Silverlight 5)
 
 Install from [nuget](https://nuget.org/packages/FSharp.Dynamic/)
 ```
