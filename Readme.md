@@ -6,9 +6,9 @@
 
 F# Dynamic Operator using the DLR (Portable Class Library WinRT, .NET 4.5, Silverlight 5)
 
-Install from [nuget](https://nuget.org/packages/FSharp.Dynamic/)
+Install from [nuget](https://nuget.org/packages/FSharp.Interop.Dynamic/)
 ```
-PM> Install-Package FSharp.Dynamic
+PM> Install-Package FSharp.Interop.Dynamic
 ```
 
 # Build Status
