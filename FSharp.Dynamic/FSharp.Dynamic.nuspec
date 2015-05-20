@@ -15,9 +15,4 @@
     <copyright>Copyright 2015</copyright>
     <tags>fsharp dynamic dlr pcl</tags>
   </metadata>
-    <files>
-    <file src="bin\Release.net40\FSharp.Interop.Dynamic.dll" target="lib\net40\FSharp.Interop.Dynamic.dll" />
-    <file src="bin\Release.net40\FSharp.Interop.Dynamic.pdb" target="lib\net40\FSharp.Interop.Dynamic.pdb" />
-    <file src="bin\Release.net40\FSharp.Interop.Dynamic.XML" target="lib\net40\FSharp.Interop.Dynamic.XML" />
-  </files>
 </package>

@@ -8,12 +8,12 @@ open System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[<assembly: AssemblyTitle("FSharp.Dynamic")>]
+[<assembly: AssemblyTitle("FSharp.Interop.Dynamic")>]
 [<assembly: AssemblyDescription("portable class library, dynamic operator using the DLR")>]
 [<assembly: AssemblyConfiguration("")>]
 [<assembly: AssemblyCompany("Ekon Benefits")>]
-[<assembly: AssemblyProduct("EkonBenefits.FSharp.Dynamic")>]
-[<assembly: AssemblyCopyright("Copyright © Ekon Benefits 2011-2016")>]
+[<assembly: AssemblyProduct("FSharp.Interop.Dynamic")>]
+[<assembly: AssemblyCopyright("Copyright © Ekon Benefits 2011-2015")>]
 [<assembly: AssemblyTrademark("")>]
 [<assembly: AssemblyCulture("")>]
 
