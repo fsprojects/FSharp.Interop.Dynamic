@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E4DB77
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Dynamic", "FSharp.Dynamic\FSharp.Dynamic.fsproj", "{69E98E16-2E6F-468D-BD96-46BB4B7EB58B}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.Dynamic", "FSharp.Interop.Dynamic\FSharp.Interop.Dynamic.fsproj", "{69E98E16-2E6F-468D-BD96-46BB4B7EB58B}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Tests", "Tests\Tests.fsproj", "{C47069FD-79CF-47AF-80A1-FD26E823B19E}"
 EndProject

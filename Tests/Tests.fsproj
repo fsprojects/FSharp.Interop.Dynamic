@@ -72,13 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library1.fs" />
-    <None Include="Script.fsx" />
     <None Include="packages.config" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FSharp.Dynamic\FSharp.Dynamic.fsproj">
-      <Name>FSharp.Dynamic</Name>
+    <ProjectReference Include="..\FSharp.Interop.Dynamic\FSharp.Interop.Dynamic.fsproj">
+      <Name>FSharp.Interop.Dynamic</Name>
       <Project>{69e98e16-2e6f-468d-bd96-46bb4b7eb58b}</Project>
       <Private>True</Private>
     </ProjectReference>
