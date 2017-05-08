@@ -24,25 +24,31 @@ Also `>?>` (`dynImplicit`), `>>?>>` (`dynExplicit`) and more.
 
 # Examples:
 
-###System.Dynamic
+### System.Dynamic
+```fsharp
     open FSharp.Interop.Dynamic
     let ex1 = ExpandoObject()
     ex1?Test<-"Hi"//Set Dynamic Property
     ex1?Test //Get Dynamic
+```
 
-###SignalR
+### SignalR
 
+```fsharp
     open FSharp.Interop.Dynamic
     type MyHub =
         inherit Hub
         member x.Send (name : string) (message : string) =
             base.Clients.All?addMessage(name,message) |> ignore
+```
+### MVC ViewBag
 
-###MVC ViewBag
+```fsharp
 
     x.ViewBag?Name<-"George"
+```
 
-#Caveats:
+# Caveats:
 
 The `dlr` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
 
