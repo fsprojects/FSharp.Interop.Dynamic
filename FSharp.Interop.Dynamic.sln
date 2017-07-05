@@ -1,15 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{E4DB7771-D475-4611-AEF9-C5C85B0BE1A0}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{f2a71f9b-5d33-465a-a702-920d77279786}") = "Tests", "Tests\Tests.fsproj", "{C47069FD-79CF-47AF-80A1-FD26E823B19E}"
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "FSharp.Interop.Dynamic", "FSharp.Interop.Dynamic\FSharp.Interop.Dynamic.fsproj", "{9D8C53EB-ADE9-402B-81D4-A1DD46B395CF}"
