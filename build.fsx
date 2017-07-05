@@ -46,10 +46,7 @@ let commonBuild target =
 
 Target "Restore" (fun () ->
     trace " --- Restore Packages --- "
-    sln |> RestoreMSSolutionPackages (fun p ->
-         { p with
-             Retries = 4 })
- 
+    commonBuild "Restore"
 )
 
 Target "Clean" (fun () ->

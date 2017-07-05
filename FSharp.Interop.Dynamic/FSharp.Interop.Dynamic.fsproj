@@ -1,16 +1,16 @@
 ﻿<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net40;portable-net45+sl5+win8</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;net40;portable40-net45+sl5+win8</TargetFrameworks>
   </PropertyGroup>
 
- <PropertyGroup Condition="'$(TargetFramework)'=='portable-net45+sl5+win8'">
+ <PropertyGroup Condition="'$(TargetFramework)'=='portable40-net45+sl5+win8'">
     <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile47</TargetFrameworkProfile>
     <DefineConstants>$(DefineConstants);PORTABLE47</DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='portable-net45+sl5+win8'">
+  <ItemGroup Condition="'$(TargetFramework)'=='portable40-net45+sl5+win8'">
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -26,6 +26,8 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Core" Version="4.1.*" />
+    <PackageReference Include="FSharp.Compiler.Tools" Version="4.1.*"
+    />
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" 
     />
     <PackageReference Include="Dynamitey" Version="1.5.2-alpha" />
