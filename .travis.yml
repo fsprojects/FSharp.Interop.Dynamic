@@ -1,15 +1,15 @@
-language: objective-c
+# Travis-CI Build for dynamitey 
+# see travis-ci.org for details
 
+language: csharp
+solution: FSharp.Interop.Dynamic.sln
 env:
   global:
     - EnableNuGetPackageRestore=true
-  matrix:
-    - MONO_VERSION="4.0.0"
-
-before_install:
-  - wget "http://download.mono-project.com/archive/${MONO_VERSION}/macos-10-x86/MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg"
-  - sudo installer -pkg "MonoFramework-MDK-${MONO_VERSION}.macos10.xamarin.x86.pkg" -target /
+    
+mono: latest
+dotnet: 1.0.4
+dist: trusty
 
 script:
-  - xbuild
-  - .ci/nunit.sh Tests/bin/Debug/Tests.dll
+  - ./build.fsx
