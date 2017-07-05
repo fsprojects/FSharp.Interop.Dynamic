@@ -1,5 +1,9 @@
 image: Visual Studio 2017 Preview
 
+environment:
+  msbuild: C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\MSBuild\15.0\bin
+
+
 build: off
 
 build_script:
