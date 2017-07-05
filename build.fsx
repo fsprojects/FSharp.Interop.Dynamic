@@ -63,7 +63,7 @@ Target "Build" (fun () ->
 
 Target "Test" (fun () ->
     trace " --- Test the libs --- "
-    let testDir = "./Tests/bin/Release/net462/"
+    let testDir = "./Tests/bin/Release/net45/"
     !! (testDir + "Tests.dll")
                |> NUnit (fun p ->
                          { p with
