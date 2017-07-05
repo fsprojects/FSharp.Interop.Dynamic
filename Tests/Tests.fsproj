@@ -13,4 +13,7 @@
   <ItemGroup>
     <Compile Include="Library1.fs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FSharp.Interop.Dynamic\FSharp.Interop.Dynamic.fsproj" />
+  </ItemGroup>
 </Project>
