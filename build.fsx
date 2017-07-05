@@ -67,7 +67,7 @@ Target "Test" (fun () ->
     !! (testDir + "Tests.dll")
                |> NUnit (fun p ->
                          { p with
-                               ToolPath = "./packages/NUnit.Runners/2.6.2/tools"
+                               ToolPath = "./packages/NUnit.Runners/2.6.4/tools"
                                //DisableShadowCopy = true;
                                ExcludeCategory = "Performance"
                                OutputFile = testDir + "TestResults.xml" })
