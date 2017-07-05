@@ -31,7 +31,7 @@ let commonBuild target =
     let buildMode = getBuildParamOrDefault "buildMode" "Release"
     let setParams defaults =
             { defaults with
-                ToolsVersion = Some("15.3")
+                ToolsVersion = Some("15.0")
                 Verbosity = Some(Quiet)
                 Targets = [target]
                 Properties =
