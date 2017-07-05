@@ -8,7 +8,7 @@ env:
     - EnableNuGetPackageRestore=true
     
 mono: beta
-dotnet: 1.0.4
+dotnet: 2.0.0-preview2-006497
 dist: trusty
 
 install:
