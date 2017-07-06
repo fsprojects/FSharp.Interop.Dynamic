@@ -1,6 +1,20 @@
 ﻿<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6;net40;portable40-net45+sl5+win8</TargetFrameworks>
+    <Description>dynamic operator using the DLR</Description>
+    <Company>Ekon Benefits</Company>
+    <Authors>Jay Tuley</Authors>
+    <Copyright>Copyright 2011-2017 Ekon Benefits</Copyright>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <FileVersion>4.0.0.0</FileVersion>
+    <PackageProjectUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic</PackageProjectUrl>
+    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageTags>fsharp dynamic dlr</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSource>True</IncludeSource>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Version>4.0.0.0-alpha</Version>
   </PropertyGroup>
 
  <PropertyGroup Condition="'$(TargetFramework)'=='portable40-net45+sl5+win8'">
