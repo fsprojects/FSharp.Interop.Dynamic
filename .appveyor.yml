@@ -13,4 +13,4 @@ build_script:
 test: off
 
 artifacts:
-  - path: FSharp.Interop.Dynamic\bin\Release\*.nupkg
+  - path: **\bin\*\*.nupkg
