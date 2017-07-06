@@ -46,6 +46,12 @@ module Dyn=
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
 
+    let getIndex (target:obj) (indexers: obj list) : 'TResult =
+        Dynamic.InvokeGetIndex(target, List.toArray indexers) :?> 'TResult
+    
+    let setIndex (target:obj) (indexers: obj list) (value) : 'TResult =
+        Dynamic.InvokeSetValueOnIndexes(target, value, List.toArray indexers) :?> 'TResult
+
     let invoke (target:obj) (memberName:string option) : 'TResult =
         let resultType = typeof<'TResult>
         let (|NoConversion| Conversion|) t = if t = typeof<obj> then NoConversion else Conversion

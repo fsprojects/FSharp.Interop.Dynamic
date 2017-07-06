@@ -20,6 +20,21 @@ module Operators=
     let (?/?) (left:obj) (right: obj) : 'TResult =    
         (Dynamic.InvokeBinaryOperator(left, ExpressionType.Divide, right)) :?> 'TResult
 
+    let (?&&&?) (left:obj) (right: obj) : 'TResult =    
+        (Dynamic.InvokeBinaryOperator(left, ExpressionType.And, right)) :?> 'TResult
+
+    let (?|||?) (left:obj) (right: obj) : 'TResult =    
+        (Dynamic.InvokeBinaryOperator(left, ExpressionType.Or, right)) :?> 'TResult
+
+    let (?^^^?) (left:obj) (right: obj) : 'TResult =    
+        (Dynamic.InvokeBinaryOperator(left, ExpressionType.ExclusiveOr, right)) :?> 'TResult
+
+    let (?<<<?) (left:obj) (right: obj) : 'TResult =    
+        (Dynamic.InvokeBinaryOperator(left, ExpressionType.LeftShift, right)) :?> 'TResult
+
+    let (?>>>?) (left:obj) (right: obj) : 'TResult =    
+        (Dynamic.InvokeBinaryOperator(left, ExpressionType.RightShift, right)) :?> 'TResult
+
     let (?<=?) (left:obj) (right: obj) : bool =    
         Dynamic.InvokeBinaryOperator(left, ExpressionType.LessThanOrEqual, right) |> Dyn.explicitConvert
 
@@ -38,4 +53,4 @@ module Operators=
     let (?>=?) (left:obj) (right: obj) : bool =    
         Dynamic.InvokeBinaryOperator(left, ExpressionType.GreaterThanOrEqual, right) |> Dyn.explicitConvert
 
-    
+  
