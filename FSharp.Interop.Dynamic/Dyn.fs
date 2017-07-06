@@ -98,13 +98,9 @@ module Dyn=
                                                            | None       -> target
                                                 Array.fold invokeFSharpFold seed argArray
                                             with
-                                            #if SILVERLIGHT
-                                                | :? RuntimeBinderException
-                                                     -> raise e
-                                            #else
                                                 | :? RuntimeBinderException as e2
                                                      -> AggregateException(e,e2) |> raise
-                                            #endif
+                                                
 
                                match returnType with
                                | Action | NoConversion -> result
