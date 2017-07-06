@@ -24,6 +24,8 @@
 #r "FakeLib.dll"
 
 open Fake
+open Fake.DotNet.Testing.NUnit3
+open Fake.DotNet.MsBuild
 
 let sln = "./FSharp.Interop.Dynamic.sln"
 
@@ -41,8 +43,7 @@ let commonBuild target =
                         "Configuration", buildMode
                     ]
              }
-    build setParams sln
-          |> DoNothing
+    build setParams sln |> DoNothing
 
 Target "Restore" (fun () ->
     trace " --- Restore Packages --- "
@@ -65,12 +66,10 @@ Target "Test" (fun () ->
     trace " --- Test the libs --- "
     let testDir = "./Tests/bin/Release/net45/"
     !! (testDir + "Tests.dll")
-               |> NUnit (fun p ->
+               |> NUnit3 (fun p ->
                          { p with
-                               ToolPath = "./packages/NUnit.Runners/2.6.4/tools"
-                               //DisableShadowCopy = true;
-                               ExcludeCategory = "Performance"
-                               OutputFile = testDir + "TestResults.xml" })
+                               Labels = All
+                               ResultSpecs = [testDir + "TestResults.xml"] })
      
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
     match appveyor with
@@ -149,7 +148,7 @@ let fakeExe = "packages/FAKE/tools/FAKE.exe"
 downloadNugetTo nugetExe
 
 if doesNotExist fakeExe then
-    exec nugetExe ["install"; "fake"; "-OutputDirectory packages"; "-ExcludeVersion"]
+    exec nugetExe ["install"; "fake";  "-OutputDirectory packages"; "-ExcludeVersion"; "-PreRelease"]
 
 exec fakeExe ([makeFsx; "-d:FSharp_MakeFile"] @ passedArgs)
 
