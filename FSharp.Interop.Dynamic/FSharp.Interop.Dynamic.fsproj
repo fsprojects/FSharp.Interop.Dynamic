@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dyn.fs" />
-    <Compile Include="Dynamic.fs" />
+    <Compile Include="TopLevelOperators.fs" />
     <Compile Include="Operators.fs" />
   </ItemGroup>
 </Project>

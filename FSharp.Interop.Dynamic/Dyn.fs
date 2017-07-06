@@ -19,7 +19,9 @@ namespace FSharp.Interop.Dynamic
 module Dyn=
     open System
     open Dynamitey
-    open System.Dynamic
+    open Microsoft.CSharp.RuntimeBinder
+    open Microsoft.FSharp.Reflection
+
     let staticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
 
 
@@ -43,3 +45,69 @@ module Dyn=
 
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
+
+    let invoke (target:obj) (memberName:string option) : 'TResult =
+        let resultType = typeof<'TResult>
+        let (|NoConversion| Conversion|) t = if t = typeof<obj> then NoConversion else Conversion
+
+        if not (FSharpType.IsFunction resultType)
+        then
+            match memberName with
+              | Some (name) ->
+                let convert r = match resultType with
+                                    | NoConversion -> r
+                                    | ____________ -> implicitConvert r
+                Dynamic.InvokeGet(target, name)
+                    |> convert
+                    |> unbox
+              | None -> implicitConvert target
+        else
+            let lambda = fun arg ->
+                               let argType,returnType = FSharpType.GetFunctionElements resultType
+
+                               let argArray =
+                                    match argType with
+                                    | a when FSharpType.IsTuple(a) -> FSharpValue.GetTupleFields(arg)
+                                    | a when a = typeof<unit>      -> [| |]
+                                    | ____________________________ -> [|arg|]
+
+                               let invoker k = Invocation(k, memberName 
+                                                              |> Option.bind(fun name -> Some(InvokeMemberName(name,null)))
+                                                              |> Option.toObj
+                                                         ).Invoke(target, argArray)
+
+                               let (|Action|Func|) t = if t = typeof<unit> then Action else Func
+                               let (|Invoke|InvokeMember|) n = if n |> Option.isNone then Invoke else InvokeMember
+
+                               let result =
+                                    try //Either it has a member or it's something directly callable
+                                        match (returnType, memberName) with
+                                        | (Action,Invoke) -> invoker(InvocationKind.InvokeAction)
+                                        | (Action,InvokeMember) -> invoker(InvocationKind.InvokeMemberAction)
+                                        | (Func, Invoke) -> invoker(InvocationKind.Invoke)
+                                        | (Func, InvokeMember) -> invoker(InvocationKind.InvokeMember)
+                                    with  //Last chance incase we are trying to invoke an fsharpfunc
+                                        |  :? RuntimeBinderException as e  ->
+                                            try
+                                                let invokeName =InvokeMemberName("Invoke", null) //FSharpFunc Invoke
+                                                let invokeContext t = InvokeContext(t,typeof<obj>) //Improve cache hits by using the same context
+                                                let invokeFSharpFold t (a:obj) =
+                                                    Dynamic.InvokeMember(invokeContext(t),invokeName,a)
+                                                let seed = match memberName with
+                                                           | Some(name) -> Dynamic.InvokeGet(target,name)
+                                                           | None       -> target
+                                                Array.fold invokeFSharpFold seed argArray
+                                            with
+                                            #if SILVERLIGHT
+                                                | :? RuntimeBinderException
+                                                     -> raise e
+                                            #else
+                                                | :? RuntimeBinderException as e2
+                                                     -> AggregateException(e,e2) |> raise
+                                            #endif
+
+                               match returnType with
+                               | Action | NoConversion -> result
+                               | _____________________ -> implicitConvertTo returnType result
+
+            FSharpValue.MakeFunction(resultType,lambda) |> unbox<'TResult>
