@@ -47,7 +47,8 @@
     <PackageReference Include="Dynamitey" Version="1.5.2-alpha" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Util.fs" />
+    <Compile Include="Dyn.fs" />
     <Compile Include="Dynamic.fs" />
+    <Compile Include="Operators.fs" />
   </ItemGroup>
 </Project>

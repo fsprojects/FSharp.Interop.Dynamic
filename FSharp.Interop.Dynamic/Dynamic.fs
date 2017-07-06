@@ -21,31 +21,6 @@ module TopLevelOperators=
     open Microsoft.CSharp.RuntimeBinder
     open Microsoft.FSharp.Reflection
     open Dynamitey
-    open Util
-
-
-    type dynAddAssign = PropertySetCallsAddAssign
-    type dynSubtractAssign = PropertySetCallsSubtractAssign
-    type dynArg = PropertyGetCallsNamedArgument
-
-    ///Wrap type to dynamically call static methods
-    let inline dynStaticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
-
-    ///dynamic implict convert to type
-    let (>?>) (target:obj) (convertType: Type) : 'TResult =
-        Dynamic.InvokeConvert(target, convertType, explicit = false) :?> 'TResult
-
-    ///dynamic explicit convert to type dynamically
-    let (>>?>>) (target:obj) (convertType: Type) : 'TResult =
-        Dynamic.InvokeConvert(target, convertType, explicit = true) :?> 'TResult
-
-    ///Use type inteference to dynamically convert implicitly
-    let inline dynImplicit (target:obj) : 'TResult =
-        target >?> typeof<'TResult>
-
-    ///Use type inteference to dynamically convert explicitly
-    let inline dynExplicit (target:obj) : 'TResult =
-        target >>?>> typeof<'TResult>
 
     ///Dynamic get property or method invocation
     let (?)  (target : obj) (name:string)  : 'TResult =
@@ -56,7 +31,7 @@ module TopLevelOperators=
         then
             let convert r = match resultType with
                                 | NoConversion -> r
-                                | ____________ -> dynImplicit(r)
+                                | ____________ -> Dyn.implicitConvert r
 
             Dynamic.InvokeGet(target, name)
                 |> convert
@@ -105,7 +80,7 @@ module TopLevelOperators=
 
                                match returnType with
                                | Action | NoConversion -> result
-                               | _____________________ -> result >?> returnType
+                               | _____________________ -> Dyn.implicitConvertTo returnType result
 
             FSharpValue.MakeFunction(resultType,lambda) |> unbox<'TResult>
 
