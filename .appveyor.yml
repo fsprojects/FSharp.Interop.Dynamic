@@ -11,3 +11,6 @@ build_script:
   - cmd: fsi --exec ./build.fsx
 
 test: off
+
+artifacts:
+  - path: '**\bin\*\*.nupkg'
