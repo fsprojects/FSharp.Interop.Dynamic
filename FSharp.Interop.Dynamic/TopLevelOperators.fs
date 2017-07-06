@@ -18,8 +18,6 @@ namespace FSharp.Interop.Dynamic
 [<AutoOpen>]
 module TopLevelOperators=
     open System
-    open Microsoft.CSharp.RuntimeBinder
-    open Microsoft.FSharp.Reflection
     open Dynamitey
 
     ///Dynamic get property or method invocation
