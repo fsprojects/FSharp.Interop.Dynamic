@@ -78,7 +78,7 @@ Target "Test" (fun () ->
     let testDir = testDirFromMoniker "net45"
     let outputFile = outputFileFromMoniker "net45"
 
-    !! (testDir + "Tests.dll")
+    !! (testDir + "Tests.exe")
                        |> NUnit3 (fun p ->
                                  { p with
                                        Labels = All
