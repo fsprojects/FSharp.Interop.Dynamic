@@ -64,20 +64,35 @@ Target "Build" (fun () ->
 
 Target "Test" (fun () ->
     trace " --- Test the libs --- "
-    let testDir = "./Tests/bin/Release/net45/"
+    let sendToAppveyer outFile = 
+        let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
+        match appveyor with
+            | Some(jobid) -> 
+                use webClient = new System.Net.WebClient()
+                webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/nunit/%s" jobid, outFile) |> ignore
+            | None -> ()
+
+    let testDirFromMoniker moniker = sprintf "./Tests/bin/Release/%s/" moniker
+    let outputFileFromMoniker moniker = (testDirFromMoniker moniker) + (sprintf "TestResults.%s.xml" moniker)
+
+    let testDir = testDirFromMoniker "net45"
+    let outputFile = outputFileFromMoniker "net45"
+
     !! (testDir + "Tests.dll")
-               |> NUnit3 (fun p ->
-                         { p with
-                               Labels = All
-                               ResultSpecs = [testDir + "TestResults.xml"] })
-     
-    let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
-    match appveyor with
-        | Some(jobid) -> 
-            use webClient = new System.Net.WebClient()
-            webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/nunit/%s" jobid, testDir + "TestResults.xml") |> ignore
-        | None -> ()
-    
+                       |> NUnit3 (fun p ->
+                                 { p with
+                                       Labels = All
+                                       ResultSpecs = [outputFile] })
+                    
+    sendToAppveyer outputFile
+
+    DotNetCli.Test
+        (fun p -> 
+             { p with 
+                   Framework = "netcoreapp1.1"
+                   Project = "Tests/Tests.fsproj"
+                   Configuration = "Release"
+                    })
     
 )
 

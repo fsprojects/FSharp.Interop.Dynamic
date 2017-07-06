@@ -1,6 +1,9 @@
 ﻿<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFrameworks>netcoreapp1.1;net45</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp1.1'">
+      <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Core" Version="4.1.*" />
@@ -8,7 +11,9 @@
     />
     <PackageReference Include="Dynamitey" Version="1.5.2-alpha" />
     <PackageReference Include="NUnit" Version="3.7.*" />
-    <PackageReference Include="NUnit.ConsoleRunner" Version="3.6.*" />
+    <PackageReference Include="NUnit.Console" Version="3.6.*" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
     <PackageReference Include="FsUnit" Version="3.0.*" />
   </ItemGroup>
   <ItemGroup>
