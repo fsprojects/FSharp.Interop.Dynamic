@@ -13,7 +13,8 @@ open System.Numerics
 open Microsoft.CSharp.RuntimeBinder
 open FSharp.Interop.Dynamic
 open FsUnit
-
+open System.Linq.Expressions
+open FSharp.Interop.Dynamic.Operators
 module Tests=
 
     type TestEvent()=
@@ -27,10 +28,26 @@ module Tests=
         static member Plus3:Func<int,int> =
           Return<int>.Arguments<int>(fun x-> x + 3)
 
+    type DynamicOperatorMock()=
+        inherit DynamicObject()
+        override this.TryBinaryOperation(binder, arg, result) =
+            result <- binder.Operation
+            true
+
+    type DynamicWeirdFlakyIndexer()=
+        inherit DynamicObject()
+        let stuff = Dictionary<obj * obj, obj>()
+
+        override this.TryGetIndex(binder, indexes, result) =
+            result <- stuff.[(indexes.[0], indexes.[1])]
+            true
+        
+        override this.TrySetIndex(binder, indexes, value) =
+            stuff.Add((indexes.[0], indexes.[1]),value)
+            true
 
     [<TestFixture>]
     type ``Basic Dynamic Operator Tests`` ()=
-
 
         [<Test>] member basic.``Call method off of an object dynamically`` ()=
                        "HelloWorld"?Substring(0,5) |> should equal "Hello"
@@ -133,3 +150,67 @@ module Tests=
         [<Test>] member basic.``Test Implicit Conversion Fail`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
                         (fun () -> Dyn.implicitConvert(ele) = 50 |> ignore) |> should throw typeof<RuntimeBinderException>
+
+        [<Test>] member basic.``Test Basic indexer `` ()=
+                        let archive:obj = upcast DynamicWeirdFlakyIndexer()
+
+                        Dyn.setIndex archive [1; 5] "A"
+                        Dyn.setIndex archive ["Hello"; "World" ] "B"
+                        Dyn.setIndex archive [box 1; box "World" ] "C"
+
+                        Dyn.getIndex archive [1; 5] |> should equal "A"
+                        Dyn.getIndex archive ["Hello"; "World" ] |> should equal "B"
+                        Dyn.getIndex archive [box 1; box "World"] |> should equal "C"
+                        
+
+        [<Test>] member basic.``Basic Operator Mock Tests`` ()=
+                        let left:obj = upcast DynamicOperatorMock()
+                        let dummy = Object()
+
+                        left ?%? dummy |> should equal ExpressionType.Modulo
+                        left ?*? dummy |> should equal ExpressionType.Multiply
+                        left ?+? dummy |> should equal ExpressionType.Add
+                        left ?-? dummy |> should equal ExpressionType.Subtract
+                        left ?/? dummy |> should equal ExpressionType.Divide
+                        left ?&&&? dummy |> should equal ExpressionType.And
+                        left ?|||? dummy |> should equal ExpressionType.Or
+                        left ?^^^? dummy |> should equal ExpressionType.ExclusiveOr
+                        left ?<<<? dummy |> should equal ExpressionType.LeftShift
+                        left ?>>>? dummy |> should equal ExpressionType.RightShift
+        
+         [<Test>] member basic.``Basic Operator Op Tests`` ()=
+                       
+
+                        65 ?%? 10 |> should equal 5
+                        5 ?*? 4 |> should equal 20
+                        5 ?+? 4 |> should equal 9
+                        5 ?-? 3 |> should equal 2
+                        15 ?/? 5 |> should equal 3
+
+                        5 ?&&&? 3 |> should equal 1
+                        5 ?|||? 3 |> should equal 7
+                        5 ?^^^? 3 |> should equal 6
+                        23 ?<<<? 2 |> should equal 92
+                        (-105) ?>>>? 1 |> should equal (-53)
+
+                        10 ?<=? 5 |> should equal false
+                        5 ?<=? 10 |> should equal true
+                        10 ?<=? 10 |> should equal true
+
+                        10 ?>=? 5 |> should equal true
+                        5 ?>=? 10 |> should equal false
+                        10 ?>=? 10 |> should equal true
+
+                        10 ?<? 5 |> should equal false
+                        5 ?<? 10 |> should equal true
+                        10 ?<? 10 |> should equal false
+
+                        10 ?>? 5 |> should equal true
+                        5 ?>? 10 |> should equal false
+                        10 ?>? 10 |> should equal false
+
+                        10 ?<>? 5 |> should equal true
+                        10 ?<>? 10 |> should equal false
+
+                        10 ?=? 5 |> should equal false
+                        10 ?=? 10 |> should equal true

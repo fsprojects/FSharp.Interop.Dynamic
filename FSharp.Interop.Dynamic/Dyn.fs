@@ -46,11 +46,11 @@ module Dyn=
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
 
-    let getIndex (target:obj) (indexers: obj list) : 'TResult =
-        Dynamic.InvokeGetIndex(target, List.toArray indexers) :?> 'TResult
+    let getIndex (target:obj) (indexers: 'T seq) : 'TResult =
+        Dynamic.InvokeGetIndex(target, (indexers |> Seq.map box  |> Seq.toArray)) :?> 'TResult
     
-    let setIndex (target:obj) (indexers: obj list) (value) : 'TResult =
-        Dynamic.InvokeSetValueOnIndexes(target, value, List.toArray indexers) :?> 'TResult
+    let setIndex (target:obj) (indexers: 'T seq) (value:obj)  =
+        Dynamic.InvokeSetValueOnIndexes(target, value, (indexers |> Seq.map box |> Seq.toArray)) |> ignore
 
     let invoke (target:obj) (memberName:string option) : 'TResult =
         let resultType = typeof<'TResult>
