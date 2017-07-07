@@ -14,3 +14,5 @@ test: off
 
 artifacts:
   - path: '**\bin\*\*.nupkg'
+
+skip_branch_with_pr: true
