@@ -7,7 +7,7 @@
     <PackageReference Include="FSharp.Core" Version="4.1.*" />
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" 
     />
-    <PackageReference Include="Dynamitey" Version="1.5.2-alpha" />
+    <PackageReference Include="Dynamitey" Version="2.0.2-alpha" />
     <PackageReference Include="NUnit" Version="3.7.*" />
     <PackageReference Include="NUnit.Console" Version="3.6.*" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-*" />
