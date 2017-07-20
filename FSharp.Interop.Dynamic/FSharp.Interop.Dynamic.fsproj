@@ -42,8 +42,10 @@
     <Compile Include="Operators.fs" />
   </ItemGroup>
 
+   <PropertyGroup>
+      <FscDebugFileExt>.pdb</FscDebugFileExt>
+   </PropertyGroup>
    <ItemGroup>
-    <FscDebugFileExt>.pdb</FscDebugFileExt>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.6-beta.*" PrivateAssets="all" />
   </ItemGroup>
 
