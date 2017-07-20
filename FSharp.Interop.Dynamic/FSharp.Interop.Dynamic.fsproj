@@ -43,6 +43,7 @@
   </ItemGroup>
 
    <ItemGroup>
+    <FscDebugFileExt>.pdb</FscDebugFileExt>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.6-beta.*" PrivateAssets="all" />
   </ItemGroup>
 
