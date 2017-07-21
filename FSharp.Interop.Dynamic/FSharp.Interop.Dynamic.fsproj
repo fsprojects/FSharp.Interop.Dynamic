@@ -5,16 +5,16 @@
     <Company>Ekon Benefits</Company>
     <Authors>Jay Tuley</Authors>
     <Copyright>Copyright 2011-2017 Ekon Benefits</Copyright>
-    <AssemblyVersion>4.0.1.0</AssemblyVersion>
-    <FileVersion>4.0.1.0</FileVersion>
+    <AssemblyVersion>4.0.2.0</AssemblyVersion>
+    <FileVersion>4.0.2.0</FileVersion>
     <PackageProjectUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic</PackageProjectUrl>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
     <PackageTags>fsharp dynamic dlr</PackageTags>
-    <IncludeSymbols>True</IncludeSymbols>
-    <IncludeSource>True</IncludeSource>
+    <IncludeSymbols Condition="'$(OS)' == 'Windows_NT'">True</IncludeSymbols>
+    <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Version>4.0.1-alpha</Version>
+    <Version>4.0.2-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='portable-net45+sl5+win8'">
@@ -41,11 +41,8 @@
     <Compile Include="TopLevelOperators.fs" />
     <Compile Include="Operators.fs" />
   </ItemGroup>
-
-   <PropertyGroup>
-      <FscDebugFileExt>.pdb</FscDebugFileExt>
-   </PropertyGroup>
-   <ItemGroup>
+   
+  <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.6" PrivateAssets="all" />
   </ItemGroup>
 
