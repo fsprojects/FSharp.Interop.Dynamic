@@ -9,13 +9,8 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
-  allow_failures:
-    - os: linux
     
 solution: FSharp.Interop.Dynamic.sln
-env:
-  global:
-    - EnableNuGetPackageRestore=true
     
 mono: beta
 dotnet: 1.0.4
