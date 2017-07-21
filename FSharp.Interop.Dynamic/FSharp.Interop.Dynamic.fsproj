@@ -46,7 +46,7 @@
       <FscDebugFileExt>.pdb</FscDebugFileExt>
    </PropertyGroup>
    <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.6-beta.*" PrivateAssets="all" />
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.6" PrivateAssets="all" />
   </ItemGroup>
 
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
