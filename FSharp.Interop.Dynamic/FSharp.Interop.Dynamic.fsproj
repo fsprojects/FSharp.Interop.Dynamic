@@ -5,8 +5,6 @@
     <Company>Ekon Benefits</Company>
     <Authors>Jay Tuley</Authors>
     <Copyright>Copyright 2011-2017 Ekon Benefits</Copyright>
-    <AssemblyVersion>4.0.2.0</AssemblyVersion>
-    <FileVersion>4.0.2.0</FileVersion>
     <PackageProjectUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic</PackageProjectUrl>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
     <PackageTags>fsharp dynamic dlr</PackageTags>
@@ -14,7 +12,6 @@
     <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Version>4.0.2-alpha</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='portable-net45+sl5+win8'">
@@ -30,11 +27,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FSharp.Core" Version="4.1.*" />
-    <PackageReference Include="FSharp.Compiler.Tools" Version="4.1.*" PrivateAssets="all"
-    />
-    <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" 
-    />
-    <PackageReference Include="Dynamitey" Version="2.0.2-alpha" />
+    <PackageReference Include="FSharp.Compiler.Tools" Version="4.1.*" PrivateAssets="all" />
+    <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
+   <PackageReference Include="Dynamitey" Version="2.0.5-alpha87" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dyn.fs" />
@@ -45,6 +40,8 @@
   <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.6" PrivateAssets="all" />
   </ItemGroup>
+
+  <Import Project="..\Version.props" />
 
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

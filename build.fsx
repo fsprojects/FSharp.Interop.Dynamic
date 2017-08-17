@@ -30,7 +30,9 @@ open Fake.DotNet.MsBuild
 let sln = "./FSharp.Interop.Dynamic.sln"
 
 let commonBuild target =
-    let buildMode = getBuildParamOrDefault "buildMode" "Release"
+    let buildMode = getBuildParamOrDefault "configuration" "Release"
+    let vsuffix = getBuildParamOrDefault "vsuffix" ""
+
     let setParams defaults =
             { defaults with
                 ToolsVersion = Some("15.0")
@@ -38,9 +40,8 @@ let commonBuild target =
                 Targets = [target]
                 Properties =
                     [
-                        "Optimize", "True"
-                        "DebugSymbols", "True"
                         "Configuration", buildMode
+                        "VersionSuffix", vsuffix
                     ]
              }
     build setParams sln |> DoNothing
@@ -77,7 +78,9 @@ Target "Test" (fun () ->
                 webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/nunit/%s" jobid, outFile) |> ignore
             | None -> ()
 
-    let testDirFromMoniker moniker = sprintf "./Tests/bin/Release/%s/" moniker
+    let buildMode = getBuildParamOrDefault "configuration" "Release"
+
+    let testDirFromMoniker moniker = sprintf "./Tests/bin/%s/%s/" buildMode moniker
     let outputFileFromMoniker moniker = (testDirFromMoniker moniker) + (sprintf "TestResults.%s.xml" moniker)
 
     let testDir = testDirFromMoniker "net45"

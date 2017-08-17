@@ -1,5 +1,7 @@
 image: Visual Studio 2017 Preview
 
+configuration: Debug
+
 environment:
   msbuild: C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\MSBuild\15.0\bin
 
@@ -16,3 +18,33 @@ artifacts:
   - path: '**\bin\*\*.nupkg'
 
 skip_branch_with_pr: true
+
+deploy:
+  - provider: NuGet
+    server: https://www.myget.org/F/dynamitey-ci/api/v2/package
+    api_key:
+      secure: yKbBrG0QiTfXUvND1/cMMNHxH1Bgal5g7c0pWGwqvjCtKGTtWkpvE2KlZb6E2ZgB
+    skip_symbols: false
+    symbol_server: https://www.myget.org/F/dynamitey-ci/symbols/api/v2/package
+
+
+for:
+  - branches:
+        except:
+          - /v.*/
+    environment:
+        vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
+        is_prerelease: true
+  - branches:
+        only:
+          - /v.*-beta/
+    environment:
+      vsuffix: beta$(APPVEYOR_BUILD_NUMBER)
+      is_prerelease: true
+  - branches:
+        only:
+          - /v[\d,.]*/
+    configuration: Release
+    environment:
+      vsuffix: $(APPVEYOR_BUILD_NUMBER)
+      is_prerelease: false
