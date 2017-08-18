@@ -99,7 +99,7 @@ Target "Test" (fun () ->
                  { p with 
                        Framework = "netcoreapp2.0"
                        Project = "Tests/Tests.fsproj"
-                       Configuration = "Release"
+                       Configuration = buildMode
                        AdditionalArgs =["--no-build";"--no-restore";"--logger=trx;LogFileName=testresults.trx"]
                         })
         
