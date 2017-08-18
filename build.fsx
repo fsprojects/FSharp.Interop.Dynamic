@@ -97,7 +97,7 @@ Target "Test" (fun () ->
     DotNetCli.Test
         (fun p -> 
              { p with 
-                   Framework = "netcoreapp1.1"
+                   Framework = "netcoreapp2.0"
                    Project = "Tests/Tests.fsproj"
                    Configuration = "Release"
                     })
