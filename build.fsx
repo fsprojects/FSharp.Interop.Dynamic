@@ -100,7 +100,7 @@ Target "Test" (fun () ->
                        Framework = "netcoreapp2.0"
                        Project = "Tests/Tests.fsproj"
                        Configuration = "Release"
-                       AdditionalArgs ="--no-build --no-restore --logger=trx;LogFileName=testresults.trx"
+                       AdditionalArgs =["--no-build";"--no-restore";"--logger=trx;LogFileName=testresults.trx"]
                         })
         
     finally
