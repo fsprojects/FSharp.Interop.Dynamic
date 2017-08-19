@@ -2,6 +2,10 @@ image: Visual Studio 2017
 
 configuration: Debug
 
+environment:
+  vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
+  githubdeploy: false
+
 build: off
 
 build_script:
@@ -39,22 +43,22 @@ deploy:
 
 for:
   - branches:
-        except:
-          - /deploy-v.*/
+      except:
+        - /deploy-v.*/
     environment:
       vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
       githubdeploy: false
   - branches:
-        only:
-          - /deploy-v.*-beta.*/
+      only:
+        - /deploy-v.*-beta.*/
     environment:
       vsuffix: beta$(APPVEYOR_BUILD_NUMBER)
       VersionSuffix: "-beta$(APPVEYOR_BUILD_NUMBER)"
       is_prerelease: true
       githubdeploy: true
   - branches:
-        only:
-          - /deploy-v[\d,.]*/
+      only:
+        - /deploy-v[\d,.]*/
     configuration: Release
     environment:
       vsuffix: $(APPVEYOR_BUILD_NUMBER)
