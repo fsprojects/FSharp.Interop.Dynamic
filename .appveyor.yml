@@ -2,9 +2,6 @@ image: Visual Studio 2017
 
 configuration: Debug
 
-environment:
-  githubdeploy: false
-
 build: off
 
 build_script:
@@ -44,6 +41,9 @@ for:
   - branches:
         except:
           - /deploy-v.*/
+    environment:
+      vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
+      githubdeploy: false
   - branches:
         only:
           - /deploy-v.*-beta.*/
