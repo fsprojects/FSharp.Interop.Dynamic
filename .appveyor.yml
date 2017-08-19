@@ -1,0 +1,63 @@
+image: Visual Studio 2017
+
+configuration: Debug
+
+build: off
+
+build_script:
+  - cmd: set PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\F#\4.1\Framework\v4.0\
+  - cmd: fsi --exec ./build.fsx
+
+test: off
+
+artifacts:
+  - path: '**\bin\*\*.nupkg'
+
+skip_branch_with_pr: true
+
+before_deploy:
+  - ps: $env:VersionPrefix=(Select-Xml -Path ./Version.props -XPath "/Project/PropertyGroup/VersionPrefix").Node.'#text'
+
+deploy:
+  - provider: NuGet
+    server: https://www.myget.org/F/dynamitey-ci/api/v2/package
+    api_key:
+      secure: yKbBrG0QiTfXUvND1/cMMNHxH1Bgal5g7c0pWGwqvjCtKGTtWkpvE2KlZb6E2ZgB
+    skip_symbols: false
+    symbol_server: https://www.myget.org/F/dynamitey-ci/symbols/api/v2/package
+
+  - provider: GitHub
+    artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
+    tag: v$(VersionPrefix)$(VersionSuffix)
+    description: 'Release description'
+    auth_token:
+      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8
+    draft: true
+    prerelease: $(is_prerelease)
+    on:
+      githubdeploy: true
+
+for:
+  - branches:
+        except:
+          - /deploy-v.*/
+    environment:
+      vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
+      githubdeploy: false
+  - branches:
+        only:
+          - /deploy-v.*-beta.*/
+    environment:
+      vsuffix: beta$(APPVEYOR_BUILD_NUMBER)
+      VersionSuffix: "-beta$(APPVEYOR_BUILD_NUMBER)"
+      is_prerelease: true
+      githubdeploy: true
+  - branches:
+        only:
+          - /deploy-v[\d,.]*/
+    configuration: Release
+    environment:
+      vsuffix: $(APPVEYOR_BUILD_NUMBER)
+      VersionSuffix: $(APPVEYOR_BUILD_NUMBER)
+      is_prerelease: false
+      githubdeploy: true
