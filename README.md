@@ -13,13 +13,21 @@ PM> Install-Package FSharp.Interop.Dynamic
 
 # Build Status
 
-[![Build Status](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic.svg?branch=master)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic) [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832)
+Platofrm | Status
+-------- | ------
+Windows | [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832/branch/master)
+Mac     | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/2)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic)
+Linux   | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/1)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic)
+ 
+# Bleeding edge feed MyGet
+
+[![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/ImpromptuInterface.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/FSharp.Interop.Dynamic)
 
 # Usage
 
 `target?Property`, `target?Property<-value`, and `target?Method(arg,arg2)` allow you to dynamically get/set properties and call methods
 
-Also `>?>` (`dynImplicit`), `>>?>>` (`dynExplicit`) and more.
+Also `Dyn.implicitConvert`,`Dyn.explicitConvert`, comparison operators and more.
 
 
 # Examples:
@@ -51,6 +59,8 @@ Also `>?>` (`dynImplicit`), `>>?>>` (`dynExplicit`) and more.
 # Caveats:
 
 The `dlr` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
+
+.net core 2.0.0 has a major bug in the c# dynamic keyword with nested classes inside of generic classes. You will know it from a substring argument length exception. .net 4.0, .net core 1.X don't have this bug.
 
 ## Maintainer(s)
 

@@ -1,10 +1,9 @@
-image: Visual Studio 2017 Preview
+image: Visual Studio 2017
 
 configuration: Debug
 
 environment:
-  msbuild: C:\Program Files (x86)\Microsoft Visual Studio\Preview\Community\MSBuild\15.0\bin
-
+  githubdeploy: false
 
 build: off
 
@@ -19,6 +18,9 @@ artifacts:
 
 skip_branch_with_pr: true
 
+before_deploy:
+  - ps: $env:VersionPrefix=(Select-Xml -Path ./Version.props -XPath "/Project/PropertyGroup/VersionPrefix").Node.'#text'
+
 deploy:
   - provider: NuGet
     server: https://www.myget.org/F/dynamitey-ci/api/v2/package
@@ -27,24 +29,35 @@ deploy:
     skip_symbols: false
     symbol_server: https://www.myget.org/F/dynamitey-ci/symbols/api/v2/package
 
+  - provider: GitHub
+    artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
+    tag: v$(VersionPrefix)$(VersionSuffix)
+    description: 'Release description'
+    auth_token:
+      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8
+    draft: true
+    prerelease: $(is_prerelease)
+    on:
+      githubdeploy: true
 
 for:
   - branches:
         except:
-          - /v.*/
-    environment:
-        vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
-        is_prerelease: true
+          - /deploy-v.*/
   - branches:
         only:
-          - /v.*-beta/
+          - /deploy-v.*-beta.*/
     environment:
       vsuffix: beta$(APPVEYOR_BUILD_NUMBER)
+      VersionSuffix: "-beta$(APPVEYOR_BUILD_NUMBER)"
       is_prerelease: true
+      githubdeploy: true
   - branches:
         only:
-          - /v[\d,.]*/
+          - /deploy-v[\d,.]*/
     configuration: Release
     environment:
       vsuffix: $(APPVEYOR_BUILD_NUMBER)
+      VersionSuffix: $(APPVEYOR_BUILD_NUMBER)
       is_prerelease: false
+      githubdeploy: true

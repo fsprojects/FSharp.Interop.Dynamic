@@ -13,7 +13,7 @@ matrix:
       
 solution: FSharp.Interop.Dynamic.sln
     
-mono: latest
+mono: beta
 dotnet: 2.0.0
 
 install:
