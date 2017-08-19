@@ -21,7 +21,7 @@ Linux   | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fspr
  
 # Bleeding edge feed MyGet
 
-[![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/ImpromptuInterface.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/FSharp.Interop.Dynamic)
+[![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/FSharp.Interop.Dynamic.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/FSharp.Interop.Dynamic)
 
 # Usage
 
