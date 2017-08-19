@@ -29,7 +29,7 @@
     <PackageReference Include="FSharp.Core" Version="4.1.*" />
     <PackageReference Include="FSharp.Compiler.Tools" Version="4.1.*" PrivateAssets="all" />
     <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" />
-   <PackageReference Include="Dynamitey" Version="2.0.6-alpha105" />
+   <PackageReference Include="Dynamitey" Version="2.0.6-beta111" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dyn.fs" />
