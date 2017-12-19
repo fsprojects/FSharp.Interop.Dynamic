@@ -14,7 +14,7 @@ matrix:
 solution: FSharp.Interop.Dynamic.sln
     
 mono: beta
-dotnet: 2.0.0
+dotnet: 2.0.3
 
 install:
   - msbuild /ver
