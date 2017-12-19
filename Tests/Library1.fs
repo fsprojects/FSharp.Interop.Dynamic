@@ -78,10 +78,6 @@ module Tests=
 
 
         [<Test>] member basic.``Test Lambda methods`` ()=
-#if NETCOREAPP2_0
-                        Assert.Ignore(".NET Core 2.0.0 has major dynamic bug")
-#endif
-
                         let ex1 = DynamicObjects.Dictionary()
                         ex1?TestLam<- (fun x -> 42 + x)
                         ex1?TestLam2<- (fun x y -> y+ 42 + x)
@@ -92,25 +88,16 @@ module Tests=
 
 
         [<Test>] member basic.``Test FSharp Lambda 3 arg `` ()=
-#if NETCOREAPP2_0
-                        Assert.Ignore(".NET Core 2.0.0 has major dynamic bug")
-#endif
                         let dyn = (fun x y z -> x + y - z) :> obj
                         !?dyn (3,2,1) |> should equal 4
 
 
         [<Test>] member basic.``Test FSharp Lambda 4 arg`` ()=
-#if NETCOREAPP2_0
-                        Assert.Ignore(".NET Core 2.0.0 has major dynamic bug")
-#endif
                         let dyn = (fun x y z bbq -> x + y - z - bbq) :> obj  in
                         !?dyn (3, 2, 1, 5) |> should equal -1
 
 
         [<Test>] member basic.``Test FSharp Lambda 5 arg`` ()=
-#if NETCOREAPP2_0
-                        Assert.Ignore(".NET Core 2.0.0 has major dynamic bug")
-#endif
                         let unknownfunc = (fun x y z bbq etc -> x + y - z - bbq + etc) :> obj in
                         !?unknownfunc (3, 2, 1, 5, 9) |> should equal 8
 
