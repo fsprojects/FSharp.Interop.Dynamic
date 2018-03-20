@@ -60,7 +60,7 @@ Also `Dyn.implicitConvert`,`Dyn.explicitConvert`, comparison operators and more.
 
 The `dlr` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
 
-.net core 2.0.0 has a major bug in the c# dynamic keyword with nested classes inside of generic classes. You will know it from a substring argument length exception. .net 4.0, .net core 1.X don't have this bug.
+.net core 2.0.0 has a major bug in the c# dynamic keyword with nested classes inside of generic classes. You will know it from a substring argument length exception. .net 4.0, .net core 1.X & .net core 2.0.3<= are okay.
 
 ## Maintainer(s)
 
