@@ -44,7 +44,7 @@ let commonBuild target =
                         "VersionSuffix", vsuffix
                     ]
              }
-    build setParams sln |> DoNothing
+    Fake.DotNet.MsBuild.build setParams sln |> DoNothing
 
 Target "Restore" (fun () ->
     trace " --- Restore Packages --- "
