@@ -25,7 +25,7 @@
 
 open Fake
 open Fake.DotNet.Testing.NUnit3
-open Fake.DotNet.MsBuild
+open Fake.DotNet
 
 let sln = "./FSharp.Interop.Dynamic.sln"
 
@@ -44,7 +44,7 @@ let commonBuild target =
                         "VersionSuffix", vsuffix
                     ]
              }
-    build setParams sln |> DoNothing
+    MsBuild.build setParams sln |> DoNothing
 
 Target "Restore" (fun () ->
     trace " --- Restore Packages --- "
