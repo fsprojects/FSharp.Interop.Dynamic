@@ -13,7 +13,6 @@ build: off
 
 build_script:
   - cmd: set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%\extra\FSharp.Compiler.Tools\tools\
-  - cmd: dir %APPVEYOR_BUILD_FOLDER%\extra\FSharp.Compiler.Tools\tools\
   - cmd: fsi --exec ./build.fsx
 
 
