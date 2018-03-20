@@ -25,7 +25,6 @@
 
 open Fake
 open Fake.DotNet.Testing.NUnit3
-open Fake.DotNet.MsBuild
 
 let sln = "./FSharp.Interop.Dynamic.sln"
 
