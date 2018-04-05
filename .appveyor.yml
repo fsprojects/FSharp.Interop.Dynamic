@@ -3,11 +3,13 @@ image: Visual Studio 2017
 configuration: Debug
 
 environment:
-  vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
+  vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
+  hyphen:"-"
   githubdeploy: false
 
 install:
   - ps: nuget install FSharp.Compiler.Tools -ExcludeVersion -OutputDirectory extra
+  - ps: $env:VersionPrefix=(Select-Xml -Path ./Version.props -XPath "/Project/PropertyGroup/VersionPrefix").Node.'#text'
 
 build: off
 
@@ -23,9 +25,6 @@ artifacts:
 
 skip_branch_with_pr: true
 
-before_deploy:
-  - ps: $env:VersionPrefix=(Select-Xml -Path ./Version.props -XPath "/Project/PropertyGroup/VersionPrefix").Node.'#text'
-
 deploy:
   - provider: NuGet
     server: https://www.myget.org/F/dynamitey-ci/api/v2/package
@@ -36,7 +35,7 @@ deploy:
 
   - provider: GitHub
     artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
-    tag: v$(VersionPrefix)$(VersionSuffix)
+    tag: v$(VersionPrefix)$(hyphen)$(vsuffix)
     description: 'Release description'
     auth_token:
       secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8
@@ -50,14 +49,15 @@ for:
       except:
         - /deploy-v.*/
     environment:
-      vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
+      vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
+      hyphen:"-"
       githubdeploy: false
   - branches:
       only:
         - /deploy-v.*-beta.*/
     environment:
-      vsuffix: beta$(APPVEYOR_BUILD_NUMBER)
-      VersionSuffix: "-beta$(APPVEYOR_BUILD_NUMBER)"
+      vsuffix: "beta$(APPVEYOR_BUILD_NUMBER)"
+      hyphen:"-"
       is_prerelease: true
       githubdeploy: true
   - branches:
@@ -65,7 +65,7 @@ for:
         - /deploy-v[\d,.]*/
     configuration: Release
     environment:
-      vsuffix: $(APPVEYOR_BUILD_NUMBER)
-      VersionSuffix: ".$(APPVEYOR_BUILD_NUMBER)"
+      hyphen:"."
+      vsuffix: "$(APPVEYOR_BUILD_NUMBER)"
       is_prerelease: false
       githubdeploy: true
