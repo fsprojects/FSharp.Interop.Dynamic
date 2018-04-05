@@ -197,7 +197,7 @@ let fakeExe = "packages/FAKE/tools/FAKE.exe"
 downloadNugetTo nugetExe
 
 if doesNotExist fakeExe then
-    exec nugetExe ["install"; "fake";  "-OutputDirectory packages"; "-ExcludeVersion"; "-PreRelease"]
+    exec nugetExe ["install"; "fake"; "-Version 5.0.0-alpha010" ; "-OutputDirectory packages"; "-ExcludeVersion"; "-PreRelease"]
 
 exec fakeExe ([makeFsx; "-d:FSharp_MakeFile"] @ passedArgs)
 
