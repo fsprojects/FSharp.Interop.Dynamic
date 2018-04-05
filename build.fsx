@@ -22,10 +22,13 @@
 
 #I "packages/FAKE/tools"
 #r "FakeLib.dll"
+#r "System.Xml.Linq.dll"
 
 open Fake
 open Fake.DotNet.Testing.NUnit3
 open Fake.DotNet
+open System.Xml.Linq
+open System.Xml.XPath
 
 let sln = "./FSharp.Interop.Dynamic.sln"
 
@@ -33,15 +36,30 @@ let commonBuild target =
     let buildMode = getBuildParamOrDefault "configuration" "Release"
     let vsuffix = getBuildParamOrDefault "vsuffix" ""
 
-    let setParams defaults =
+    let versionPrefix = "Version.props" 
+                        |> System.IO.File.ReadAllText 
+                        |> XDocument.Parse
+                        |> (fun x -> x.XPathEvaluate("//VersionPrefix/text()"))
+                        |> (fun x-> x :?> seq<obj>)
+                        |> Seq.exactlyOne
+                        |> sprintf "%A"
+
+    let vProp =
+        if System.Text.RegularExpressions.Regex.IsMatch(vsuffix, "^\d+$") then 
+            "Version", versionPrefix + "." + vsuffix
+        else
+            "VersionSuffix", vsuffix
+
+
+    let setParams (defaults:MsBuild.MSBuildParams) =
             { defaults with
                 ToolsVersion = Some("15.0")
-                Verbosity = Some(Quiet)
+                Verbosity = Some(MsBuild.MSBuildVerbosity.Quiet)
                 Targets = [target]
                 Properties =
                     [
                         "Configuration", buildMode
-                        "VersionSuffix", vsuffix
+                        vProp
                     ]
              }
     MsBuild.build setParams sln |> DoNothing
