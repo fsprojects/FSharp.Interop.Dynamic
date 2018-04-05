@@ -4,7 +4,7 @@ configuration: Debug
 
 environment:
   vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
-  hyphen:"-"
+  hyphen: "-"
   githubdeploy: false
 
 install:
@@ -50,14 +50,14 @@ for:
         - /deploy-v.*/
     environment:
       vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
-      hyphen:"-"
+      hyphen: "-"
       githubdeploy: false
   - branches:
       only:
         - /deploy-v.*-beta.*/
     environment:
       vsuffix: "beta$(APPVEYOR_BUILD_NUMBER)"
-      hyphen:"-"
+      hyphen: "-"
       is_prerelease: true
       githubdeploy: true
   - branches:
@@ -65,7 +65,7 @@ for:
         - /deploy-v[\d,.]*/
     configuration: Release
     environment:
-      hyphen:"."
+      hyphen: "."
       vsuffix: "$(APPVEYOR_BUILD_NUMBER)"
       is_prerelease: false
       githubdeploy: true
