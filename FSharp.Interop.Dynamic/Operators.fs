@@ -1,6 +1,6 @@
 namespace FSharp.Interop.Dynamic
 
-
+/// Additional operators to dyanmically do normal operations
 module Operators=
     open System
     open Dynamitey

@@ -20,7 +20,7 @@ open System.Linq.Expressions
 
 module Tests=
 
-    (***hide***)
+(***hide***)
     type TestEvent()=
         let event1 = new Event<EventHandler<EventArgs>, EventArgs>()
         [<CLIEvent>]
@@ -28,17 +28,17 @@ module Tests=
         member this.OnEvent(obj:Object, args:EventArgs)=
            event1.Trigger(obj,args)
 
-    (***hide***)
+(***hide***)
     type TestFuncs()=
         static member Plus3:Func<int,int> =
           Return<int>.Arguments<int>(fun x-> x + 3)
-    (***hide***)
+(***hide***)
     type DynamicOperatorMock()=
         inherit DynamicObject()
         override this.TryBinaryOperation(binder, arg, result) =
             result <- binder.Operation
             true
-    (***hide***)
+(***hide***)
     type DynamicWeirdFlakyIndexer()=
         inherit DynamicObject()
         let stuff = Dictionary<obj * obj, obj>()
@@ -69,25 +69,25 @@ Set a property with dlr, Expando only responds to the dlr.
                         ex1?Test<-"Hi";
                         ex1?Test |> should equal "Hi"
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test Direct Invoke`` ()=
                         !?Dynamic.Curry(Dyn.staticContext(typeof<string>))?Format("Test {0} {1}") (1,2) |>
                             should equal "Test 1 2"
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test Void Method`` ()=
                         let array = List<string>()
                         array?Add("1");
                         array.[0] |> should equal "1"
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test SetAll`` ()=
                         let e1 = ExpandoObject()
                         !?Dynamic.InvokeSetAll (e1, [("One",1);("Two",2)])
                         e1?One |> should equal 1
                         e1?Two |> should equal 2
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test Lambda methods`` ()=
                         let ex1 = DynamicObjects.Dictionary()
                         ex1?TestLam<- (fun x -> 42 + x)
@@ -97,22 +97,22 @@ Set a property with dlr, Expando only responds to the dlr.
                         ex1?TestLam2(1, 2) |> should equal 45
                         ex1?TestDel(2) |> should equal 5
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test FSharp Lambda 3 arg `` ()=
                         let dyn = (fun x y z -> x + y - z) :> obj
                         !?dyn (3,2,1) |> should equal 4
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test FSharp Lambda 4 arg`` ()=
                         let dyn = (fun x y z bbq -> x + y - z - bbq) :> obj  in
                         !?dyn (3, 2, 1, 5) |> should equal -1
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test FSharp Lambda 5 arg`` ()=
                         let unknownfunc = (fun x y z bbq etc -> x + y - z - bbq + etc) :> obj in
                         !?unknownfunc (3, 2, 1, 5, 9) |> should equal 8
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test Events`` ()=
                         let pocoObj = TestEvent()
                         let refBool = ref false
@@ -170,13 +170,13 @@ Use the dlr to call the implicit operator with inferred type from usage
                         ele |> Dyn.implicitConvert |> should equal (decimal 50)
 
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test Implicit Conversion Fail`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
                         (fun () -> Dyn.implicitConvert(ele) = 50 |> ignore) 
                             |> should throw typeof<RuntimeBinderException>
 
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Test Basic indexer `` ()=
                         let archive:obj = upcast DynamicWeirdFlakyIndexer()
 
@@ -188,7 +188,7 @@ Use the dlr to call the implicit operator with inferred type from usage
                         Dyn.getIndex archive ["Hello"; "World" ] |> should equal "B"
                         Dyn.getIndex archive [box 1; box "World"] |> should equal "C"
                         
-        (***hide***)
+(***hide***)
         [<Test>] member basic.``Basic Operator Mock Tests`` ()=
                         let left:obj = upcast DynamicOperatorMock()
                         let dummy = Object()

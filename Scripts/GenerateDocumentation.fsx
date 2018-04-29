@@ -102,9 +102,10 @@ for dir in Directory.GetDirectories(docStyles) do
       File.Copy(file, Path.Combine(outputContentDir, Path.GetFileName(file)), overwrite = true)
 for file in Directory.GetFiles(docStyles) do
     File.Copy(file, Path.Combine(baseOutput, Path.GetFileName(file)), overwrite = true)
-
+let imgDir = Path.Combine(outputDir,"images")
+createDir imgDir
 let logo = Path.Combine(docContent, "logo.png")
-File.Copy(logo, Path.Combine(outputDir, "logo.png"), overwrite=true)
+File.Copy(logo, Path.Combine(imgDir, "logo.png"), overwrite=true)
 
 
 let template = "docpage.cshtml"

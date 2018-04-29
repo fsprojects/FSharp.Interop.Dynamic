@@ -60,133 +60,15 @@
 </tr>
 </table>
 <p>Set a property with dlr, Expando only responds to the dlr.</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-<span class="l">29: </span>
-<span class="l">30: </span>
-<span class="l">31: </span>
-<span class="l">32: </span>
-<span class="l">33: </span>
-<span class="l">34: </span>
-<span class="l">35: </span>
-<span class="l">36: </span>
-<span class="l">37: </span>
-<span class="l">38: </span>
-<span class="l">39: </span>
-<span class="l">40: </span>
-<span class="l">41: </span>
-<span class="l">42: </span>
-<span class="l">43: </span>
-<span class="l">44: </span>
-<span class="l">45: </span>
-<span class="l">46: </span>
-<span class="l">47: </span>
-<span class="l">48: </span>
-<span class="l">49: </span>
-<span class="l">50: </span>
-<span class="l">51: </span>
-<span class="l">52: </span>
-<span class="l">53: </span>
-<span class="l">54: </span>
-<span class="l">55: </span>
-<span class="l">56: </span>
-<span class="l">57: </span>
-<span class="l">58: </span>
-<span class="l">59: </span>
-<span class="l">60: </span>
-<span class="l">61: </span>
-<span class="l">62: </span>
-<span class="l">63: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 89)" onmouseover="showTip(event, 'fs52', 89)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 90)" onmouseover="showTip(event, 'fs53', 90)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Expando Set and Get``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
                         <span class="k">let</span> <span onmouseout="hideTip(event, 'fs54', 91)" onmouseover="showTip(event, 'fs54', 91)" class="id">ex1</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs55', 92)" onmouseover="showTip(event, 'fs55', 92)" class="rt">ExpandoObject</span><span class="pn">(</span><span class="pn">)</span>
                         <span onmouseout="hideTip(event, 'fs54', 93)" onmouseover="showTip(event, 'fs54', 93)" class="o">ex1</span><span class="o">?</span><span onmouseout="hideTip(event, 'fs52', 94)" onmouseover="showTip(event, 'fs52', 94)" class="id">Test</span><span class="k">&lt;-</span><span class="s">&quot;Hi&quot;</span><span class="pn">;</span>
                         <span onmouseout="hideTip(event, 'fs54', 95)" onmouseover="showTip(event, 'fs54', 95)" class="id">ex1</span><span class="o">?</span><span onmouseout="hideTip(event, 'fs52', 96)" onmouseover="showTip(event, 'fs52', 96)" class="id">Test</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;Hi&quot;</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 97)" onmouseover="showTip(event, 'fs52', 97)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 98)" onmouseover="showTip(event, 'fs53', 98)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Direct Invoke``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="o">!?</span><span onmouseout="hideTip(event, 'fs9', 99)" onmouseover="showTip(event, 'fs9', 99)" class="id">Dynamic</span><span class="pn">.</span><span class="id">Curry</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs56', 100)" onmouseover="showTip(event, 'fs56', 100)" class="id">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs57', 101)" onmouseover="showTip(event, 'fs57', 101)" class="id">staticContext</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs58', 102)" onmouseover="showTip(event, 'fs58', 102)" class="id">typeof</span><span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs59', 103)" onmouseover="showTip(event, 'fs59', 103)" class="id">string</span><span class="pn">&gt;</span><span class="pn">)</span><span class="pn">)</span><span class="o">?</span><span onmouseout="hideTip(event, 'fs60', 104)" onmouseover="showTip(event, 'fs60', 104)" class="id">Format</span><span class="pn">(</span><span class="s">&quot;Test {0} {1}&quot;</span><span class="pn">)</span> <span class="pn">(</span><span class="n">1</span><span class="pn">,</span><span class="n">2</span><span class="pn">)</span> <span class="o">|&gt;</span>
-                            <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;Test 1 2&quot;</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 105)" onmouseover="showTip(event, 'fs52', 105)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 106)" onmouseover="showTip(event, 'fs53', 106)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Void Method``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs61', 107)" onmouseover="showTip(event, 'fs61', 107)" class="id">array</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs62', 108)" onmouseover="showTip(event, 'fs62', 108)" class="rt">List</span><span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs59', 109)" onmouseover="showTip(event, 'fs59', 109)" class="rt">string</span><span class="pn">&gt;</span><span class="pn">(</span><span class="pn">)</span>
-                        <span onmouseout="hideTip(event, 'fs61', 110)" onmouseover="showTip(event, 'fs61', 110)" class="id">array</span><span class="o">?</span><span class="id">Add</span><span class="pn">(</span><span class="s">&quot;1&quot;</span><span class="pn">)</span><span class="pn">;</span>
-                        <span onmouseout="hideTip(event, 'fs61', 111)" onmouseover="showTip(event, 'fs61', 111)" class="id">array</span><span class="pn">.</span><span class="pn">[</span><span class="n">0</span><span class="pn">]</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;1&quot;</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 112)" onmouseover="showTip(event, 'fs52', 112)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 113)" onmouseover="showTip(event, 'fs53', 113)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test SetAll``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs63', 114)" onmouseover="showTip(event, 'fs63', 114)" class="id">e1</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs55', 115)" onmouseover="showTip(event, 'fs55', 115)" class="rt">ExpandoObject</span><span class="pn">(</span><span class="pn">)</span>
-                        <span class="o">!?</span><span onmouseout="hideTip(event, 'fs9', 116)" onmouseover="showTip(event, 'fs9', 116)" class="id">Dynamic</span><span class="pn">.</span><span class="id">InvokeSetAll</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs63', 117)" onmouseover="showTip(event, 'fs63', 117)" class="id">e1</span><span class="pn">,</span> <span class="pn">[</span><span class="pn">(</span><span class="s">&quot;One&quot;</span><span class="pn">,</span><span class="n">1</span><span class="pn">)</span><span class="pn">;</span><span class="pn">(</span><span class="s">&quot;Two&quot;</span><span class="pn">,</span><span class="n">2</span><span class="pn">)</span><span class="pn">]</span><span class="pn">)</span>
-                        <span onmouseout="hideTip(event, 'fs63', 118)" onmouseover="showTip(event, 'fs63', 118)" class="id">e1</span><span class="o">?</span><span class="id">One</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">1</span>
-                        <span onmouseout="hideTip(event, 'fs63', 119)" onmouseover="showTip(event, 'fs63', 119)" class="id">e1</span><span class="o">?</span><span class="id">Two</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">2</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 120)" onmouseover="showTip(event, 'fs52', 120)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 121)" onmouseover="showTip(event, 'fs53', 121)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Lambda methods``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs64', 122)" onmouseover="showTip(event, 'fs64', 122)" class="id">ex1</span> <span class="o">=</span> <span class="id">DynamicObjects</span><span class="pn">.</span><span class="id">Dictionary</span><span class="pn">(</span><span class="pn">)</span>
-                        <span onmouseout="hideTip(event, 'fs64', 123)" onmouseover="showTip(event, 'fs64', 123)" class="o">ex1</span><span class="o">?</span><span class="id">TestLam</span><span class="k">&lt;-</span> <span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs65', 124)" onmouseover="showTip(event, 'fs65', 124)" class="id">x</span> <span class="k">-&gt;</span> <span class="n">42</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs65', 125)" onmouseover="showTip(event, 'fs65', 125)" class="id">x</span><span class="pn">)</span>
-                        <span onmouseout="hideTip(event, 'fs64', 126)" onmouseover="showTip(event, 'fs64', 126)" class="o">ex1</span><span class="o">?</span><span class="id">TestLam2</span><span class="k">&lt;-</span> <span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs65', 127)" onmouseover="showTip(event, 'fs65', 127)" class="id">x</span> <span onmouseout="hideTip(event, 'fs66', 128)" onmouseover="showTip(event, 'fs66', 128)" class="id">y</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs66', 129)" onmouseover="showTip(event, 'fs66', 129)" class="id">y</span><span class="o">+</span> <span class="n">42</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs65', 130)" onmouseover="showTip(event, 'fs65', 130)" class="id">x</span><span class="pn">)</span>
-                        <span onmouseout="hideTip(event, 'fs64', 131)" onmouseover="showTip(event, 'fs64', 131)" class="o">ex1</span><span class="o">?</span><span class="id">TestDel</span><span class="k">&lt;-</span> <span onmouseout="hideTip(event, 'fs32', 132)" onmouseover="showTip(event, 'fs32', 132)" class="rt">TestFuncs</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs67', 133)" onmouseover="showTip(event, 'fs67', 133)" class="id">Plus3</span>
-                        <span onmouseout="hideTip(event, 'fs64', 134)" onmouseover="showTip(event, 'fs64', 134)" class="id">ex1</span><span class="o">?</span><span class="id">TestLam</span><span class="pn">(</span><span class="n">1</span><span class="pn">)</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">43</span>
-                        <span onmouseout="hideTip(event, 'fs64', 135)" onmouseover="showTip(event, 'fs64', 135)" class="id">ex1</span><span class="o">?</span><span class="id">TestLam2</span><span class="pn">(</span><span class="n">1</span><span class="pn">,</span> <span class="n">2</span><span class="pn">)</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">45</span>
-                        <span onmouseout="hideTip(event, 'fs64', 136)" onmouseover="showTip(event, 'fs64', 136)" class="id">ex1</span><span class="o">?</span><span class="id">TestDel</span><span class="pn">(</span><span class="n">2</span><span class="pn">)</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">5</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 137)" onmouseover="showTip(event, 'fs52', 137)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 138)" onmouseover="showTip(event, 'fs53', 138)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test FSharp Lambda 3 arg ``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs68', 139)" onmouseover="showTip(event, 'fs68', 139)" class="id">dyn</span> <span class="o">=</span> <span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs65', 140)" onmouseover="showTip(event, 'fs65', 140)" class="id">x</span> <span onmouseout="hideTip(event, 'fs66', 141)" onmouseover="showTip(event, 'fs66', 141)" class="id">y</span> <span onmouseout="hideTip(event, 'fs69', 142)" onmouseover="showTip(event, 'fs69', 142)" class="id">z</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs65', 143)" onmouseover="showTip(event, 'fs65', 143)" class="id">x</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs66', 144)" onmouseover="showTip(event, 'fs66', 144)" class="id">y</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs69', 145)" onmouseover="showTip(event, 'fs69', 145)" class="id">z</span><span class="pn">)</span> <span class="o">:&gt;</span> <span onmouseout="hideTip(event, 'fs45', 146)" onmouseover="showTip(event, 'fs45', 146)" class="rt">obj</span>
-                        <span class="o">!?</span><span onmouseout="hideTip(event, 'fs68', 147)" onmouseover="showTip(event, 'fs68', 147)" class="id">dyn</span> <span class="pn">(</span><span class="n">3</span><span class="pn">,</span><span class="n">2</span><span class="pn">,</span><span class="n">1</span><span class="pn">)</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">4</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 148)" onmouseover="showTip(event, 'fs52', 148)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 149)" onmouseover="showTip(event, 'fs53', 149)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test FSharp Lambda 4 arg``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs68', 150)" onmouseover="showTip(event, 'fs68', 150)" class="id">dyn</span> <span class="o">=</span> <span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs65', 151)" onmouseover="showTip(event, 'fs65', 151)" class="id">x</span> <span onmouseout="hideTip(event, 'fs66', 152)" onmouseover="showTip(event, 'fs66', 152)" class="id">y</span> <span onmouseout="hideTip(event, 'fs69', 153)" onmouseover="showTip(event, 'fs69', 153)" class="id">z</span> <span onmouseout="hideTip(event, 'fs70', 154)" onmouseover="showTip(event, 'fs70', 154)" class="id">bbq</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs65', 155)" onmouseover="showTip(event, 'fs65', 155)" class="id">x</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs66', 156)" onmouseover="showTip(event, 'fs66', 156)" class="id">y</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs69', 157)" onmouseover="showTip(event, 'fs69', 157)" class="id">z</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs70', 158)" onmouseover="showTip(event, 'fs70', 158)" class="id">bbq</span><span class="pn">)</span> <span class="o">:&gt;</span> <span onmouseout="hideTip(event, 'fs45', 159)" onmouseover="showTip(event, 'fs45', 159)" class="rt">obj</span>  <span class="k">in</span>
-                        <span class="o">!?</span><span onmouseout="hideTip(event, 'fs68', 160)" onmouseover="showTip(event, 'fs68', 160)" class="id">dyn</span> <span class="pn">(</span><span class="n">3</span><span class="pn">,</span> <span class="n">2</span><span class="pn">,</span> <span class="n">1</span><span class="pn">,</span> <span class="n">5</span><span class="pn">)</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="o">-</span><span class="n">1</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 161)" onmouseover="showTip(event, 'fs52', 161)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 162)" onmouseover="showTip(event, 'fs53', 162)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test FSharp Lambda 5 arg``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs71', 163)" onmouseover="showTip(event, 'fs71', 163)" class="id">unknownfunc</span> <span class="o">=</span> <span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs65', 164)" onmouseover="showTip(event, 'fs65', 164)" class="id">x</span> <span onmouseout="hideTip(event, 'fs66', 165)" onmouseover="showTip(event, 'fs66', 165)" class="id">y</span> <span onmouseout="hideTip(event, 'fs69', 166)" onmouseover="showTip(event, 'fs69', 166)" class="id">z</span> <span onmouseout="hideTip(event, 'fs70', 167)" onmouseover="showTip(event, 'fs70', 167)" class="id">bbq</span> <span onmouseout="hideTip(event, 'fs72', 168)" onmouseover="showTip(event, 'fs72', 168)" class="id">etc</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs65', 169)" onmouseover="showTip(event, 'fs65', 169)" class="id">x</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs66', 170)" onmouseover="showTip(event, 'fs66', 170)" class="id">y</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs69', 171)" onmouseover="showTip(event, 'fs69', 171)" class="id">z</span> <span class="o">-</span> <span onmouseout="hideTip(event, 'fs70', 172)" onmouseover="showTip(event, 'fs70', 172)" class="id">bbq</span> <span class="o">+</span> <span onmouseout="hideTip(event, 'fs72', 173)" onmouseover="showTip(event, 'fs72', 173)" class="id">etc</span><span class="pn">)</span> <span class="o">:&gt;</span> <span onmouseout="hideTip(event, 'fs45', 174)" onmouseover="showTip(event, 'fs45', 174)" class="rt">obj</span> <span class="k">in</span>
-                        <span class="o">!?</span><span onmouseout="hideTip(event, 'fs71', 175)" onmouseover="showTip(event, 'fs71', 175)" class="id">unknownfunc</span> <span class="pn">(</span><span class="n">3</span><span class="pn">,</span> <span class="n">2</span><span class="pn">,</span> <span class="n">1</span><span class="pn">,</span> <span class="n">5</span><span class="pn">,</span> <span class="n">9</span><span class="pn">)</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">8</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 176)" onmouseover="showTip(event, 'fs52', 176)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 177)" onmouseover="showTip(event, 'fs53', 177)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Events``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs73', 178)" onmouseover="showTip(event, 'fs73', 178)" class="id">pocoObj</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs20', 179)" onmouseover="showTip(event, 'fs20', 179)" class="rt">TestEvent</span><span class="pn">(</span><span class="pn">)</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs74', 180)" onmouseover="showTip(event, 'fs74', 180)" class="mv">refBool</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs75', 181)" onmouseover="showTip(event, 'fs75', 181)" class="fn">ref</span> <span class="k">false</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs76', 182)" onmouseover="showTip(event, 'fs76', 182)" class="id">myevent</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 183)" onmouseover="showTip(event, 'fs23', 183)" class="id">EventHandler</span><span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs24', 184)" onmouseover="showTip(event, 'fs24', 184)" class="rt">EventArgs</span><span class="pn">&gt;</span><span class="pn">(</span><span class="k">fun</span> <span onmouseout="hideTip(event, 'fs77', 185)" onmouseover="showTip(event, 'fs77', 185)" class="id">obj</span> <span onmouseout="hideTip(event, 'fs78', 186)" onmouseover="showTip(event, 'fs78', 186)" class="id">arg</span> <span class="k">-&gt;</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs74', 187)" onmouseover="showTip(event, 'fs74', 187)" class="mv">refBool</span> <span class="o">:=</span> <span class="k">true</span><span class="pn">)</span><span class="pn">)</span>
-
-                        <span class="c">//Add event dynamically</span>
-                        <span onmouseout="hideTip(event, 'fs56', 188)" onmouseover="showTip(event, 'fs56', 188)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs79', 189)" onmouseover="showTip(event, 'fs79', 189)" class="id">addAssignMember</span> <span onmouseout="hideTip(event, 'fs73', 190)" onmouseover="showTip(event, 'fs73', 190)" class="id">pocoObj</span> <span class="s">&quot;Event&quot;</span> <span onmouseout="hideTip(event, 'fs76', 191)" onmouseover="showTip(event, 'fs76', 191)" class="id">myevent</span>
-                        <span onmouseout="hideTip(event, 'fs73', 192)" onmouseover="showTip(event, 'fs73', 192)" class="fn">pocoObj</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs80', 193)" onmouseover="showTip(event, 'fs80', 193)" class="id">OnEvent</span><span class="pn">(</span><span class="k">null</span><span class="pn">,</span><span class="k">null</span><span class="pn">)</span>
-                        <span class="o">!</span><span onmouseout="hideTip(event, 'fs74', 194)" onmouseover="showTip(event, 'fs74', 194)" class="mv">refBool</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="k">true</span>
-
-                        <span class="c">//Remove event dynamically</span>
-                        <span onmouseout="hideTip(event, 'fs74', 195)" onmouseover="showTip(event, 'fs74', 195)" class="mv">refBool</span> <span class="o">:=</span><span class="k">false</span>
-                        <span onmouseout="hideTip(event, 'fs56', 196)" onmouseover="showTip(event, 'fs56', 196)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs81', 197)" onmouseover="showTip(event, 'fs81', 197)" class="id">subtractAssignMember</span> <span onmouseout="hideTip(event, 'fs73', 198)" onmouseover="showTip(event, 'fs73', 198)" class="id">pocoObj</span> <span class="s">&quot;Event&quot;</span> <span onmouseout="hideTip(event, 'fs76', 199)" onmouseover="showTip(event, 'fs76', 199)" class="id">myevent</span>
-                        <span class="o">!</span><span onmouseout="hideTip(event, 'fs74', 200)" onmouseover="showTip(event, 'fs74', 200)" class="mv">refBool</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="k">false</span>
 </code></pre></td>
 </tr>
 </table>
@@ -246,83 +128,13 @@
 </tr>
 </table>
 <p>Use the dlr to call the implicit operator with inferred type from usage</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
-<span class="l"> 2: </span>
-<span class="l"> 3: </span>
-<span class="l"> 4: </span>
-<span class="l"> 5: </span>
-<span class="l"> 6: </span>
-<span class="l"> 7: </span>
-<span class="l"> 8: </span>
-<span class="l"> 9: </span>
-<span class="l">10: </span>
-<span class="l">11: </span>
-<span class="l">12: </span>
-<span class="l">13: </span>
-<span class="l">14: </span>
-<span class="l">15: </span>
-<span class="l">16: </span>
-<span class="l">17: </span>
-<span class="l">18: </span>
-<span class="l">19: </span>
-<span class="l">20: </span>
-<span class="l">21: </span>
-<span class="l">22: </span>
-<span class="l">23: </span>
-<span class="l">24: </span>
-<span class="l">25: </span>
-<span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-<span class="l">29: </span>
-<span class="l">30: </span>
-<span class="l">31: </span>
-<span class="l">32: </span>
-<span class="l">33: </span>
-<span class="l">34: </span>
-<span class="l">35: </span>
-<span class="l">36: </span>
-<span class="l">37: </span>
-<span class="l">38: </span>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp">        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 243)" onmouseover="showTip(event, 'fs52', 243)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 244)" onmouseover="showTip(event, 'fs53', 244)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Implicit Conversion``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
                         <span class="k">let</span> <span onmouseout="hideTip(event, 'fs88', 245)" onmouseover="showTip(event, 'fs88', 245)" class="id">ele</span> <span class="o">=</span> <span class="n">50</span>
                         <span onmouseout="hideTip(event, 'fs88', 246)" onmouseover="showTip(event, 'fs88', 246)" class="id">ele</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs56', 247)" onmouseover="showTip(event, 'fs56', 247)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs92', 248)" onmouseover="showTip(event, 'fs92', 248)" class="id">implicitConvert</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs89', 249)" onmouseover="showTip(event, 'fs89', 249)" class="id">decimal</span> <span class="n">50</span><span class="pn">)</span>
-
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 250)" onmouseover="showTip(event, 'fs52', 250)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 251)" onmouseover="showTip(event, 'fs53', 251)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Implicit Conversion Fail``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs83', 252)" onmouseover="showTip(event, 'fs83', 252)" class="id">ele</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs84', 253)" onmouseover="showTip(event, 'fs84', 253)" class="rt">XElement</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs85', 254)" onmouseover="showTip(event, 'fs85', 254)" class="rt">XName</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs86', 255)" onmouseover="showTip(event, 'fs86', 255)" class="id">Get</span><span class="pn">(</span><span class="s">&quot;Test&quot;</span><span class="pn">)</span><span class="pn">,</span><span class="s">&quot;50&quot;</span><span class="pn">)</span>
-                        <span class="pn">(</span><span class="k">fun</span> <span class="pn">(</span><span class="pn">)</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs56', 256)" onmouseover="showTip(event, 'fs56', 256)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs92', 257)" onmouseover="showTip(event, 'fs92', 257)" class="id">implicitConvert</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs83', 258)" onmouseover="showTip(event, 'fs83', 258)" class="id">ele</span><span class="pn">)</span> <span class="o">=</span> <span class="n">50</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs93', 259)" onmouseover="showTip(event, 'fs93', 259)" class="fn">ignore</span><span class="pn">)</span> 
-                            <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">throw</span> <span onmouseout="hideTip(event, 'fs58', 260)" onmouseover="showTip(event, 'fs58', 260)" class="id">typeof</span><span class="pn">&lt;</span><span onmouseout="hideTip(event, 'fs94', 261)" onmouseover="showTip(event, 'fs94', 261)" class="id">RuntimeBinderException</span><span class="pn">&gt;</span>
-
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 262)" onmouseover="showTip(event, 'fs52', 262)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 263)" onmouseover="showTip(event, 'fs53', 263)" class="id">basic</span><span class="pn">.</span><span class="fn">``Test Basic indexer ``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs95', 264)" onmouseover="showTip(event, 'fs95', 264)" class="id">archive</span><span class="pn">:</span><span onmouseout="hideTip(event, 'fs45', 265)" onmouseover="showTip(event, 'fs45', 265)" class="rt">obj</span> <span class="o">=</span> <span class="k">upcast</span> <span onmouseout="hideTip(event, 'fs42', 266)" onmouseover="showTip(event, 'fs42', 266)" class="rt">DynamicWeirdFlakyIndexer</span><span class="pn">(</span><span class="pn">)</span>
-
-                        <span onmouseout="hideTip(event, 'fs56', 267)" onmouseover="showTip(event, 'fs56', 267)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs96', 268)" onmouseover="showTip(event, 'fs96', 268)" class="id">setIndex</span> <span onmouseout="hideTip(event, 'fs95', 269)" onmouseover="showTip(event, 'fs95', 269)" class="id">archive</span> <span class="pn">[</span><span class="n">1</span><span class="pn">;</span> <span class="n">5</span><span class="pn">]</span> <span class="s">&quot;A&quot;</span>
-                        <span onmouseout="hideTip(event, 'fs56', 270)" onmouseover="showTip(event, 'fs56', 270)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs96', 271)" onmouseover="showTip(event, 'fs96', 271)" class="id">setIndex</span> <span onmouseout="hideTip(event, 'fs95', 272)" onmouseover="showTip(event, 'fs95', 272)" class="id">archive</span> <span class="pn">[</span><span class="s">&quot;Hello&quot;</span><span class="pn">;</span> <span class="s">&quot;World&quot;</span> <span class="pn">]</span> <span class="s">&quot;B&quot;</span>
-                        <span onmouseout="hideTip(event, 'fs56', 273)" onmouseover="showTip(event, 'fs56', 273)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs96', 274)" onmouseover="showTip(event, 'fs96', 274)" class="id">setIndex</span> <span onmouseout="hideTip(event, 'fs95', 275)" onmouseover="showTip(event, 'fs95', 275)" class="id">archive</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs97', 276)" onmouseover="showTip(event, 'fs97', 276)" class="fn">box</span> <span class="n">1</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs97', 277)" onmouseover="showTip(event, 'fs97', 277)" class="fn">box</span> <span class="s">&quot;World&quot;</span> <span class="pn">]</span> <span class="s">&quot;C&quot;</span>
-
-                        <span onmouseout="hideTip(event, 'fs56', 278)" onmouseover="showTip(event, 'fs56', 278)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs98', 279)" onmouseover="showTip(event, 'fs98', 279)" class="id">getIndex</span> <span onmouseout="hideTip(event, 'fs95', 280)" onmouseover="showTip(event, 'fs95', 280)" class="id">archive</span> <span class="pn">[</span><span class="n">1</span><span class="pn">;</span> <span class="n">5</span><span class="pn">]</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;A&quot;</span>
-                        <span onmouseout="hideTip(event, 'fs56', 281)" onmouseover="showTip(event, 'fs56', 281)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs98', 282)" onmouseover="showTip(event, 'fs98', 282)" class="id">getIndex</span> <span onmouseout="hideTip(event, 'fs95', 283)" onmouseover="showTip(event, 'fs95', 283)" class="id">archive</span> <span class="pn">[</span><span class="s">&quot;Hello&quot;</span><span class="pn">;</span> <span class="s">&quot;World&quot;</span> <span class="pn">]</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;B&quot;</span>
-                        <span onmouseout="hideTip(event, 'fs56', 284)" onmouseover="showTip(event, 'fs56', 284)" class="m">Dyn</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs98', 285)" onmouseover="showTip(event, 'fs98', 285)" class="id">getIndex</span> <span onmouseout="hideTip(event, 'fs95', 286)" onmouseover="showTip(event, 'fs95', 286)" class="id">archive</span> <span class="pn">[</span><span onmouseout="hideTip(event, 'fs97', 287)" onmouseover="showTip(event, 'fs97', 287)" class="fn">box</span> <span class="n">1</span><span class="pn">;</span> <span onmouseout="hideTip(event, 'fs97', 288)" onmouseover="showTip(event, 'fs97', 288)" class="fn">box</span> <span class="s">&quot;World&quot;</span><span class="pn">]</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;C&quot;</span>
-                        
-        <span class="c">(***hide***)</span>
-        <span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs52', 289)" onmouseover="showTip(event, 'fs52', 289)" class="rt">Test</span><span class="pn">&gt;]</span> <span class="k">member</span> <span onmouseout="hideTip(event, 'fs53', 290)" onmouseover="showTip(event, 'fs53', 290)" class="id">basic</span><span class="pn">.</span><span class="fn">``Basic Operator Mock Tests``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs99', 291)" onmouseover="showTip(event, 'fs99', 291)" class="id">left</span><span class="pn">:</span><span onmouseout="hideTip(event, 'fs45', 292)" onmouseover="showTip(event, 'fs45', 292)" class="rt">obj</span> <span class="o">=</span> <span class="k">upcast</span> <span onmouseout="hideTip(event, 'fs35', 293)" onmouseover="showTip(event, 'fs35', 293)" class="rt">DynamicOperatorMock</span><span class="pn">(</span><span class="pn">)</span>
-                        <span class="k">let</span> <span onmouseout="hideTip(event, 'fs100', 294)" onmouseover="showTip(event, 'fs100', 294)" class="id">dummy</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs29', 295)" onmouseover="showTip(event, 'fs29', 295)" class="rt">Object</span><span class="pn">(</span><span class="pn">)</span>
-
-                        <span onmouseout="hideTip(event, 'fs99', 296)" onmouseover="showTip(event, 'fs99', 296)" class="id">left</span> <span class="o">?%?</span> <span onmouseout="hideTip(event, 'fs100', 297)" onmouseover="showTip(event, 'fs100', 297)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 298)" onmouseover="showTip(event, 'fs101', 298)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs102', 299)" onmouseover="showTip(event, 'fs102', 299)" class="id">Modulo</span>
-                        <span onmouseout="hideTip(event, 'fs99', 300)" onmouseover="showTip(event, 'fs99', 300)" class="id">left</span> <span class="o">?*?</span> <span onmouseout="hideTip(event, 'fs100', 301)" onmouseover="showTip(event, 'fs100', 301)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 302)" onmouseover="showTip(event, 'fs101', 302)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs103', 303)" onmouseover="showTip(event, 'fs103', 303)" class="id">Multiply</span>
-                        <span onmouseout="hideTip(event, 'fs99', 304)" onmouseover="showTip(event, 'fs99', 304)" class="id">left</span> <span class="o">?+?</span> <span onmouseout="hideTip(event, 'fs100', 305)" onmouseover="showTip(event, 'fs100', 305)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 306)" onmouseover="showTip(event, 'fs101', 306)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs104', 307)" onmouseover="showTip(event, 'fs104', 307)" class="id">Add</span>
-                        <span onmouseout="hideTip(event, 'fs99', 308)" onmouseover="showTip(event, 'fs99', 308)" class="id">left</span> <span class="o">?-?</span> <span onmouseout="hideTip(event, 'fs100', 309)" onmouseover="showTip(event, 'fs100', 309)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 310)" onmouseover="showTip(event, 'fs101', 310)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs105', 311)" onmouseover="showTip(event, 'fs105', 311)" class="id">Subtract</span>
-                        <span onmouseout="hideTip(event, 'fs99', 312)" onmouseover="showTip(event, 'fs99', 312)" class="id">left</span> <span class="o">?/?</span> <span onmouseout="hideTip(event, 'fs100', 313)" onmouseover="showTip(event, 'fs100', 313)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 314)" onmouseover="showTip(event, 'fs101', 314)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs106', 315)" onmouseover="showTip(event, 'fs106', 315)" class="id">Divide</span>
-                        <span onmouseout="hideTip(event, 'fs99', 316)" onmouseover="showTip(event, 'fs99', 316)" class="id">left</span> <span class="o">?&amp;&amp;&amp;?</span> <span onmouseout="hideTip(event, 'fs100', 317)" onmouseover="showTip(event, 'fs100', 317)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 318)" onmouseover="showTip(event, 'fs101', 318)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs107', 319)" onmouseover="showTip(event, 'fs107', 319)" class="id">And</span>
-                        <span onmouseout="hideTip(event, 'fs99', 320)" onmouseover="showTip(event, 'fs99', 320)" class="id">left</span> <span class="o">?|||?</span> <span onmouseout="hideTip(event, 'fs100', 321)" onmouseover="showTip(event, 'fs100', 321)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 322)" onmouseover="showTip(event, 'fs101', 322)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs108', 323)" onmouseover="showTip(event, 'fs108', 323)" class="id">Or</span>
-                        <span onmouseout="hideTip(event, 'fs99', 324)" onmouseover="showTip(event, 'fs99', 324)" class="id">left</span> <span class="o">?^^^?</span> <span onmouseout="hideTip(event, 'fs100', 325)" onmouseover="showTip(event, 'fs100', 325)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 326)" onmouseover="showTip(event, 'fs101', 326)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs109', 327)" onmouseover="showTip(event, 'fs109', 327)" class="id">ExclusiveOr</span>
-                        <span onmouseout="hideTip(event, 'fs99', 328)" onmouseover="showTip(event, 'fs99', 328)" class="id">left</span> <span class="o">?&lt;&lt;&lt;?</span> <span onmouseout="hideTip(event, 'fs100', 329)" onmouseover="showTip(event, 'fs100', 329)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 330)" onmouseover="showTip(event, 'fs101', 330)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs110', 331)" onmouseover="showTip(event, 'fs110', 331)" class="id">LeftShift</span>
-                        <span onmouseout="hideTip(event, 'fs99', 332)" onmouseover="showTip(event, 'fs99', 332)" class="id">left</span> <span class="o">?&gt;&gt;&gt;?</span> <span onmouseout="hideTip(event, 'fs100', 333)" onmouseover="showTip(event, 'fs100', 333)" class="id">dummy</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span onmouseout="hideTip(event, 'fs101', 334)" onmouseover="showTip(event, 'fs101', 334)" class="id">ExpressionType</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs111', 335)" onmouseover="showTip(event, 'fs111', 335)" class="id">RightShift</span>
 </code></pre></td>
 </tr>
 </table>

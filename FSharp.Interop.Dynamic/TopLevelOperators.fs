@@ -15,6 +15,7 @@
 
 namespace FSharp.Interop.Dynamic
 
+/// Main operators for dynamic invocation
 [<AutoOpen>]
 module TopLevelOperators=
     open System

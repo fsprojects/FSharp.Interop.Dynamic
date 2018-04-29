@@ -22,36 +22,50 @@ module Dyn=
     open Microsoft.CSharp.RuntimeBinder
     open Microsoft.FSharp.Reflection
 
+    
+
+    ///allow access to static context for dynamic invocation of static methods
     let staticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
 
 
+  
+    ///implict convert via reflected type
     let implicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
         Dynamic.InvokeConvert(target, convertType, explicit = false) :?> 'TResult
 
+    ///implict convert via inferred type
     let implicitConvert(target:obj) : 'TResult  = 
       implicitConvertTo typeof<'TResult> target
 
+    ///explicit convert via reflected type
     let explicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
         Dynamic.InvokeConvert(target, convertType, explicit = true) :?> 'TResult
 
+    ///explicit convert via inferred type
     let explicitConvert (target:obj) : 'TResult  = 
         explicitConvertTo typeof<'TResult> target
 
+    //allow marking args with names for dlr invoke
     let namedArg (name:string) (argValue:obj) =
         InvokeArg(name, argValue)
 
+    ///Dynamically call `+=` on member
     let addAssignMember (target:obj) (memberName:string) (value:obj)  =
         Dynamic.InvokeAddAssignMember(target, memberName, value)
 
+     ///Dynamically call `-=` on member
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
 
+    //dynamically call get index
     let getIndex (target:obj) (indexers: 'T seq) : 'TResult =
         Dynamic.InvokeGetIndex(target, (indexers |> Seq.map box  |> Seq.toArray)) :?> 'TResult
-    
+    // dynamically call set index
     let setIndex (target:obj) (indexers: 'T seq) (value:obj)  =
         Dynamic.InvokeSetValueOnIndexes(target, value, (indexers |> Seq.map box |> Seq.toArray)) |> ignore
 
+    // main workhouse method; Some(methodName) or just None to invoke without name;
+    // infered casting with automatic implicit convert.
     let invoke (target:obj) (memberName:string option) : 'TResult =
         let resultType = typeof<'TResult>
         let (|NoConversion| Conversion|) t = if t = typeof<obj> then NoConversion else Conversion
