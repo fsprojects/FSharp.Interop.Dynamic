@@ -77,12 +77,18 @@ let testDir = Path.Combine(root, "Tests")
 let docContent = Path.Combine(root, "DocsSrc")
 let outputDir = Path.Combine(root, "docs")
 
-let dll = Path.Combine(srcDir,
+let getDllNamed name =
+    Path.Combine(srcDir,
                         projName,
                         "bin",
                         configuration,
                         targetFramework, 
-                        sprintf "%s.dll" projName)
+                        sprintf "%s.dll" name)
+
+let dll = getDllNamed projName
+
+
+                        
 
 ///end variables
 
@@ -132,7 +138,7 @@ let processMdFile input output =
           replacements = projInfo,
           compilerOptions = options,
           layoutRoots = templateDirs,
-          includeSource = true )
+          includeSource = true)
 let processFsFile input output =
     RazorLiterate.ProcessScriptFile(
           input,
