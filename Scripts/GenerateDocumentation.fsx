@@ -68,7 +68,7 @@ type FsProj = XmlProvider<"../FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fspr
 let fsProj = FsProj.GetSample()
 
 let targetFramework = fsProj.PropertyGroup.TargetFrameworks.Split(';') 
-                        |> Seq.find (fun x-> x.Contains("standard"))
+                        |> Seq.find (fun x-> x.Contains("net4"))
 let projName = "FSharp.Interop.Dynamic"
 let configuration = "Release"
 let root = Path.Combine(__SOURCE_DIRECTORY__, "..")
