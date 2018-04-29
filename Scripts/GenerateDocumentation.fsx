@@ -75,7 +75,7 @@ let root = Path.Combine(__SOURCE_DIRECTORY__, "..")
 let srcDir =  Path.Combine(root, "src")
 let testDir = Path.Combine(root, "Tests")
 let docContent = Path.Combine(root, "DocsSrc")
-let outputDir = Path.Combine(root, "Docs")
+let outputDir = Path.Combine(root, "docs")
 ///end variables
 
 printfn "Copy Doc Content."
