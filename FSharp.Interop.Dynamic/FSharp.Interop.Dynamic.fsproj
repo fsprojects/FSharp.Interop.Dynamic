@@ -11,6 +11,7 @@
     <IncludeSymbols Condition="'$(OS)' == 'Windows_NT'">True</IncludeSymbols>
     <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <DisableImplicitFSharpCoreReference>True</DisableImplicitFSharpCoreReference>
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>

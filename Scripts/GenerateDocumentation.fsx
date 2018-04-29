@@ -67,16 +67,26 @@ open FSharp.Data
 type FsProj = XmlProvider<"../FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj">
 let fsProj = FsProj.GetSample()
 
-let targetFramework = fsProj.PropertyGroup.TargetFrameworks.Split(' ') 
+let targetFramework = fsProj.PropertyGroup.TargetFrameworks.Split(';') 
                         |> Seq.find (fun x-> x.Contains("standard"))
 let projName = "FSharp.Interop.Dynamic"
-let configuration = "Debug"
+let configuration = "Release"
 let root = Path.Combine(__SOURCE_DIRECTORY__, "..")
-let srcDir =  Path.Combine(root, "src")
+let srcDir =  Path.Combine(root)
 let testDir = Path.Combine(root, "Tests")
 let docContent = Path.Combine(root, "DocsSrc")
 let outputDir = Path.Combine(root, "docs")
+
+let dll = Path.Combine(srcDir,
+                        projName,
+                        "bin",
+                        configuration,
+                        targetFramework, 
+                        sprintf "%s.dll" projName)
+
 ///end variables
+
+
 
 printfn "Copy Doc Content."
 
@@ -110,12 +120,7 @@ let projInfo =
       "root", sprintf "/%s" projName
       ]
 
-let dll = Path.Combine(srcDir,
-                        projName,
-                        "bin",
-                        configuration,
-                        targetFramework, 
-                        sprintf "%s.dll" projName)
+
 let options = sprintf "--reference:\"%s\"" dll
 
 let processMdFile input output =
@@ -148,7 +153,7 @@ processFsFile (Path.Combine(testDir,"Library1.fs")) "examples.html"
 
 //end custom files
 let refDir = Path.Combine(outputDir, "reference")
-printfn "Generate API Reference."
+printfn "Generate API Reference. '%s'" dll
 createDir(refDir)
 let sourceRepo = sprintf "%s/tree/master/" fsProj.PropertyGroup.PackageProjectUrl
 RazorMetadataFormat.Generate( dll, 
