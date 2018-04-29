@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="@Description">
+    <meta name="author" content="@Properties["project-author"]">
+    <script src="https://unpkg.com/jquery@1.12.4/dist/jquery.js" integrity="sha384-KcyRSlC9FQog/lJsT+QA8AUIFBgnwKM7bxm7/YaX+NTr4D00npYawrX0h+oXI3a2" crossorigin="anonymous"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js" integrity="sha384-qJ8AGIuPqPo4I2zhyRYO6vQaJrGBbTpIiXGihDsGpfMCHJD0IKH0gkPQToGD5ek3" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/mathjax@2.7.4/unpacked/MathJax.js" integrity="sha384-Ydr+qBrpdvdtDb/YSkSHZEOQixgFsvrt1Zc0IUuJswugVphb8NiCUm82/3Jq5BYS" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/mathjax@2.7.4/unpacked/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha384-oAlS1dBwiSaCl97QMkeSMZ3MNuQcIWCaJnLmzWPLj25LdAOsRmj3kISYeexD0GXv" crossorigin="anonymous"></script>   
+    <!-- https://unpkg.com/bootstrap-2.3.2@1.0.0/css/bootstrap.min.css"--> 
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" integrity="sha384-SxD9NhT6x7xbJZq3DchEPXL/Go+GKOxlfipD1Y+5v4WFOnsU6MNTmzRe9oPoXwCA" crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet" href="@Root/content/style.css" />
+    <script type="text/javascript" src="@Root/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://fsprojects.github.io/FSharp.Formatting/"><img height="16" width="16" src="https://matthid.github.io/Yaaf.AdvancedBuilding/content/img/FSharp.Formatting.png" /> F# Formatting</a></li>
+        </ul>
+        <h3 class="muted"><a href="@Root/index.html">@Properties["project-name"]</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          @RenderBody()
+        </div>
+        <div class="span3">
+          <a href="@Root/index.html">
+            <img src="@Root/images/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">@Properties["project-name"]</li>
+
+            <li class="divider"></li>
+
+            <li><a href="@Properties["project-github"]">Source Code on GitHub</a></li>
+            <li><a href="@Properties["project-github"]/blob/master/LICENSE">OSI Approved License</a></li>
+
+            <li class="nav-header">Documentation</li>
+
+            <li><a href="@Root/index.html">Introduction</a></li>
+            <li><a href="@Root/examples.html">Examples</a></li>
+            <li class="divider"></li>
+
+            <li class="nav-header">Reference</li>
+
+            <li><a href="@Root/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="@Properties["project-github"]"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>
