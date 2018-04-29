@@ -34,26 +34,25 @@ Also `Dyn.implicitConvert`,`Dyn.explicitConvert`, comparison operators and more.
 
 ### System.Dynamic
 ```fsharp
-    open FSharp.Interop.Dynamic
-    let ex1 = ExpandoObject()
-    ex1?Test<-"Hi"//Set Dynamic Property
-    ex1?Test //Get Dynamic
+open FSharp.Interop.Dynamic
+let ex1 = ExpandoObject()
+ex1?Test<-"Hi"//Set Dynamic Property
+ex1?Test //Get Dynamic
 ```
 
 ### SignalR
 
 ```fsharp
-    open FSharp.Interop.Dynamic
-    type MyHub =
-        inherit Hub
-        member x.Send (name : string) (message : string) =
-            base.Clients.All?addMessage(name,message) |> ignore
+open FSharp.Interop.Dynamic
+type MyHub =
+    inherit Hub
+    member x.Send (name : string) (message : string) =
+        base.Clients.All?addMessage(name,message) |> ignore
 ```
 ### MVC ViewBag
 
 ```fsharp
-
-    x.ViewBag?Name<-"George"
+x.ViewBag?Name<-"George"
 ```
 
 # Caveats:
