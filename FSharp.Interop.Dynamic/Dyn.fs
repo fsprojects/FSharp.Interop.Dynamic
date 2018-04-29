@@ -16,6 +16,7 @@
 
 namespace FSharp.Interop.Dynamic
 
+///Functions backing the operators and more
 module Dyn=
     open System
     open Dynamitey
@@ -45,7 +46,7 @@ module Dyn=
     let explicitConvert (target:obj) : 'TResult  = 
         explicitConvertTo typeof<'TResult> target
 
-    //allow marking args with names for dlr invoke
+    ///allow marking args with names for dlr invoke
     let namedArg (name:string) (argValue:obj) =
         InvokeArg(name, argValue)
 
@@ -53,19 +54,19 @@ module Dyn=
     let addAssignMember (target:obj) (memberName:string) (value:obj)  =
         Dynamic.InvokeAddAssignMember(target, memberName, value)
 
-     ///Dynamically call `-=` on member
+    ///Dynamically call `-=` on member
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
 
-    //dynamically call get index
+    ///dynamically call get index
     let getIndex (target:obj) (indexers: 'T seq) : 'TResult =
         Dynamic.InvokeGetIndex(target, (indexers |> Seq.map box  |> Seq.toArray)) :?> 'TResult
-    // dynamically call set index
+    /// dynamically call set index
     let setIndex (target:obj) (indexers: 'T seq) (value:obj)  =
         Dynamic.InvokeSetValueOnIndexes(target, value, (indexers |> Seq.map box |> Seq.toArray)) |> ignore
 
-    // main workhouse method; Some(methodName) or just None to invoke without name;
-    // infered casting with automatic implicit convert.
+    /// main workhouse method; Some(methodName) or just None to invoke without name;
+    /// infered casting with automatic implicit convert.
     let invoke (target:obj) (memberName:string option) : 'TResult =
         let resultType = typeof<'TResult>
         let (|NoConversion| Conversion|) t = if t = typeof<obj> then NoConversion else Conversion
