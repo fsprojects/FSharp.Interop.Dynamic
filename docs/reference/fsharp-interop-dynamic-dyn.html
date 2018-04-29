@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Dyn - FSharp.Interop.Dynamic</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Jay Tuley">
+    <script src="https://unpkg.com/jquery@1.12.4/dist/jquery.js" integrity="sha384-KcyRSlC9FQog/lJsT+QA8AUIFBgnwKM7bxm7/YaX+NTr4D00npYawrX0h+oXI3a2" crossorigin="anonymous"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js" integrity="sha384-qJ8AGIuPqPo4I2zhyRYO6vQaJrGBbTpIiXGihDsGpfMCHJD0IKH0gkPQToGD5ek3" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/mathjax@2.7.4/unpacked/MathJax.js" integrity="sha384-Ydr+qBrpdvdtDb/YSkSHZEOQixgFsvrt1Zc0IUuJswugVphb8NiCUm82/3Jq5BYS" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/mathjax@2.7.4/unpacked/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha384-oAlS1dBwiSaCl97QMkeSMZ3MNuQcIWCaJnLmzWPLj25LdAOsRmj3kISYeexD0GXv" crossorigin="anonymous"></script>   
+    <!-- https://unpkg.com/bootstrap-2.3.2@1.0.0/css/bootstrap.min.css"--> 
+
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" integrity="sha384-SxD9NhT6x7xbJZq3DchEPXL/Go+GKOxlfipD1Y+5v4WFOnsU6MNTmzRe9oPoXwCA" crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet" href="/FSharp.Interop.Dynamic/content/style.css" />
+    <script type="text/javascript" src="/FSharp.Interop.Dynamic/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://fsprojects.github.io/FSharp.Formatting/"><img height="16" width="16" src="https://matthid.github.io/Yaaf.AdvancedBuilding/content/img/FSharp.Formatting.png" /> F# Formatting</a></li>
+        </ul>
+        <h3 class="muted"><a href="/FSharp.Interop.Dynamic/index.html">FSharp.Interop.Dynamic</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+
+
+
+<h1>Dyn</h1>
+<p>
+  <span>Namespace: FSharp.Interop.Dynamic</span><br />
+</p>
+<div class="xmldoc">
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
+    <thead>
+      <tr><td>Function or value</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '1', 1)" onmouseover="showTip(event, '1', 1)">
+            addAssignMember target memberName value
+          </code>
+          <div class="tip" id="1">
+            <strong>Signature:</strong> target:obj -&gt; memberName:string -&gt; value:obj -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L53-53" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Dynamically call <code>+=</code> on member</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '2', 2)" onmouseover="showTip(event, '2', 2)">
+            explicitConvert target
+          </code>
+          <div class="tip" id="2">
+            <strong>Signature:</strong> target:obj -&gt; &#39;TResult<br />
+                          <strong>Type parameters:</strong> 'TResult          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L45-45" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>explicit convert via inferred type</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '3', 3)" onmouseover="showTip(event, '3', 3)">
+            explicitConvertTo convertType target
+          </code>
+          <div class="tip" id="3">
+            <strong>Signature:</strong> convertType:Type -&gt; target:obj -&gt; &#39;TResult<br />
+                          <strong>Type parameters:</strong> 'TResult          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L41-41" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>explicit convert via reflected type</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '4', 4)" onmouseover="showTip(event, '4', 4)">
+            getIndex target indexers
+          </code>
+          <div class="tip" id="4">
+            <strong>Signature:</strong> target:obj -&gt; indexers:seq&lt;&#39;T&gt; -&gt; &#39;TResult<br />
+                          <strong>Type parameters:</strong> 'T, 'TResult          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L61-61" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '5', 5)" onmouseover="showTip(event, '5', 5)">
+            implicitConvert target
+          </code>
+          <div class="tip" id="5">
+            <strong>Signature:</strong> target:obj -&gt; &#39;TResult<br />
+                          <strong>Type parameters:</strong> 'TResult          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L37-37" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>implict convert via inferred type</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '6', 6)" onmouseover="showTip(event, '6', 6)">
+            implicitConvertTo convertType target
+          </code>
+          <div class="tip" id="6">
+            <strong>Signature:</strong> convertType:Type -&gt; target:obj -&gt; &#39;TResult<br />
+                          <strong>Type parameters:</strong> 'TResult          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L33-33" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>implict convert via reflected type</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '7', 7)" onmouseover="showTip(event, '7', 7)">
+            invoke target memberName
+          </code>
+          <div class="tip" id="7">
+            <strong>Signature:</strong> target:obj -&gt; memberName:string option -&gt; &#39;TResult<br />
+                          <strong>Type parameters:</strong> 'TResult          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L69-69" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '8', 8)" onmouseover="showTip(event, '8', 8)">
+            namedArg name argValue
+          </code>
+          <div class="tip" id="8">
+            <strong>Signature:</strong> name:string -&gt; argValue:obj -&gt; InvokeArg<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L49-49" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '9', 9)" onmouseover="showTip(event, '9', 9)">
+            setIndex target indexers value
+          </code>
+          <div class="tip" id="9">
+            <strong>Signature:</strong> target:obj -&gt; indexers:seq&lt;&#39;T&gt; -&gt; value:obj -&gt; unit<br />
+                          <strong>Type parameters:</strong> 'T          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L64-64" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '10', 10)" onmouseover="showTip(event, '10', 10)">
+            staticContext target
+          </code>
+          <div class="tip" id="10">
+            <strong>Signature:</strong> target:Type -&gt; InvokeContext<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L28-28" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>allow access to static context for dynamic invocation of static methods</p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '11', 11)" onmouseover="showTip(event, '11', 11)">
+            subtractAssignMember (...)
+          </code>
+          <div class="tip" id="11">
+            <strong>Signature:</strong> target:obj -&gt; memberName:string -&gt; value:obj -&gt; unit<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/tree/master//FSharp.Interop.Dynamic/Dyn.fs#L57-57" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p>Dynamically call <code>-=</code> on member</p>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+        </div>
+        <div class="span3">
+          <a href="/FSharp.Interop.Dynamic/index.html">
+            <img src="/FSharp.Interop.Dynamic/images/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">FSharp.Interop.Dynamic</li>
+
+            <li class="divider"></li>
+
+            <li><a href="https://github.com/fsprojects/FSharp.Interop.Dynamic">Source Code on GitHub</a></li>
+            <li><a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/blob/master/LICENSE">OSI Approved License</a></li>
+
+            <li class="nav-header">Documentation</li>
+
+            <li><a href="/FSharp.Interop.Dynamic/index.html">Introduction</a></li>
+            <li><a href="/FSharp.Interop.Dynamic/examples.html">Examples</a></li>
+            <li class="divider"></li>
+
+            <li class="nav-header">Reference</li>
+
+            <li><a href="/FSharp.Interop.Dynamic/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="https://github.com/fsprojects/FSharp.Interop.Dynamic"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

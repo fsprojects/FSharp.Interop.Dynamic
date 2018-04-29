@@ -77,13 +77,14 @@ let testDir = Path.Combine(root, "Tests")
 let docContent = Path.Combine(root, "DocsSrc")
 let outputDir = Path.Combine(root, "docs")
 
-let getDllNamed name =
-    Path.Combine(srcDir,
+let binDir =Path.Combine(srcDir,
                         projName,
                         "bin",
                         configuration,
-                        targetFramework, 
-                        sprintf "%s.dll" name)
+                        targetFramework)
+
+let getDllNamed name =
+    Path.Combine(binDir, sprintf "%s.dll" name)
 
 let dll = getDllNamed projName
 
@@ -168,6 +169,7 @@ RazorMetadataFormat.Generate( dll,
                               templateDirs,
                               parameters = projInfo,
                               sourceRepo = sourceRepo,
-                              sourceFolder = root)
+                              sourceFolder = root,
+                              libDirs = [binDir])
 
 printfn "Finished Generating Docs."
