@@ -15,24 +15,27 @@
 
 
 namespace FSharp.Interop.Dynamic
+open System
+
+type Calling = 
+    | GenericMember of string * Type array 
+    | Member of string
+    | Direct
 
 ///Functions backing the operators and more
-module Dyn=
-    open System
+module Dyn =
     open Dynamitey
     open Microsoft.CSharp.RuntimeBinder
     open Microsoft.FSharp.Reflection
 
-    
-
     ///allow access to static context for dynamic invocation of static methods
     let staticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
 
-
+    let staticTarget<'TTarget> = InvokeContext.CreateStatic.Invoke(typeof<'TTarget>)
   
     ///implict convert via reflected type
     let implicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
-        Dynamic.InvokeConvert(target, convertType, explicit = false) :?> 'TResult
+        Dynamic.InvokeConvert(target, convertType, explicit = false) |> unbox<'TResult>
 
     ///implict convert via inferred type
     let implicitConvert(target:obj) : 'TResult  = 
@@ -40,7 +43,7 @@ module Dyn=
 
     ///explicit convert via reflected type
     let explicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
-        Dynamic.InvokeConvert(target, convertType, explicit = true) :?> 'TResult
+        Dynamic.InvokeConvert(target, convertType, explicit = true) |> unbox<'TResult>
 
     ///explicit convert via inferred type
     let explicitConvert (target:obj) : 'TResult  = 
@@ -51,37 +54,53 @@ module Dyn=
         InvokeArg(name, argValue)
 
     ///Dynamically call `+=` on member
-    let addAssignMember (target:obj) (memberName:string) (value:obj)  =
+    let memberAddAssign (memberName:string) (value:obj) (target:obj) =
         Dynamic.InvokeAddAssignMember(target, memberName, value)
-
+    
     ///Dynamically call `-=` on member
-    let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
+    let memberSubtractAssign (memberName:string) (value:obj) (target:obj) =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
+    
+    let get (name:string) (target:obj) : 'TResult =
+        Dynamic.InvokeGet(target, name) |> unbox<'TResult>
+
+    let getChain (chainOfMembers:string) (target:obj) =
+        Dynamic.InvokeGetChain(target, chainOfMembers) |> unbox<'TResult>
+
+    let set (name:string) (value:obj) (target:obj) =
+        Dynamic.InvokeSet(target, name, value) |> ignore
+
+    let setChain (chainOfMembers:string) (value:obj) (target:obj) =
+        Dynamic.InvokeSet(target, chainOfMembers, value) |> ignore
 
     ///dynamically call get index
-    let getIndex (target:obj) (indexers: 'T seq) : 'TResult =
-        Dynamic.InvokeGetIndex(target, (indexers |> Seq.map box  |> Seq.toArray)) :?> 'TResult
+    let getIndexer (indexers: 'T seq) (target:obj): 'TResult =
+        let indexes = indexers |> Seq.map box  |> Seq.toArray
+        Dynamic.InvokeGetIndex(target, indexes) |> unbox<'TResult>
+
     /// dynamically call set index
-    let setIndex (target:obj) (indexers: 'T seq) (value:obj)  =
-        Dynamic.InvokeSetValueOnIndexes(target, value, (indexers |> Seq.map box |> Seq.toArray)) |> ignore
+    let setIndexer (indexers: 'T seq) (value:obj) (target:obj) =
+        let indexes = indexers |> Seq.map box |> Seq.toArray
+        Dynamic.InvokeSetValueOnIndexes(target, value, indexes) |> ignore
 
     /// main workhouse method; Some(methodName) or just None to invoke without name;
     /// infered casting with automatic implicit convert.
-    let invoke (target:obj) (memberName:string option) : 'TResult =
+    let invocation (memberName:Calling) (target:obj)  : 'TResult =
         let resultType = typeof<'TResult>
         let (|NoConversion| Conversion|) t = if t = typeof<obj> then NoConversion else Conversion
 
         if not (FSharpType.IsFunction resultType)
         then
             match memberName with
-              | Some (name) ->
+              | GenericMember (name, _)
+              | Member name ->
                 let convert r = match resultType with
                                     | NoConversion -> r
                                     | ____________ -> implicitConvert r
                 Dynamic.InvokeGet(target, name)
                     |> convert
                     |> unbox
-              | None -> implicitConvert target
+              | Direct -> implicitConvert target
         else
             let lambda = fun arg ->
                                let argType,returnType = FSharpType.GetFunctionElements resultType
@@ -92,39 +111,78 @@ module Dyn=
                                     | a when a = typeof<unit>      -> [| |]
                                     | ____________________________ -> [|arg|]
 
-                               let invoker k = Invocation(k, memberName 
-                                                              |> Option.bind(fun name -> Some(InvokeMemberName(name,null)))
-                                                              |> Option.toObj
-                                                         ).Invoke(target, argArray)
+                               let invoker k = 
+                                    let memberName =
+                                         memberName |> function | GenericMember (name, targs) ->
+                                                                    InvokeMemberName(name, targs)
+                                                                | Member name -> 
+                                                                    InvokeMemberName(name, null)
+                                                                | Direct -> null
+                                    Invocation(k, memberName).Invoke(target, argArray)
 
                                let (|Action|Func|) t = if t = typeof<unit> then Action else Func
-                               let (|Invoke|InvokeMember|) n = if n |> Option.isNone then Invoke else InvokeMember
 
                                let result =
                                     try //Either it has a member or it's something directly callable
                                         match (returnType, memberName) with
-                                        | (Action,Invoke) -> invoker(InvocationKind.InvokeAction)
-                                        | (Action,InvokeMember) -> invoker(InvocationKind.InvokeMemberAction)
-                                        | (Func, Invoke) -> invoker(InvocationKind.Invoke)
-                                        | (Func, InvokeMember) -> invoker(InvocationKind.InvokeMember)
+                                        | (Action, Direct) -> invoker(InvocationKind.InvokeAction)
+                                        | (Action, GenericMember _)
+                                        | (Action, Member _) -> invoker(InvocationKind.InvokeMemberAction)
+                                        | (Func, Direct) -> invoker(InvocationKind.Invoke)
+                                        | (Func, GenericMember _)
+                                        | (Func, Member _) -> invoker(InvocationKind.InvokeMember)
                                     with  //Last chance incase we are trying to invoke an fsharpfunc
                                         |  :? RuntimeBinderException as e  ->
                                             try
-                                                let invokeName =InvokeMemberName("Invoke", null) //FSharpFunc Invoke
-                                                let invokeContext t = InvokeContext(t,typeof<obj>) //Improve cache hits by using the same context
+                                                let invokeName = InvokeMemberName("Invoke", null) //FSharpFunc Invoke
+                                                let invokeContext t = InvokeContext(t, typeof<obj>) //Improve cache hits by using the same context
                                                 let invokeFSharpFold t (a:obj) =
-                                                    Dynamic.InvokeMember(invokeContext(t),invokeName,a)
+                                                    Dynamic.InvokeMember(invokeContext(t), invokeName,a)
                                                 let seed = match memberName with
-                                                           | Some(name) -> Dynamic.InvokeGet(target,name)
-                                                           | None       -> target
+                                                           | GenericMember (name, _)
+                                                           | Member name -> Dynamic.InvokeGet(target, name)
+                                                           | Direct       -> target
                                                 Array.fold invokeFSharpFold seed argArray
                                             with
                                                 | :? RuntimeBinderException as e2
-                                                     -> AggregateException(e,e2) |> raise
-                                                
-
+                                                     -> AggregateException(e, e2) |> raise
                                match returnType with
                                | Action | NoConversion -> result
                                | _____________________ -> implicitConvertTo returnType result
 
             FSharpValue.MakeFunction(resultType,lambda) |> unbox<'TResult>
+
+    //allows result to be called like a function
+    let invokeDirect (target:obj) : 'TResult =
+        target |> invocation Direct
+
+    //calls member whose result can be called like a function
+    let invokeMember (memberName:string) (target:obj) : 'TResult =
+        target |> invocation (Member memberName)
+
+    //calls member and specify's generic parameters and whose result can be called like a function
+    let invokeGeneric (memberName:string) (typeArgs:Type seq) (target:obj) : 'TResult =
+        let typeArgs' = typeArgs |> Array.ofSeq
+        let genericMember = GenericMember (memberName, typeArgs')
+        target |> invocation genericMember
+
+    [<Obsolete("Replaced with partial application version `getIndexer`")>]
+    let getIndex (target:obj) (indexers: 'T seq) : 'TResult =
+        target |> getIndexer indexers
+
+    [<Obsolete("Replaced with partial application version `setIndexer`")>]
+    let setIndex (target:obj) (indexers: 'T seq) (value:obj)  =
+        target |> setIndexer indexers value
+
+    [<Obsolete("Replaced with partial application version `memberAddAssign`")>]
+    let addAssignMember (target:obj) (memberName:string) (value:obj)  =
+        target |> memberAddAssign memberName value
+    
+    [<Obsolete>]
+    let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
+        target |> memberSubtractAssign memberName value
+
+    [<Obsolete("Replaced with partial application version `invocation`")>]
+    let invoke (target:obj) (memberName:string option) : 'TResult =
+        let memberOrDirect = match memberName with | Some mn -> Member mn | None -> Direct
+        target |> invocation memberOrDirect

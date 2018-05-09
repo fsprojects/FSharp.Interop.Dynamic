@@ -71,7 +71,7 @@ Set a property with dlr, Expando only responds to the dlr.
 
 (***hide***)
         [<Test>] member basic.``Test Direct Invoke`` ()=
-                        !?Dynamic.Curry(Dyn.staticContext(typeof<string>))?Format("Test {0} {1}") (1,2) |>
+                        !?Dynamic.Curry(Dyn.staticTarget<string>)?Format("Test {0} {1}") (1,2) |>
                             should equal "Test 1 2"
 
 (***hide***)
