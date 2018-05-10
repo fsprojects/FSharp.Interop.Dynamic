@@ -65,7 +65,8 @@ module Dyn =
     /// infered casting with automatic implicit convert.
     let invocation (memberName:Calling) (target:obj)  : 'TResult =
         let resultType = typeof<'TResult>
-        let (|NoConversion| Conversion|) t = if t = typeof<obj> then NoConversion else Conversion
+        let (|NoConversion| Conversion|) t = 
+            if t = typeof<obj> then NoConversion else Conversion
         let finalConvertResult finalType r :'TResult = 
             match finalType with
             | NoConversion -> r
@@ -81,13 +82,11 @@ module Dyn =
         else
             let lambda arg =
                let argType,returnType = FSharpType.GetFunctionElements resultType
-
                let argArray =
                     match argType with
                     | a when FSharpType.IsTuple(a) -> FSharpValue.GetTupleFields(arg)
                     | a when a = typeof<unit>      -> [| |]
                     | ____________________________ -> [|arg|]
-
                let invoker k = 
                     let memberName =
                          memberName |> function | GenericMember (name, targs) ->
@@ -96,9 +95,8 @@ module Dyn =
                                                     InvokeMemberName(name, null)
                                                 | Direct -> null
                     Invocation(k, memberName).Invoke(target, argArray)
-
-               let (|Action|Func|) t = if t = typeof<unit> then Action else Func
-
+               let (|Action|Func|) t =
+                    if t = typeof<unit> then Action else Func
                let result =
                     try //Either it has a member or it's something directly callable
                         match (returnType, memberName) with
@@ -144,8 +142,8 @@ module Dyn =
 
     let get (propertyName:string) (target:obj) : 'TResult =
         target |> invocation (Member propertyName)
-        
-    let getChain (chainOfMembers:string seq) (target:obj) =
+
+    let getChain (chainOfMembers:string seq) (target:obj) : 'TResult =
         let chainOfMembers' = String.concat "." chainOfMembers 
         Dynamic.InvokeGetChain(target, chainOfMembers') |> invocation Direct
  
