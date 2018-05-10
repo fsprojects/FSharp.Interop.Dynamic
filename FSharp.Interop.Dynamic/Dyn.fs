@@ -144,20 +144,22 @@ module Dyn =
 
     let get (propertyName:string) (target:obj) : 'TResult =
         target |> invocation (Member propertyName)
-
-    let getChain (chainOfMembers:string) (target:obj) =
-        Dynamic.InvokeGetChain(target, chainOfMembers) |> invocation Direct
-
-    let set (propertyName:string) (value:obj) (target:obj) =
-        Dynamic.InvokeSet(target, propertyName, value) |> ignore
-
-    let setChain (chainOfMembers:string) (value:obj) (target:obj) =
-        Dynamic.InvokeSet(target, chainOfMembers, value) |> ignore
-
+        
+    let getChain (chainOfMembers:string seq) (target:obj) =
+        let chainOfMembers' = String.concat "." chainOfMembers 
+        Dynamic.InvokeGetChain(target, chainOfMembers') |> invocation Direct
+ 
     ///dynamically call get index
     let getIndexer (indexers: 'T seq) (target:obj): 'TResult =
         let indexes = indexers |> Seq.map box  |> Seq.toArray
         Dynamic.InvokeGetIndex(target, indexes) |> invocation Direct
+
+    let set (propertyName:string) (value:obj) (target:obj) =
+        Dynamic.InvokeSet(target, propertyName, value) |> ignore
+
+    let setChain (chainOfMembers: string seq) (value:obj) (target:obj) =
+        let chainOfMembers' = String.concat "." chainOfMembers 
+        Dynamic.InvokeSet(target, chainOfMembers', value) |> ignore
 
     /// dynamically call set index
     let setIndexer (indexers: 'T seq) (value:obj) (target:obj) =
