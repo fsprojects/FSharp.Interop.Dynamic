@@ -63,7 +63,8 @@ module Dyn =
 
     /// main workhouse method; Some(methodName) or just None to invoke without name;
     /// infered casting with automatic implicit convert.
-    let invocation (memberName:Calling) (target:obj)  : 'TResult =
+    /// target not last because result could be infered to be fsharp style curried function
+    let invocation (target:obj) (memberName:Calling)  : 'TResult =
         let resultType = typeof<'TResult>
         let (|NoConversion| Conversion|) t = 
             if t = typeof<obj> then NoConversion else Conversion
@@ -127,30 +128,30 @@ module Dyn =
             FSharpValue.MakeFunction(resultType,lambda) |> unbox<'TResult>
 
     //allows result to be called like a function
-    let invokeDirect (target:obj) : 'TResult =
-        target |> invocation Direct
+    let invokeDirect value (target:obj) : 'TResult =
+        invocation target Direct value
 
     //calls member whose result can be called like a function
-    let invokeMember (memberName:string) (target:obj) : 'TResult =
-        target |> invocation (Member memberName)
+    let invokeMember (memberName:string) value (target:obj) : 'TResult =
+        invocation target (Member memberName) value
 
     //calls member and specify's generic parameters and whose result can be called like a function
-    let invokeGeneric (memberName:string) (typeArgs:Type seq) (target:obj) : 'TResult =
+    let invokeGeneric (memberName:string) (typeArgs:Type seq) value (target:obj) : 'TResult =
         let typeArgs' = typeArgs |> Array.ofSeq
         let genericMember = GenericMember (memberName, typeArgs')
-        target |> invocation genericMember
+        invocation target genericMember value
 
     let get (propertyName:string) (target:obj) : 'TResult =
-        target |> invocation (Member propertyName)
+        invocation target (Member propertyName)
 
     let getChain (chainOfMembers:string seq) (target:obj) : 'TResult =
         let chainOfMembers' = String.concat "." chainOfMembers 
-        Dynamic.InvokeGetChain(target, chainOfMembers') |> invocation Direct
+        Dynamic.InvokeGetChain(target, chainOfMembers') |> invocation <| Direct
  
     ///dynamically call get index
     let getIndexer (indexers: 'T seq) (target:obj): 'TResult =
         let indexes = indexers |> Seq.map box  |> Seq.toArray
-        Dynamic.InvokeGetIndex(target, indexes) |> invocation Direct
+        Dynamic.InvokeGetIndex(target, indexes) |> invocation <| Direct
 
     let set (propertyName:string) (value:obj) (target:obj) =
         Dynamic.InvokeSet(target, propertyName, value) |> ignore
@@ -183,4 +184,4 @@ module Dyn =
     [<Obsolete("Replaced with partial application version `invocation`")>]
     let invoke (target:obj) (memberName:string option) : 'TResult =
         let memberOrDirect = match memberName with | Some mn -> Member mn | None -> Direct
-        target |> invocation memberOrDirect
+        invocation target memberOrDirect

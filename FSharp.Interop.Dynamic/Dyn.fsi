@@ -14,11 +14,12 @@ namespace FSharp.Interop.Dynamic
     val memberAddAssign : memberName:string -> value:obj -> target:obj -> unit
     val memberSubtractAssign :
       memberName:string -> value:obj -> target:obj -> unit
-    val invocation : memberName:Calling -> target:obj -> 'TResult
-    val invokeDirect : target:obj -> 'TResult
-    val invokeMember : memberName:string -> target:obj -> 'TResult
+    val invocation : target:obj -> memberName:Calling -> 'TResult
+    val invokeDirect : value:'a -> target:obj -> 'TResult
+    val invokeMember : memberName:string -> value:'a -> target:obj -> 'TResult
     val invokeGeneric :
-      memberName:string -> typeArgs:seq<System.Type> -> target:obj -> 'TResult
+      memberName:string ->
+        typeArgs:seq<System.Type> -> value:'a -> target:obj -> 'TResult
     val get : propertyName:string -> target:obj -> 'TResult
     val getChain : chainOfMembers:seq<string> -> target:obj -> 'TResult
     val getIndexer : indexers:seq<'T> -> target:obj -> 'TResult

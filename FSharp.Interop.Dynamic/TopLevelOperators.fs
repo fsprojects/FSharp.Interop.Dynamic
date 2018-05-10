@@ -20,7 +20,7 @@ namespace FSharp.Interop.Dynamic
 module TopLevelOperators=
     ///Dynamic get property or method invocation
     let (?)  (target : obj) (name:string)  : 'TResult =
-       target |> Dyn.invocation (Member name)
+       Dyn.invocation target (Member name)
 
     ///Dynamic set property
     let (?<-) (target : obj) (name : string) (value : 'TValue) : unit =
@@ -28,4 +28,4 @@ module TopLevelOperators=
 
     ///Prefix operator that allows direct dynamic invocation of the object
     let (!?) (target:obj) : 'TResult =
-        target |> Dyn.invocation Direct
+        Dyn.invocation target Direct
