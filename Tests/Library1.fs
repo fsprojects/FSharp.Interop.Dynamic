@@ -115,19 +115,19 @@ Set a property with dlr, Expando only responds to the dlr.
                         x |> should equal 5
         [<Test>] member __.``Test FSharp Lambda 3 arg not tupled`` ()=
                         let dyn = (fun x y z -> x + y - z) :> obj
-                        let x:int = !?dyn 3 2 1
+                        let x = !?dyn 3 2 1
                         x |> should equal 4
 (***hide***)
         [<Test>] member __.``Test FSharp Lambda 4 arg`` ()=
                         let dyn = (fun x y z bbq -> x + y - z - bbq) :> obj  in
-                        let x:int = !?dyn 3 2 1 5 
+                        let x = !?dyn 3 2 1 5 
                         x |> should equal -1
 
 (***hide***)
         [<Test>] member __.``Test FSharp Lambda 5 arg`` ()=
                         let unknownfunc = (fun x y z bbq etc -> x + y - z - bbq + etc) :> obj in
                         let go = !?unknownfunc
-                        let x:int = go 3 2 1 5 9 
+                        let x = go 3 2 1 5 9 
                         x |> should equal 8
 
 (***hide***)

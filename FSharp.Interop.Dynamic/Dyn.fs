@@ -82,11 +82,17 @@ module Dyn =
             if t = typeof<obj> then NoConversion else Conversion
         let finalConvertResult finalType r :'TResult = 
             match finalType with
+            | t when FSharpType.IsFunction t -> // if return type is a function
+                let rec rLambda r' t' rArg = 
+                    let result' = fsharpInvoke r' Direct [|rArg|]
+                    let _,retType' = FSharpType.GetFunctionElements t'
+                    if FSharpType.IsFunction retType' then
+                        FSharpValue.MakeFunction(retType',rLambda result' retType')
+                    else
+                        result'
+                FSharpValue.MakeFunction(t,rLambda r t)
             | NoConversion -> r
             | Conversion -> implicitConvert r
-            | t when FSharpType.IsFunction t -> // if return type is a function
-                let rLambda rArg = fsharpInvoke r Direct [|rArg|]
-                FSharpValue.MakeFunction(finalType,rLambda)
             |> unbox
         if not (FSharpType.IsFunction resultType)
         then
