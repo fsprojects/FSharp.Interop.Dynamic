@@ -16,6 +16,7 @@
 
 namespace FSharp.Interop.Dynamic
 open System
+open System
 
 type Calling = 
     | GenericMember of string * Type array 
@@ -66,12 +67,26 @@ module Dyn =
     /// target not last because result could be infered to be fsharp style curried function
     let invocation (target:obj) (memberName:Calling)  : 'TResult =
         let resultType = typeof<'TResult>
+        //Helper to dynamically call call FSharpFuncs
+        let fsharpInvoke target' memberName' argArray' =
+            let invokeName = InvokeMemberName("Invoke", null) //FSharpFunc Invoke
+            let invokeContext t = InvokeContext(t, typeof<obj>) //Improve cache hits by using the same context
+            let invokeFSharpFold t (a:obj) =
+                Dynamic.InvokeMember(invokeContext(t), invokeName, a)
+            let seed = match memberName' with
+                       | GenericMember (name, _)
+                       | Member name -> Dynamic.InvokeGet(target', name)
+                       | Direct       -> target'
+            Array.fold invokeFSharpFold seed argArray'
         let (|NoConversion| Conversion|) t = 
             if t = typeof<obj> then NoConversion else Conversion
         let finalConvertResult finalType r :'TResult = 
             match finalType with
             | NoConversion -> r
             | Conversion -> implicitConvert r
+            | t when FSharpType.IsFunction t -> // if return type is a function
+                let rLambda rArg = fsharpInvoke r Direct [|rArg|]
+                FSharpValue.MakeFunction(finalType,rLambda)
             |> unbox
         if not (FSharpType.IsFunction resultType)
         then
@@ -96,8 +111,7 @@ module Dyn =
                                                     InvokeMemberName(name, null)
                                                 | Direct -> null
                     Invocation(k, memberName).Invoke(target, argArray)
-               let (|Action|Func|) t =
-                    if t = typeof<unit> then Action else Func
+               let (|Action|Func|) t = if t = typeof<unit> then Action else Func
                let result =
                     try //Either it has a member or it's something directly callable
                         match (returnType, memberName) with
@@ -110,18 +124,13 @@ module Dyn =
                     with  //Last chance incase we are trying to invoke an fsharpfunc
                         |  :? RuntimeBinderException as e  ->
                             try
-                                let invokeName = InvokeMemberName("Invoke", null) //FSharpFunc Invoke
-                                let invokeContext t = InvokeContext(t, typeof<obj>) //Improve cache hits by using the same context
-                                let invokeFSharpFold t (a:obj) =
-                                    Dynamic.InvokeMember(invokeContext(t), invokeName,a)
-                                let seed = match memberName with
-                                           | GenericMember (name, _)
-                                           | Member name -> Dynamic.InvokeGet(target, name)
-                                           | Direct       -> target
-                                Array.fold invokeFSharpFold seed argArray
+                               if FSharpType.IsTuple(argType) then //Since this is an fsharp func we don't want to split tuples
+                                    fsharpInvoke target memberName [|arg|]
+                               else
+                                    fsharpInvoke target memberName argArray
                             with
                                 | :? RuntimeBinderException as e2
-                                     -> AggregateException(e, e2) |> raise
+                                   -> AggregateException(e, e2) |> raise
                match returnType with
                | Action | NoConversion -> result
                | _____________________ -> result |> finalConvertResult returnType

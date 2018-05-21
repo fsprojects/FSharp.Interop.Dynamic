@@ -24,8 +24,8 @@ module Tests=
     type TestEvent()=
         let event1 = new Event<EventHandler<EventArgs>, EventArgs>()
         [<CLIEvent>]
-        member this.Event = event1.Publish
-        member this.OnEvent(obj:Object, args:EventArgs)=
+        member __.Event = event1.Publish
+        member __.OnEvent(obj:Object, args:EventArgs)=
            event1.Trigger(obj,args)
 
 (***hide***)
@@ -35,7 +35,7 @@ module Tests=
 (***hide***)
     type DynamicOperatorMock()=
         inherit DynamicObject()
-        override this.TryBinaryOperation(binder, arg, result) =
+        override __.TryBinaryOperation(binder, arg, result) =
             result <- binder.Operation
             true
 (***hide***)
@@ -43,11 +43,11 @@ module Tests=
         inherit DynamicObject()
         let stuff = Dictionary<obj * obj, obj>()
 
-        override this.TryGetIndex(binder, indexes, result) =
+        override __.TryGetIndex(_, indexes, result) =
             result <- stuff.[(indexes.[0], indexes.[1])]
             true
         
-        override this.TrySetIndex(binder, indexes, value) =
+        override __.TrySetIndex(_, indexes, value) =
             stuff.Add((indexes.[0], indexes.[1]),value)
             true
 
@@ -57,82 +57,100 @@ module Tests=
 (**
 Call a method with dlr (ideally you wouldn't know it was as a string).
 *)
-        [<Test>] member basic.``Call method off of an object dynamically`` ()=
+        [<Test>] member __.``Call method off of an object dynamically`` ()=
                        "HelloWorld"?Substring(0,5) 
                             |> should equal "Hello"
-
+(**
+Call a method with a variable (ideally you wouldn't know it was as a string).
+*)
+        [<Test>] member __.``Call method off of an object dynamically with variable`` ()=
+                       let method = "Substring"
+                       "HelloWorld"?(method)(0,5) 
+                            |> should equal "Hello"
 (**
 Set a property with dlr, Expando only responds to the dlr.
 *)
-        [<Test>] member basic.``Test Expando Set and Get`` ()=
+        [<Test>] member __.``Test Expando Set and Get`` ()=
                         let ex1 = ExpandoObject()
                         ex1?Test<-"Hi";
                         ex1?Test |> should equal "Hi"
 
 (***hide***)
-        [<Test>] member basic.``Test Direct Invoke`` ()=
+        [<Test>] member __.``Test Direct Invoke`` ()=
                         !?Dynamic.Curry(Dyn.staticTarget<string>)?Format("Test {0} {1}") (1,2) |>
                             should equal "Test 1 2"
 
 (***hide***)
-        [<Test>] member basic.``Test Void Method`` ()=
+        [<Test>] member __.``Test Void Method`` ()=
                         let array = List<string>()
                         array?Add("1");
                         array.[0] |> should equal "1"
 
 (***hide***)
-        [<Test>] member basic.``Test SetAll`` ()=
+        [<Test>] member __.``Test SetAll`` ()=
                         let e1 = ExpandoObject()
                         !?Dynamic.InvokeSetAll (e1, [("One",1);("Two",2)])
                         e1?One |> should equal 1
                         e1?Two |> should equal 2
 
 (***hide***)
-        [<Test>] member basic.``Test Lambda methods`` ()=
+        [<Test>] member __.``Test Lambda methods`` ()=
                         let ex1 = DynamicObjects.Dictionary()
                         ex1?TestLam<- (fun x -> 42 + x)
-                        ex1?TestLam2<- (fun x y -> y+ 42 + x)
+                        ex1?TestLam2<- (fun (x,y) -> y+ 42 + x)
                         ex1?TestDel<- TestFuncs.Plus3
                         ex1?TestLam(1) |> should equal 43
-                        ex1?TestLam2(1, 2) |> should equal 45
+                        ex1?TestLam2(1,2) |> should equal 45
                         ex1?TestDel(2) |> should equal 5
 
 (***hide***)
-        [<Test>] member basic.``Test FSharp Lambda 3 arg `` ()=
+        [<Test>] member __.``Test FSharp Lambda Tuple arg `` ()=
+                        let dyn = (fun (x,y) z -> x + y - z) :> obj
+                        let x:int = !?dyn (3,2) 1
+                        x |> should equal 4
+
+        [<Test>] member __.``Test FSharp Lambda 2 arg`` ()=
+                        let dyn = (( + )) :> obj
+                        let x = !?dyn 3 2
+                        x |> should equal 5
+        [<Test>] member __.``Test FSharp Lambda 3 arg not tupled`` ()=
                         let dyn = (fun x y z -> x + y - z) :> obj
-                        !?dyn (3,2,1) |> should equal 4
-
+                        let x:int = !?dyn 3 2 1
+                        x |> should equal 4
 (***hide***)
-        [<Test>] member basic.``Test FSharp Lambda 4 arg`` ()=
+        [<Test>] member __.``Test FSharp Lambda 4 arg`` ()=
                         let dyn = (fun x y z bbq -> x + y - z - bbq) :> obj  in
-                        !?dyn (3, 2, 1, 5) |> should equal -1
+                        let x:int = !?dyn 3 2 1 5 
+                        x |> should equal -1
 
 (***hide***)
-        [<Test>] member basic.``Test FSharp Lambda 5 arg`` ()=
+        [<Test>] member __.``Test FSharp Lambda 5 arg`` ()=
                         let unknownfunc = (fun x y z bbq etc -> x + y - z - bbq + etc) :> obj in
-                        !?unknownfunc (3, 2, 1, 5, 9) |> should equal 8
+                        let go = !?unknownfunc
+                        let x:int = go 3 2 1 5 9 
+                        x |> should equal 8
 
 (***hide***)
-        [<Test>] member basic.``Test Events`` ()=
+        [<Test>] member __.``Test Events`` ()=
                         let pocoObj = TestEvent()
                         let refBool = ref false
-                        let myevent = EventHandler<EventArgs>(fun obj arg -> (refBool := true))
+                        let myevent = EventHandler<EventArgs>(fun _ _ -> (refBool := true))
 
                         //Add event dynamically
-                        Dyn.addAssignMember pocoObj "Event" myevent
+                        pocoObj |> Dyn.memberAddAssign "Event" myevent
                         pocoObj.OnEvent(null,null)
                         !refBool |> should equal true
 
                         //Remove event dynamically
                         refBool :=false
-                        Dyn.subtractAssignMember pocoObj "Event" myevent
+                        pocoObj |> Dyn.memberSubtractAssign "Event" myevent
                         !refBool |> should equal false
 
 (**
 `!?` will invoke without a name, dynamic function or the like. 
 `Dyn.namedArg` allows you to wrap your arguments with names as part of the invocation.
 *)
-        [<Test>] member basic.``Test NamedArgs`` ()=
+        [<Test>] member __.``Test NamedArgs`` ()=
                         let buildObj = !?Build<ExpandoObject>.NewObject (
                                                                             Dyn.namedArg "One" 1,
                                                                             Dyn.namedArg "Two" 2
@@ -143,21 +161,21 @@ Set a property with dlr, Expando only responds to the dlr.
 (**
 Use the dlr to call the explict operator with a reflected type
 *)
-        [<Test>] member basic.``Test dynamic Explicit Conversion`` ()=
+        [<Test>] member __.``Test dynamic Explicit Conversion`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
                         ele |> Dyn.explicitConvertTo typeof<Int32> |> should equal 50
 
 (**
 Use the dlr to call the implict operato rwith a reflected type
 *)
-        [<Test>] member basic.``Test dynamic Implicit Conversion`` ()=
+        [<Test>] member __.``Test dynamic Implicit Conversion`` ()=
                         let ele = 50
                         ele |> Dyn.implicitConvertTo typeof<decimal> |> should equal (decimal 50)
 
 (**
 Use the dlr to call the explict operator with inferred type from usage
 *)
-        [<Test>] member basic.``Test Explicit Conversion`` ()=
+        [<Test>] member __.``Test Explicit Conversion`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
                         let elet:int = Dyn.explicitConvert ele
                         elet |> should equal 50
@@ -165,31 +183,31 @@ Use the dlr to call the explict operator with inferred type from usage
 (**
 Use the dlr to call the implicit operator with inferred type from usage
 *)
-        [<Test>] member basic.``Test Implicit Conversion`` ()=
+        [<Test>] member __.``Test Implicit Conversion`` ()=
                         let ele = 50
                         ele |> Dyn.implicitConvert |> should equal (decimal 50)
 
 
 (***hide***)
-        [<Test>] member basic.``Test Implicit Conversion Fail`` ()=
+        [<Test>] member __.``Test Implicit Conversion Fail`` ()=
                         let ele = XElement(XName.Get("Test"),"50")
                         (fun () -> Dyn.implicitConvert(ele) = 50 |> ignore) 
                             |> should throw typeof<RuntimeBinderException>
 
 (***hide***)
-        [<Test>] member basic.``Test Basic indexer `` ()=
+        [<Test>] member __.``Test Basic indexer `` ()=
                         let archive:obj = upcast DynamicWeirdFlakyIndexer()
 
-                        Dyn.setIndex archive [1; 5] "A"
-                        Dyn.setIndex archive ["Hello"; "World" ] "B"
-                        Dyn.setIndex archive [box 1; box "World" ] "C"
+                        archive |> Dyn.setIndexer  [1; 5] "A"
+                        archive |> Dyn.setIndexer ["Hello"; "World" ] "B"
+                        archive |> Dyn.setIndexer  [box 1; box "World" ] "C"
 
-                        Dyn.getIndex archive [1; 5] |> should equal "A"
-                        Dyn.getIndex archive ["Hello"; "World" ] |> should equal "B"
-                        Dyn.getIndex archive [box 1; box "World"] |> should equal "C"
+                        archive |> Dyn.getIndexer  [1; 5] |> should equal "A"
+                        archive |> Dyn.getIndexer  ["Hello"; "World" ] |> should equal "B"
+                        archive |> Dyn.getIndexer  [box 1; box "World"] |> should equal "C"
                         
 (***hide***)
-        [<Test>] member basic.``Basic Operator Mock Tests`` ()=
+        [<Test>] member __.``Basic Operator Mock Tests`` ()=
                         let left:obj = upcast DynamicOperatorMock()
                         let dummy = Object()
 
@@ -206,7 +224,7 @@ Use the dlr to call the implicit operator with inferred type from usage
 (**
 Use operators dynamically (better without knowing the types).
 *)
-         [<Test>] member basic.``Basic Operator Op Tests`` ()=
+         [<Test>] member __.``Basic Operator Op Tests`` ()=
                        
 
                         65 ?%? 10 |> should equal 5
