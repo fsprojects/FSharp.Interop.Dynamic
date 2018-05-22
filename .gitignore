@@ -147,6 +147,13 @@ $RECYCLE.BIN/
 # Mac crap
 .DS_Store
 
+# JetBrains Rider
+.idea/**/.idea/*
+.idea/**/*.iml
+
+!.idea/**/runConfigurations/
+!.idea/**/runConfigurations/*
+
 .fake/
 .nuget/NuGet.exe
 *.userprefs
