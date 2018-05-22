@@ -1,24 +1,23 @@
 image: Visual Studio 2017
 
+version: "{build}" #until it gets updated at install
 configuration: Debug
 
 environment:
-  vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
-  hyphen: "-"
-  githubdeploy: false
-
-install:
-  - ps: nuget install FSharp.Compiler.Tools -ExcludeVersion -OutputDirectory extra
-  - ps: $env:VersionPrefix=(Select-Xml -Path ./Version.props -XPath "/Project/PropertyGroup/VersionPrefix").Node.'#text'
+  base_version: 5.0.0
+  github_deploy: false 
+  is_prerelease: true
+  package_version: $(BASE_VERSION)-alpha$(APPVEYOR_BUILD_NUMBER)
 
 build: off
-
-build_script:
-  - cmd: set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%\extra\FSharp.Compiler.Tools\tools\
-  - cmd: fsi --exec ./build.fsx
-
-
 test: off
+
+install:
+  - ps: Update-AppveyorBuild -Version "$env:PACKAGE_VERSION"
+  - ps: dotnet restore /p:Version="$Env:APPVEYOR_BUILD_VERSION"
+
+test_script:
+  - ps: dotnet test -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION"
 
 artifacts:
   - path: '**\bin\*\*.nupkg'
@@ -35,37 +34,29 @@ deploy:
 
   - provider: GitHub
     artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
-    tag: v$(VersionPrefix)$(hyphen)$(vsuffix)
+    tag: v$(PACKAGE_VERSION)
     description: 'Release description'
-    auth_token:
-      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8
+    auth_token: 
+      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8 #jay's public repo token
     draft: true
     prerelease: $(is_prerelease)
     on:
-      githubdeploy: true
+      github_deploy: true
+
 
 for:
-  - branches:
-      except:
-        - /deploy-v.*/
-    environment:
-      vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
-      hyphen: "-"
-      githubdeploy: false
   - branches:
       only:
         - /deploy-v.*-beta.*/
     environment:
-      vsuffix: "beta$(APPVEYOR_BUILD_NUMBER)"
-      hyphen: "-"
+      package_version: $(BASE_VERSION)-beta$(APPVEYOR_BUILD_NUMBER)
       is_prerelease: true
-      githubdeploy: true
+      github_deploy: true
   - branches:
       only:
         - /deploy-v[\d,.]*/
     configuration: Release
     environment:
-      hyphen: "."
-      vsuffix: "$(APPVEYOR_BUILD_NUMBER)"
+      package_version: $(BASE_VERSION).$(APPVEYOR_BUILD_NUMBER)
       is_prerelease: false
-      githubdeploy: true
+      github_deploy: true

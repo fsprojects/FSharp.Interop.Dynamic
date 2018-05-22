@@ -1,23 +1,21 @@
-﻿<Project Sdk="FSharp.NET.Sdk;Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0;net45</TargetFrameworks>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="FSharp.Core" Version="4.1.*" />
-    <PackageReference Include="FSharp.NET.Sdk" Version="1.0.*" PrivateAssets="All" 
-    />
+
     <PackageReference Include="NUnit" Version="3.7.*" />
     <PackageReference Include="NUnit.Console" Version="3.6.*" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
     <PackageReference Include="FsUnit" Version="3.0.*" />
+
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library1.fs" />
-  </ItemGroup>
-  <ItemGroup>
-      <Reference Include="Microsoft.CSharp" />
+     <Compile Include="Main.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FSharp.Interop.Dynamic\FSharp.Interop.Dynamic.fsproj" />

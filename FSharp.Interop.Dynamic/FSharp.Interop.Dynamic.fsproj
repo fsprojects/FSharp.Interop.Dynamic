@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net40;portable-net45+sl5+win8</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <Description>dynamic operator using the DLR</Description>
     <Company>Ekon Benefits</Company>
     <Authors>Jay Tuley</Authors>
@@ -10,6 +10,7 @@
     <PackageTags>fsharp dynamic dlr</PackageTags>
     <IncludeSymbols Condition="'$(OS)' == 'Windows_NT'">True</IncludeSymbols>
     <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
+    <GeneratePackageOnBuild Condition="'$(APPVEYOR)' == 'True'">True</GeneratePackageOnBuild>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
@@ -17,22 +18,19 @@
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='portable-net45+sl5+win8'">
-    <Reference Include="Microsoft.CSharp" />
+ 
+  <ItemGroup Condition="'$(TargetFramework)'=='net45'">
     <PackageReference Include="FSharp.Core" Version="4.1.*" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.6'">
-    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
     <PackageReference Include="FSharp.Core" Version="4.2.*" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='net40'">
-    <Reference Include="Microsoft.CSharp" />
-    <PackageReference Include="FSharp.Core" Version="4.1.*" />
-  </ItemGroup>
+
   <ItemGroup>
-   <PackageReference Include="Dynamitey" Version="2.0.*" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.4.1" />
+    <PackageReference Include="Dynamitey" Version="2.0.*" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dyn.fsi" />
@@ -43,11 +41,8 @@
     <Compile Include="Operators.fs" />
   </ItemGroup>
    
-  <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.0.6" PrivateAssets="all" />
-  </ItemGroup>
+
 
   <Import Project="..\Version.props" />
 
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

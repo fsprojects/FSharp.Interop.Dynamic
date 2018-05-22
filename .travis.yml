@@ -9,18 +9,17 @@ matrix:
       dist: trusty
       sudo: required
     - os: osx
-      osx_image: xcode8.3
+      osx_image: xcode9
       
 solution: FSharp.Interop.Dynamic.sln
     
-mono: beta
+mono: 5.2.0
 dotnet: 2.0.3
 
 install:
-  - msbuild /ver
-
+  - export FrameworkPathOverride=$(dirname $(which mono))/../lib/mono/4.5/
 script:
-  - ./build.fsx
+  - dotnet test
 
 branches:
   only:
