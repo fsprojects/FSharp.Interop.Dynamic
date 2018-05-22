@@ -20,7 +20,7 @@ test_script:
   - ps: dotnet test -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION"
 
 artifacts:
-  - path: '**\bin\*\*.nupkg'
+  - path: 'FSharp.Interop.Dynamic\**\*.nupkg'
 
 skip_branch_with_pr: true
 
