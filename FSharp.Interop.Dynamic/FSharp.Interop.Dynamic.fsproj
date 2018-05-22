@@ -18,7 +18,8 @@
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
   </PropertyGroup>
 
- 
+  <Import Project="../monofx.props" />
+
   <ItemGroup Condition="'$(TargetFramework)'=='net45'">
     <PackageReference Include="FSharp.Core" Version="4.1.*" />
   </ItemGroup>
@@ -40,9 +41,6 @@
     <Compile Include="Operators.fsi" />
     <Compile Include="Operators.fs" />
   </ItemGroup>
-   
-
-
-  <Import Project="..\Version.props" />
+  
 
 </Project>
