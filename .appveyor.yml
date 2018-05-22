@@ -25,7 +25,6 @@ test_script:
 artifacts:
   - path: 'FSharp.Interop.Dynamic\**\*.nupkg'
     name: NuGet
-skip_branch_with_pr: true
 
 deploy:
   - provider: NuGet
@@ -35,7 +34,6 @@ deploy:
     skip_symbols: false
     symbol_server: https://www.myget.org/F/dynamitey-ci/symbols/api/v2/package
     artifact: /.*\.nupkg/
-
   - provider: GitHub
     artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
     tag: v$(PACKAGE_VERSION)
