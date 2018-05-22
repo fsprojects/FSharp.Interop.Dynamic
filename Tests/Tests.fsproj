@@ -1,22 +1,30 @@
-﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net45</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.1;netcoreapp2.0;net46</TargetFrameworks>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
-  
   <Import Project="../monofx.props" />
+  
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp1.1'">
+    <PackageReference Include="FsUnit.xUnit" Version="3.0.0" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='net46' or '$(TargetFramework)'=='netcoreapp2.0'">
+    <PackageReference Include="FsUnit.xUnit" Version="3.1.0" />
+  </ItemGroup>
 
+  <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+  </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.7.*" />
-    <PackageReference Include="NUnit.Console" Version="3.6.*" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.8.0-*" />
+    <PackageReference Update="FSharp.Core" Version="4.3.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
-    <PackageReference Include="FsUnit" Version="3.0.*" />
-
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+    <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library1.fs" />
-     <Compile Include="Main.fs" />
+    <Compile Include="Main.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FSharp.Interop.Dynamic\FSharp.Interop.Dynamic.fsproj" />
