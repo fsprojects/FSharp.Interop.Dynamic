@@ -3,29 +3,28 @@
 
 language: csharp
 
-dotnet:
-  - 1.1.2
-  - 2.0.3
-  - 2.1.0
-
 os:
   - linux
   - osx
 
+dotnet:
+  - 1.1.2
+  - 2.0.3
+  - 2.1.0
+  
 matrix:
   include:
-    - os: linux
-      dist: trusty
-      sudo: required
-    - os: osx
-      osx_image: xcode9
     - dotnet: 1.1.2
       env: TRGTTEST=netcoreapp1.1
     - dotnet: 2.0.3
       env: TRGTTEST=netcoreapp2.0
     - dotnet: 2.1.0
       env: TRGTTEST=net46
-
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: osx
+      osx_image: xcode9
       
 solution: FSharp.Interop.Dynamic.sln
 
