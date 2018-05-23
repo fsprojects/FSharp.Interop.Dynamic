@@ -29,8 +29,8 @@ install:
 script:
   - cd Tests
   - dotnet build
-  - dotnet xunit -nobuild -fxversion 1.1.2 -framework netcoreapp1.1
-  - dotnet xunit -nobuild -fxversion 2.0.3 -framework netcoreapp2.0
+#  - dotnet xunit -nobuild -fxversion 1.1.2 -framework netcoreapp1.1
+#  - dotnet xunit -nobuild -fxversion 2.0.3 -framework netcoreapp2.0
   - dotnet xunit -nobuild -framework net46
 branches:
   only:
