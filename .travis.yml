@@ -28,6 +28,8 @@ install:
   - dotnet restore
 
 script:
+  - pwd
+  - dotnet build
   - dotnet xunit
 
 branches:
