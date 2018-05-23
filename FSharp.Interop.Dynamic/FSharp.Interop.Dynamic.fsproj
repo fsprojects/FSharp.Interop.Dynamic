@@ -26,6 +26,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Compile Include="SymbolicString.fs"/>
     <Compile Include="Dyn.fsi" />
     <Compile Include="Dyn.fs" />
     <Compile Include="TopLevelOperators.fsi" />

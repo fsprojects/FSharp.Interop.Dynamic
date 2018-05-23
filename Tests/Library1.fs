@@ -6,8 +6,10 @@ namespace Tests
 
 open FSharp.Interop.Dynamic
 open FSharp.Interop.Dynamic.Operators
+open FSharp.Interop.Dynamic.SymbolicString
 (***hide***)
 open Xunit
+open FsUnit.Xunit
 open System
 open Dynamitey
 open System.Dynamic
@@ -15,7 +17,7 @@ open System.Collections.Generic
 open System.Xml.Linq
 open System.Numerics
 open Microsoft.CSharp.RuntimeBinder
-open FsUnit.Xunit
+
 open System.Linq.Expressions
 
 module Tests =

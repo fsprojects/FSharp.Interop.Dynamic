@@ -26,7 +26,7 @@ type Calling =
 module Dyn =
     open Dynamitey
     open Microsoft.CSharp.RuntimeBinder
-    open Microsoft.FSharp.Reflection
+    open FSharp.Reflection
 
     ///allow access to static context for dynamic invocation of static methods
     let staticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
