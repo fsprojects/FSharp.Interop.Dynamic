@@ -24,12 +24,10 @@ before_install:
 solution: FSharp.Interop.Dynamic.sln
 
 install:
-  - cd Tests
   - dotnet restore
 
 script:
-  - pwd
-  - dotnet build
+  - cd Tests
   - dotnet xunit
 
 branches:
