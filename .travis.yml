@@ -2,38 +2,28 @@
 # see travis-ci.org for details
 
 language: csharp
-  
+
+dotnet: 2.0.3
+mono: 5.10.1
+
 matrix:
   include:
     - os: osx
-      osx_image: xcode9
-      dotnet: 1.1.9
-      env: TRGTTEST=netcoreapp1.1
-    - os: osx
-      osx_image: xcode9
-      dotnet: 2.0.3
-      env: TRGTTEST=netcoreapp2.0
-    - os: osx
-      osx_image: xcode9
-      dotnet: 2.1.0 
-      mono: 5.10.1
-      env: TRGTTEST=net46
+      osx_image: xcode9   
     - os: linux
       dist: trusty
       sudo: required
-      dotnet: 1.1.9
-      env: TRGTTEST=netcoreapp1.1
-    - os: linux
-      dist: trusty
-      sudo: required
-      dotnet: 2.0.3
-      env: TRGTTEST=netcoreapp2.0     
-    - os: linux
-      dist: trusty
-      sudo: required   
-      dotnet: 2.1.0 
-      mono: 5.10.1
-      env: TRGTTEST=net46
+      addons:
+      apt:
+        sources:
+        - sourceline: 'deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-ubuntu-trusty-prod trusty main'
+          key_url: 'https://packages.microsoft.com/keys/microsoft.asc'
+        packages:
+        - sharedframework-microsoft.netcore.app-1.1.2
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget --retry-connrefused --waitretry=1 -O /tmp/dotnet1_1_2.pkg https://download.microsoft.com/download/D/0/2/D028801E-0802-43C8-9F9F-C7DB0A39B344/dotnet-osx-x64.1.1.2.pkg ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo installer -package "/tmp/dotnet1_1_2.pkg" -target "/" -verboseR; fi     
 
 solution: FSharp.Interop.Dynamic.sln
 
@@ -42,8 +32,7 @@ install:
 
 script:
   - cd Tests
-  - dotnet restore
-  - dotnet xunit -framework $TRGTTEST
+  - dotnet xunit
 
 branches:
   only:
