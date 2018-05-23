@@ -28,7 +28,8 @@ install:
 
 script:
   - cd Tests
-  - dotnet xunit
+  - dotnet build
+  - dotnet xunit -nobuild
 
 branches:
   only:
