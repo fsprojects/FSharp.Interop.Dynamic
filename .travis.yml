@@ -3,6 +3,15 @@
 
 language: csharp
 
+dotnet:
+  - 1.1.2
+  - 2.0.3
+  - 2.1.0
+
+os:
+  - linux
+  - osx
+
 matrix:
   include:
     - os: linux
@@ -10,19 +19,22 @@ matrix:
       sudo: required
     - os: osx
       osx_image: xcode9
+    - dotnet: 1.1.2
+      env: TRGTTEST=netcoreapp1.1
+    - dotnet: 2.0.3
+      env: TRGTTEST=netcoreapp2.0
+    - dotnet: 2.1.0
+      env: TRGTTEST=net46
+
       
 solution: FSharp.Interop.Dynamic.sln
-    
-mono: 5.10.1
-dotnet: 2.0.3
 
 install:
   - dotnet restore
 
 script:
-  - dotnet build
   - cd Tests
-  - dotnet xunit
+  - dotnet xunit -framework $TRGTTEST
 
 branches:
   only:
