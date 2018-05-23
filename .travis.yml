@@ -13,15 +13,16 @@ matrix:
       
 solution: FSharp.Interop.Dynamic.sln
     
-mono: 5.2.0
-dotnet: 2.0.3
+mono: 5.10.1
+dotnet: 2.0.7
 
 install:
   - dotnet restore
 
 script:
   - dotnet build
-  - dotnet test
+  - cd Tests
+  - dotnet xunit
 
 branches:
   only:
