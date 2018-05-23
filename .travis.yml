@@ -3,26 +3,35 @@
 
 language: csharp
 
+dotnet: 2.1.200
+mono: 5.10.1
+
 matrix:
   include:
+    - os: osx
+      osx_image: xcode9   
     - os: linux
       dist: trusty
       sudo: required
-    - os: osx
-      osx_image: xcode9
-      
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget --retry-connrefused --waitretry=1 -O /tmp/dotnet1_1_2.pkg https://download.microsoft.com/download/D/0/2/D028801E-0802-43C8-9F9F-C7DB0A39B344/dotnet-osx-x64.1.1.2.pkg ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo installer -package "/tmp/dotnet1_1_2.pkg" -target "/" -verboseR; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget --retry-connrefused --waitretry=1 -O /tmp/dotnet2_0_3.pkg https://download.microsoft.com/download/D/7/2/D725E47F-A4F1-4285-8935-A91AE2FCC06A/dotnet-sdk-2.0.3-osx-x64.pkg ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo installer -package "/tmp/dotnet2_0_3.pkg" -target "/" -verboseR; fi     
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq dotnet-sharedframework-microsoft.netcore.app-1.1.2; fi   
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -qq dotnet-runtime-2.0.3; fi   
 solution: FSharp.Interop.Dynamic.sln
-    
-mono: 5.2.0
-dotnet: 2.0.3
 
 install:
   - dotnet restore
 
 script:
+  - cd Tests
   - dotnet build
-  - dotnet test
-
+  - dotnet xunit -nobuild -fxversion 1.1.2 -framework netcoreapp1.1
+  - dotnet xunit -nobuild -fxversion 2.0.3 -framework netcoreapp2.0
+  - dotnet xunit -nobuild -framework net46
 branches:
   only:
     - master
