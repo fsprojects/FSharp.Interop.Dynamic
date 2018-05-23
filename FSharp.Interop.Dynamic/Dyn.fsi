@@ -36,7 +36,7 @@ namespace FSharp.Interop.Dynamic
     [<System.Obsolete ()>]
     val subtractAssignMember :
       target:obj -> memberName:string -> value:obj -> unit
-    [<System.Obsolete ("Replaced with partial application version `invocation`")>]
+    [<System.Obsolete("Replaced with `invocation`")>]
     val invoke : target:obj -> memberName:string option -> 'TResult
   end
 

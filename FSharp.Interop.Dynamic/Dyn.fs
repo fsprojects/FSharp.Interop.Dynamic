@@ -190,7 +190,7 @@ module Dyn =
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         target |> memberSubtractAssign memberName value
 
-    [<Obsolete("Replaced with partial application version `invocation`")>]
+    [<Obsolete("Replaced with `invocation`")>]
     let invoke (target:obj) (memberName:string option) : 'TResult =
         let memberOrDirect = match memberName with | Some mn -> Member mn | None -> Direct
         invocation target memberOrDirect
