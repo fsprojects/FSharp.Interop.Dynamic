@@ -4,7 +4,12 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <Import Project="../monofx.props" />
-  
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp1.1'">
+    <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
+    <RuntimeFrameworkVersion>2.0.3</RuntimeFrameworkVersion>
+  </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp1.1'">
     <PackageReference Include="FsUnit.xUnit" Version="3.0.0" />
   </ItemGroup>
