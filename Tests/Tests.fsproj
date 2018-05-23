@@ -3,13 +3,16 @@
     <TargetFrameworks>netcoreapp1.1;netcoreapp2.0;net46</TargetFrameworks>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
+
   <Import Project="../monofx.props" />
+  
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp1.1'">
     <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
     <RuntimeFrameworkVersion>2.0.3</RuntimeFrameworkVersion>
   </PropertyGroup>
+
   <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp1.1'">
     <PackageReference Include="FsUnit.xUnit" Version="3.0.0" />
   </ItemGroup>
@@ -18,10 +21,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <PackageReference Update="FSharp.Core" Version="4.3.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
     <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
     <DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="2.0.1" />
   </ItemGroup>
