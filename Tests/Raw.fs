@@ -12,27 +12,27 @@ module Raw =
 
    [<Fact>] 
     let ``Name of Call`` ()=
-        Name.Of(faux<string>.Substring(0,0)) |> should equal "Substring"
+        Name.Of(sym<string>.Substring(0,0)) |> should equal "Substring"
   
     [<Fact>]
     let ``Name of unapplied method`` ()=
-        Name.Of(faux<string>.Substring) |> should equal "Substring"
+        Name.Of(sym<string>.Substring) |> should equal "Substring"
     
     [<Fact>]
     let ``Name of get`` ()=
-        Name.Of(faux<string>.Length) |> should equal "Length"
+        Name.Of(sym<string>.Length) |> should equal "Length"
     
     [<Fact>]
     let ``Name of end of chain`` ()=
-        Name.Of(faux<string>.Length.CompareTo) |> should equal "CompareTo"
+        Name.Of(sym<string>.Length.CompareTo) |> should equal "CompareTo"
     
     [<Fact>]
     let ``Name of End of chain overload`` ()=
-        Name.Of(faux<string>.Length.ToString(faux<string>)) |> should equal "ToString"
+        Name.Of(sym<string>.Length.ToString(sym<string>)) |> should equal "ToString"
 
     [<Fact>]
     let ``Name of End of chain mix and match extension`` ()=
-        Name.Of(faux<string>.Length.ToString(faux<string>).Length.ToString().Any) |> should equal "Any"
+        Name.Of(sym<string>.Length.ToString(sym<string>).Length.ToString().Any) |> should equal "Any"
  
     [<Fact>]
     let ``Name of var`` ()=
@@ -50,6 +50,6 @@ module Raw =
 
     [<Fact>]
     let ``Call method off of an object dynamically`` ()=
-        let name = Name.Of(faux<string>.Substring(0,0))
+        let name = Name.Of(sym<string>.Substring(0,0))
         let actual = "HelloWorld" |> Dyn.invokeMember name (0,5) 
         actual |> should equal "Hello"

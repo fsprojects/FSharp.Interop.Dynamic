@@ -5,7 +5,7 @@ open FSharp.Quotations.Patterns
 open FSharp.Reflection
 module SymbolicString =
 
-    let faux<'TTarget> : 'TTarget = failwith "don't call the faux instance, meant for quotations only!"
+    let sym<'TTarget> : 'TTarget = failwith "don't call the sym function, meant for quotations only!"
     
     
     type Name =
