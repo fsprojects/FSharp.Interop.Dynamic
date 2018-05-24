@@ -28,7 +28,8 @@ test_script:
 artifacts:
   - path: 'FSharp.Interop.Dynamic\**\*.nupkg'
     name: NuGet
-
+  - path: 'Tests\coverage.*'
+    name: Coverlet
 deploy:
   - provider: NuGet
     server: https://www.myget.org/F/dynamitey-ci/api/v2/package
