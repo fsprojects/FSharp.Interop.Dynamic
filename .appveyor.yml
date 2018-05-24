@@ -1,29 +1,33 @@
 image: Visual Studio 2017
 
+version: "{build}" #until it gets updated at install
 configuration: Debug
 
 environment:
-  vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
-  hyphen: "-"
-  githubdeploy: false
-
-install:
-  - ps: nuget install FSharp.Compiler.Tools -ExcludeVersion -OutputDirectory extra
-  - ps: $env:VersionPrefix=(Select-Xml -Path ./Version.props -XPath "/Project/PropertyGroup/VersionPrefix").Node.'#text'
-
+  base_version: 5.0.0
+  github_deploy: false 
+  is_prerelease: true
+  package_version: $(BASE_VERSION)-alpha$(APPVEYOR_BUILD_NUMBER)
+  COVERALLS_REPO_TOKEN:
+    secure: WxjMN6xCAGad/rRS7HwDOhcXgXRnvrXZKYZkBK27iHGu6PcTf2YI6dlhBikAi/8n
 build: off
-
-build_script:
-  - cmd: set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%\extra\FSharp.Compiler.Tools\tools\
-  - cmd: fsi --exec ./build.fsx
-
-
 test: off
 
-artifacts:
-  - path: '**\bin\*\*.nupkg'
+install:
+  - ps: Update-AppveyorBuild -Version "$env:PACKAGE_VERSION"
+  - ps: dotnet restore /p:Version="$Env:APPVEYOR_BUILD_VERSION"
+  - ps: nuget install coveralls.net -Version 0.7.0 -OutputDirectory tools -ExcludeVersion
 
-skip_branch_with_pr: true
+build_script:
+  - ps: dotnet build -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION"
+
+test_script:
+  - ps: dotnet test -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - ps: if (Test-Path env:COVERALLS_REPO_TOKEN) { .\tools\coveralls.net\tools\csmacnz.coveralls.exe --opencover -i Tests/coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID }
+
+artifacts:
+  - path: 'FSharp.Interop.Dynamic\**\*.nupkg'
+    name: NuGet
 
 deploy:
   - provider: NuGet
@@ -32,40 +36,32 @@ deploy:
       secure: yKbBrG0QiTfXUvND1/cMMNHxH1Bgal5g7c0pWGwqvjCtKGTtWkpvE2KlZb6E2ZgB
     skip_symbols: false
     symbol_server: https://www.myget.org/F/dynamitey-ci/symbols/api/v2/package
-
+    artifact: /.*\.nupkg/
   - provider: GitHub
     artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
-    tag: v$(VersionPrefix)$(hyphen)$(vsuffix)
+    tag: v$(PACKAGE_VERSION)
     description: 'Release description'
-    auth_token:
-      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8
+    auth_token: 
+      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8 #jay's public repo token
     draft: true
     prerelease: $(is_prerelease)
     on:
-      githubdeploy: true
+      github_deploy: true
+
 
 for:
-  - branches:
-      except:
-        - /deploy-v.*/
-    environment:
-      vsuffix: "alpha$(APPVEYOR_BUILD_NUMBER)"
-      hyphen: "-"
-      githubdeploy: false
   - branches:
       only:
         - /deploy-v.*-beta.*/
     environment:
-      vsuffix: "beta$(APPVEYOR_BUILD_NUMBER)"
-      hyphen: "-"
+      package_version: $(BASE_VERSION)-beta$(APPVEYOR_BUILD_NUMBER)
       is_prerelease: true
-      githubdeploy: true
+      github_deploy: true
   - branches:
       only:
         - /deploy-v[\d,.]*/
     configuration: Release
     environment:
-      hyphen: "."
-      vsuffix: "$(APPVEYOR_BUILD_NUMBER)"
+      package_version: $(BASE_VERSION).$(APPVEYOR_BUILD_NUMBER)
       is_prerelease: false
-      githubdeploy: true
+      github_deploy: true

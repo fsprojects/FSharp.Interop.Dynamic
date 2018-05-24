@@ -18,17 +18,14 @@ namespace FSharp.Interop.Dynamic
 /// Main operators for dynamic invocation
 [<AutoOpen>]
 module TopLevelOperators=
-    open System
-    open Dynamitey
-
     ///Dynamic get property or method invocation
     let (?)  (target : obj) (name:string)  : 'TResult =
-       Dyn.invoke target (Some(name))
+       Dyn.invocation target (Member name)
 
     ///Dynamic set property
     let (?<-) (target : obj) (name : string) (value : 'TValue) : unit =
-        Dynamic.InvokeSet(target, name, value) |> ignore
+        target |> Dyn.set name value
 
     ///Prefix operator that allows direct dynamic invocation of the object
     let (!?) (target:obj) : 'TResult =
-        Dyn.invoke target None
+        Dyn.invocation target Direct
