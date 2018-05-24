@@ -170,7 +170,7 @@ module Dyn =
 
     let setChain (chainOfMembers: string seq) (value:obj) (target:obj) =
         let chainOfMembers' = String.concat "." chainOfMembers 
-        Dynamic.InvokeSet(target, chainOfMembers', value) |> ignore
+        Dynamic.InvokeSetChain(target, chainOfMembers', value) |> ignore
 
     /// dynamically call set index
     let setIndexer (indexers: 'T seq) (value:obj) (target:obj) =
