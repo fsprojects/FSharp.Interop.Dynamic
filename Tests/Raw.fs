@@ -62,3 +62,22 @@ module Raw =
         let name = Symbol.nameOf(sym<string>.Substring(0,0))
         let actual = "HelloWorld" |> Dyn.invokeMember name (0,5) 
         actual |> should equal "Hello"
+        
+    [<Fact>]
+    let ``implict convert null`` () =
+        let actual:string = (null |> Dyn.implicitConvertTo typeof<string>)
+        actual |> should equal null
+        
+    [<Fact>]
+    let ``implict convert null option`` () =
+        let actual:string option = (null |> Dyn.implicitConvertTo typeof<string option>)
+        actual |> should equal None 
+    [<Fact>]
+    let ``implict convert null fail`` () =
+        let actual ():int = null |> Dyn.implicitConvertTo typeof<int>
+        actual >> ignore |> shouldFail 
+        
+    [<Fact>]
+    let ``implict convert null fail fsharp type`` () =
+        let actual ():Calling = (null |> Dyn.implicitConvertTo typeof<Calling>)
+        actual >> ignore |> shouldFail 

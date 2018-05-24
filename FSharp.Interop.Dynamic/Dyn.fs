@@ -35,10 +35,13 @@ module Dyn =
   
     ///implict convert via reflected type
     let implicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
-        Dynamic.InvokeConvert(target, convertType, explicit = false) |> unbox<'TResult>
-
+        match target with 
+        | null -> target
+        | t -> Dynamic.InvokeConvert(t, convertType, explicit = false) 
+        |> unbox<'TResult>
+        
     ///implict convert via inferred type
-    let implicitConvert(target:obj) : 'TResult  = 
+    let implicitConvert(target:obj) : 'TResult  =
         implicitConvertTo typeof<'TResult> target
 
     ///explicit convert via reflected type

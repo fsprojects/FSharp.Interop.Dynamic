@@ -19,7 +19,7 @@ module SymbolicString =
                     let rec finalName value' =
                         match value' with
                             | ValueWithName(_, type', name) -> 
-                                {ReturnType= type'; Name= name; DeclaringType = None }
+                                { ReturnType= type'; Name= name; DeclaringType = None }
                             | NewUnionCase(caseInfo, _) -> 
                                 { ReturnType= caseInfo.DeclaringType
                                   Name= caseInfo.Name
