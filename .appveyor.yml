@@ -16,14 +16,14 @@ test: off
 install:
   - ps: Update-AppveyorBuild -Version "$env:PACKAGE_VERSION"
   - ps: dotnet restore /p:Version="$Env:APPVEYOR_BUILD_VERSION"
-  - ps: dotnet tool install coveralls.net --version 1.0.0-beta0002 --tool-path tools
+  - ps: nuget install coveralls.net -Version 1.0.0-beta0003 --OutputDirectory tools -ExcludeVersion
 
 build_script:
   - ps: dotnet build -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION"
 
 test_script:
   - ps: dotnet test -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-  - ps: .\tools\csmacnz.coveralls.exe --opencover -i Tests/coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
+  - ps: .\tools\coveralls.net\tools\csmacnz.coveralls.exe --opencover -i Tests/coverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
 
 artifacts:
   - path: 'FSharp.Interop.Dynamic\**\*.nupkg'
