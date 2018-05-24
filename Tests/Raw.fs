@@ -9,6 +9,7 @@ open FsUnit.Xunit
 open System.Linq
 open System
 open System.Collections.Generic
+open System.Dynamic
 
 module Raw =
     open System.Collections
@@ -81,3 +82,55 @@ module Raw =
     let ``implict convert null fail fsharp type`` () =
         let actual ():Calling = (null |> Dyn.implicitConvertTo typeof<Calling>)
         actual >> ignore |> shouldFail 
+       
+    [<Fact>]
+    let ``set dynamic chain`` () =
+        let expected = "1";
+        let target = ExpandoObject();
+        let target2 = ExpandoObject();
+        let target3 = ExpandoObject();
+        target?Test <- target2;
+        target2?Test2 <- target3;
+        
+        
+        target |> Dyn.setChain ["Test"; "Test2"; "Test3"] expected;
+        
+        target?Test?Test2?Test3 |> should equal expected
+    
+    [<Fact>]
+    let ``set dynamic get chain`` () =
+        let expected = "1";
+        let target = ExpandoObject();
+        let target2 = ExpandoObject();
+        let target3 = ExpandoObject();
+        target?Test <- target2;
+        target2?Test2 <- target3;
+        target3?Test3 <- expected;
+        
+        let actual = target |> Dyn.getChain ["Test"; "Test2"; "Test3"];
+        
+        actual |> should equal expected 
+        
+    [<Fact>]
+    let ``set dynamic get`` () =
+        let expected = "A";
+        let target = ExpandoObject();
+        target?prop <- expected
+        let actual = target |> Dyn.get "prop"
+        actual |> should equal expected
+     
+    [<Fact>]
+    let ``set dynamic set`` () =
+        let expected = "A";
+        let target = ExpandoObject();
+        target |> Dyn.set "prop" expected
+        let actual = target?prop
+        actual |> should equal expected  
+        
+    [<Fact>]  
+    let ``call static generic method`` () =
+        let expected = Enumerable.Empty<int>()
+        let target = Dyn.staticTarget<Enumerable>
+        let actual: int seq = target |> Dyn.invokeGeneric "Empty" [typeof<int>] ()
+        actual |> should equal expected  
+        
