@@ -18,6 +18,8 @@ Platofrm | Status
 Windows | [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832/branch/master)
 Mac     | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/2)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic)
 Linux   | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/1)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic)
+Coverage| [![Coverage Status](https://coveralls.io/repos/github/fsprojects/FSharp.Interop.Dynamic/badge.svg?branch=master)](https://coveralls.io/github/fsprojects/FSharp.Interop.Dynamic?branch=master)
+ 
  
 # Bleeding edge feed MyGet
 
