@@ -16,7 +16,7 @@ test: off
 install:
   - ps: Update-AppveyorBuild -Version "$env:PACKAGE_VERSION"
   - ps: dotnet restore /p:Version="$Env:APPVEYOR_BUILD_VERSION"
-  - ps: nuget install coveralls.net -Version 1.0.0-beta0003 -OutputDirectory tools -ExcludeVersion
+  - ps: nuget install coveralls.net -Version 0.7.0 -OutputDirectory tools -ExcludeVersion
 
 build_script:
   - ps: dotnet build -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION"
