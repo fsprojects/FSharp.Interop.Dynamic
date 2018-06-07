@@ -10,9 +10,25 @@ open System.Linq
 open System
 open System.Collections.Generic
 open System.Dynamic
+open Dynamitey
+
+
+type FieldObj (i:int) as this=
+    [<DefaultValue>]
+    val mutable Field : int
+    do 
+      this.Field<- i
 
 module Raw =
     open System.Collections
+
+    [<Fact>] 
+    let ``Name of Field`` ()=
+        let fieldName = Symbol.nameOf(sym<FieldObj>.Field)
+        fieldName |> should equal "Field"
+        let target = FieldObj(7)
+        target |> Dyn.get fieldName |> should equal 7
+
 
     [<Fact>] 
     let ``Name of Call`` ()=
@@ -134,3 +150,10 @@ module Raw =
         let actual: int seq = target |> Dyn.invokeGeneric "Empty" [typeof<int>] ()
         actual |> should equal expected  
         
+
+    [<Fact>]  
+    let ``call static generic method typeof`` () =
+        let expected = Enumerable.Empty<int>()
+        let target = Dyn.staticContext (typeof<Enumerable>)
+        let actual: int seq = target |> Dyn.invokeGeneric "Empty" [typeof<int>] ()
+        actual |> should equal expected  

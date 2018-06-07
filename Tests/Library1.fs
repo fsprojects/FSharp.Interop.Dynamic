@@ -20,15 +20,14 @@ open Microsoft.CSharp.RuntimeBinder
 
 open System.Linq.Expressions
 
-module Tests =
-
 (***hide***)
-    type TestEvent()=
-        let event1 = new Event<EventHandler<EventArgs>, EventArgs>()
-        [<CLIEvent>]
-        member __.Event = event1.Publish
-        member __.OnEvent(obj:Object, args:EventArgs)=
-           event1.Trigger(obj,args)
+type TestEvent()=
+    let event1 = new Event<EventHandler<EventArgs>, EventArgs>()
+    [<CLIEvent>]
+    member __.Event = event1.Publish
+    member __.OnEvent(obj:Object, args:EventArgs)=
+       event1.Trigger(obj,args)
+
 
 (***hide***)
     type TestFuncs()=
@@ -52,6 +51,10 @@ module Tests =
         override __.TrySetIndex(_, indexes, value) =
             stuff.Add((indexes.[0], indexes.[1]),value)
             true
+            
+module Tests =
+
+
 
 
     (**
