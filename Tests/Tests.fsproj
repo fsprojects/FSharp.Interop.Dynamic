@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="Library1.fs" />
     <Compile Include="Raw.fs" />
+    <Compile Include="Obsolete.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
   <ItemGroup>
