@@ -21,7 +21,7 @@ Linux   | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fspr
 Coverage| [![codecov](https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic/branch/master/graph/badge.svg)](https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic) [![Coverage Status](https://coveralls.io/repos/github/fsprojects/FSharp.Interop.Dynamic/badge.svg?branch=master)](https://coveralls.io/github/fsprojects/FSharp.Interop.Dynamic?branch=master)
  
  
-# Bleeding edge feed MyGet
+# Bleeding edge feed on MyGet
 
 [![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/FSharp.Interop.Dynamic.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/FSharp.Interop.Dynamic)
 
