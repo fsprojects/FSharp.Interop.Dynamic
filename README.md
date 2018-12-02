@@ -4,9 +4,9 @@
 # FSharp.Interop.Dynamic [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.Dynamic/)
 
 
-F# Dynamic Operator using the DLR .net Std 1.6, .net 4.0, & (Portable Class Library WinRT, .NET 4.5, Silverlight 5)
+F# Dynamic Operator using the DLR. Available on .NET Standard 1.6, .NET Framework 4.0 and Portable Class Library Profile 47 ( WinRT, .NET 4.5, Silverlight 5)
 
-Install from [nuget](https://nuget.org/packages/FSharp.Interop.Dynamic/)
+Install from [NuGet](https://nuget.org/packages/FSharp.Interop.Dynamic/)
 ```
 PM> Install-Package FSharp.Interop.Dynamic
 ```
@@ -59,9 +59,9 @@ x.ViewBag?Name<-"George"
 
 # Caveats:
 
-The `dlr` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
+The `DLR` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
 
-.net core 2.0.0 has a major bug in the c# dynamic keyword with nested classes inside of generic classes. You will know it from a substring argument length exception. .net 4.0, .net core 1.X & .net core 2.0.3<= are okay.
+[.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11) You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ are unaffected.
 
 ## Maintainer(s)
 
