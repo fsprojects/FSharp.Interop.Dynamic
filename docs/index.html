@@ -38,8 +38,8 @@
 <p><a href="http://issuestats.com/github/fsprojects/FSharp.Interop.Dynamic"><img src="http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/issue" alt="Issue Stats" /></a>
 <a href="http://issuestats.com/github/fsprojects/FSharp.Interop.Dynamic"><img src="http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/pr" alt="Issue Stats" /></a></p>
 <h1>FSharp.Interop.Dynamic <a href="https://www.nuget.org/packages/FSharp.Interop.Dynamic/"><img src="http://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat" alt="NuGet Status" /></a></h1>
-<p>F# Dynamic Operator using the DLR .net Std 1.6, .net 4.0, &amp; (Portable Class Library WinRT, .NET 4.5, Silverlight 5)</p>
-<p>Install from <a href="https://nuget.org/packages/FSharp.Interop.Dynamic/">nuget</a></p>
+<p>The F# Dynamic Operator, powered by the DLR. Available on .NET Standard 1.6, .NET Framework 4.0 and Portable Class Library Profile 47 (WinRT, .NET 4.5, Silverlight 5)</p>
+<p>Install from <a href="https://nuget.org/packages/FSharp.Interop.Dynamic/">NuGet</a></p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">PM</span><span class="o">&gt;</span> <span class="id">Install</span><span class="o">-</span><span class="id">Package</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">Dynamic</span>
@@ -67,10 +67,14 @@
 <td><p>Linux</p></td>
 <td><p><a href="https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic"><img src="https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/1" alt="Build Status" /></a></p></td>
 </tr>
+<tr class="even">
+<td><p>Coverage</p></td>
+<td><p><a href="https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic"><img src="https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic/branch/master/graph/badge.svg" alt="codecov" /></a> <a href="https://coveralls.io/github/fsprojects/FSharp.Interop.Dynamic?branch=master"><img src="https://coveralls.io/repos/github/fsprojects/FSharp.Interop.Dynamic/badge.svg?branch=master" alt="Coverage Status" /></a></p></td>
+</tr>
 </tbody>
 </table>
 
-<h1>Bleeding edge feed MyGet</h1>
+<h1>Bleeding edge feed on MyGet</h1>
 <p><a href="https://www.myget.org/feed/dynamitey-ci/package/nuget/FSharp.Interop.Dynamic"><img src="https://img.shields.io/myget/dynamitey-ci/vpre/FSharp.Interop.Dynamic.svg" alt="MyGet Pre Release" /></a></p>
 <h1>Usage</h1>
 <p><code>target?Property</code>, <code>target?Property&lt;-value</code>, and <code>target?Method(arg,arg2)</code> allow you to dynamically get/set properties and call methods</p>
@@ -112,8 +116,8 @@
 </tr>
 </table>
 <h1>Caveats:</h1>
-<p>The <code>dlr</code> is incompatible with interface explicit members, so are these operators, <a href="http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c">just like C#'s <code>dynamic</code> keyword</a>.</p>
-<p>.net core 2.0.0 has a major bug in the c# dynamic keyword with nested classes inside of generic classes. You will know it from a substring argument length exception. .net 4.0, .net core 1.X &amp; .net core 2.0.3&lt;= are okay.</p>
+<p>The <code>DLR</code> is incompatible with interface explicit members, so are these operators, <a href="http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c">just like C#'s <code>dynamic</code> keyword</a>.</p>
+<p><a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11">.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.</a>. You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ are unaffected.</p>
 <h2>Maintainer(s)</h2>
 <ul>
 <li><a href="https://github.com/jbtule">@jbtule</a></li>
