@@ -22,51 +22,43 @@ type Calling =
     | Member of string
     | Direct
 
-///Functions backing the operators and more
 module Dyn =
     open Dynamitey
     open Microsoft.CSharp.RuntimeBinder
     open FSharp.Reflection
 
-    ///allow access to static context for dynamic invocation of static methods
     let staticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
 
     let staticTarget<'TTarget> = InvokeContext.CreateStatic.Invoke(typeof<'TTarget>)
   
-    ///implict convert via reflected type
     let implicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
         match target with 
         | null -> target
         | t -> Dynamic.InvokeConvert(t, convertType, explicit = false) 
         |> unbox<'TResult>
         
-    ///implict convert via inferred type
+    
     let implicitConvert(target:obj) : 'TResult  =
         implicitConvertTo typeof<'TResult> target
 
-    ///explicit convert via reflected type
+   
     let explicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
         Dynamic.InvokeConvert(target, convertType, explicit = true) |> unbox<'TResult>
 
-    ///explicit convert via inferred type
     let explicitConvert (target:obj) : 'TResult  = 
         explicitConvertTo typeof<'TResult> target
 
-    ///allow marking args with names for dlr invoke
     let namedArg (name:string) (argValue:obj) =
         InvokeArg(name, argValue)
 
-    ///Dynamically call `+=` on member
     let memberAddAssign (memberName:string) (value:obj) (target:obj) =
         Dynamic.InvokeAddAssignMember(target, memberName, value)
     
-    ///Dynamically call `-=` on member
+    
     let memberSubtractAssign (memberName:string) (value:obj) (target:obj) =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
 
-    /// main workhouse method; Some(methodName) or just None to invoke without name;
-    /// infered casting with automatic implicit convert.
-    /// target not last because result could be infered to be fsharp style curried function
+  
     let invocation (target:obj) (memberName:Calling)  : 'TResult =
         let resultType = typeof<'TResult>
         //Helper to dynamically call call FSharpFuncs
@@ -139,15 +131,14 @@ module Dyn =
                 | _____________________ -> result |> finalConvertResult returnType
             FSharpValue.MakeFunction(resultType, lambda) |> unbox<'TResult>
 
-    //allows result to be called like a function
     let invokeDirect value (target:obj) : 'TResult =
         invocation target Direct value
 
-    //calls member whose result can be called like a function
+   
     let invokeMember (memberName:string) value (target:obj) : 'TResult =
         invocation target (Member memberName) value
 
-    //calls member and specify's generic parameters and whose result can be called like a function
+
     let invokeGeneric (memberName:string) (typeArgs:Type seq) value (target:obj) : 'TResult =
         let typeArgs' = typeArgs |> Array.ofSeq
         let genericMember = GenericMember (memberName, typeArgs')
@@ -160,7 +151,7 @@ module Dyn =
         let chainOfMembers' = String.concat "." chainOfMembers 
         Dynamic.InvokeGetChain(target, chainOfMembers') |> invocation <| Direct
  
-    ///dynamically call get index
+   
     let getIndexer (indexers: 'T seq) (target:obj): 'TResult =
         let indexes = indexers |> Seq.map box  |> Seq.toArray
         Dynamic.InvokeGetIndex(target, indexes) |> invocation <| Direct

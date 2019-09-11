@@ -157,4 +157,4 @@ $RECYCLE.BIN/
 .fake/
 .nuget/NuGet.exe
 *.userprefs
-.ionide/symbolCache.db
+.ionide/
