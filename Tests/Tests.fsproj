@@ -3,7 +3,7 @@
     <TargetFrameworks>netcoreapp3.0;netcoreapp2.1;net46</TargetFrameworks>
     <TestingTarget Condition="'$(TestingTarget)' == ''">netcoreapp2.1</TestingTarget>
     <TargetFrameworks Condition="'$(WithoutCrossCompile)' != ''">$(TestingTarget)</TargetFrameworks>
-    <OutputType>Exe</OutputType>
+    <OutputType Condition="'$(TargetFramework)' == 'net46'" >Exe</OutputType>
   </PropertyGroup>
   <Import Project="../monofx.props" />
   <ItemGroup>
