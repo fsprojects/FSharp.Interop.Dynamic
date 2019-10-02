@@ -10,6 +10,11 @@ jobs:
       matrix:
          os: [ubuntu-latest, windows-latest, macOS-latest]
          dotnet: [2.1.802, 3.0.100]
+         include:
+            - dotnet: 2.1.802
+              target: netcoreapp2.1
+            - dotnet: 3.0.100
+              target: netcoreapp3.0
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
@@ -17,8 +22,14 @@ jobs:
       with:
         dotnet-version: ${{ matrix.dotnet }}
     - name: Restore NuGet
+      env:
+        TestingTarget: ${{ matrix.target }}
       run: dotnet restore
     - name: Build with dotnet ${{ matrix.dotnet }}
+      env:
+        TestingTarget: ${{ matrix.target }}
       run: dotnet build
     - name: Test with xUnit
+      env:
+        TestingTarget: ${{ matrix.target }}
       run: dotnet test --no-build
