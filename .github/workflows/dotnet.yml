@@ -8,8 +8,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-         dotnet: [2.1.802, 3.0.100]
          os: [ubuntu-latest, windows-latest, macOS-latest]
+         dotnet: [2.1.802, 3.0.100]
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
@@ -21,4 +21,4 @@ jobs:
     - name: Build with dotnet ${{ matrix.dotnet }}
       run: dotnet build
     - name: Test with xUnit
-      run: dotnet xunit -nobuild 
+      run: dotnet test --no-build
