@@ -44,7 +44,7 @@ deploy:
     tag: v$(PACKAGE_VERSION)
     description: 'Release description'
     auth_token: 
-      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8 #jay's public repo token
+      secure: sAkwkj/uWppL6/hBqda0g4SQ4OZ1cUDSe3Sf7jiHovAdQlizMunbVA8FQL5tPw6U #jay's public repo token
     draft: true
     prerelease: $(is_prerelease)
     on:
