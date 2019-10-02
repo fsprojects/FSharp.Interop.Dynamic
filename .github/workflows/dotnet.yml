@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-    name: Test ${{ matrix.os }} for dotnet ${{ matrix.dotnet }}
+    name: ${{ matrix.os }}/dotnet ${{ matrix.dotnet }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -16,6 +16,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ matrix.dotnet }}
+    - name: Restore NuGet
+      run: dotnet restore
     - name: Build with dotnet ${{ matrix.dotnet }}
       run: dotnet build
     - name: Test with xUnit
