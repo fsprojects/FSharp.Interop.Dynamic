@@ -5,15 +5,17 @@
     <Description>dynamic operator using the DLR</Description>
     <Company>Ekon Benefits</Company>
     <Authors>Jay Tuley</Authors>
-    <Copyright>Copyright 2011-2017 Ekon Benefits</Copyright>
+    <Copyright>Copyright 2011-2019 Ekon Benefits</Copyright>
     <PackageProjectUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic</PackageProjectUrl>
-    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>fsharp dynamic dlr</PackageTags>
     <IncludeSymbols Condition="'$(OS)' == 'Windows_NT'">True</IncludeSymbols>
     <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
     <GeneratePackageOnBuild Condition="'$(APPVEYOR)' == 'True'">True</GeneratePackageOnBuild>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <DisableImplicitFSharpCoreReference>True</DisableImplicitFSharpCoreReference>
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
   </PropertyGroup>

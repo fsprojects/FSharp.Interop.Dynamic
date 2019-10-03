@@ -20,14 +20,14 @@ install:
   - ps: choco install codecov
 build_script:
   - ps: dotnet build -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION"
-
+  - ps: dotnet build -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION" /p:SymbolPackageFormat=symbols.nupkg
 test_script:
   - ps: dotnet test -c "$Env:CONFIGURATION" /p:Version="$Env:APPVEYOR_BUILD_VERSION" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   - ps: if (Test-Path env:COVERALLS_REPO_TOKEN) { .\tools\coveralls.net\tools\csmacnz.coveralls.exe --opencover -i Tests/coverage.xml --useRelativePaths --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_BUILD_NUMBER --serviceName appveyor}
   - ps: codecov -f Tests/coverage.xml
   
 artifacts:
-  - path: 'FSharp.Interop.Dynamic\**\*.nupkg'
+  - path: 'FSharp.Interop.Dynamic\**\*.*nupkg'
     name: NuGet
   - path: 'Tests\coverage.*'
     name: Coverlet
