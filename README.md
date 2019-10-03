@@ -10,7 +10,7 @@ PM> Install-Package FSharp.Interop.Dynamic
 
 # Build Status
 
-Platofrm | Status
+Platform | Status
 -------- | ------
 Nuget Deployment | [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832/branch/master)
 Mac/Linux/Windows | [![Action Status](https://github.com/fsprojects/FSharp.Interop.Dynamic/workflows/.NET%20Core%20CI/badge.svg)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions?workflow=.NET+Core+CI)
