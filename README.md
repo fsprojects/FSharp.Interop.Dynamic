@@ -1,10 +1,7 @@
-[![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/issue)](http://issuestats.com/github/fsprojects/FSharp.Interop.Dynamic)
-[![Issue Stats](http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/pr)](http://issuestats.com/github/fsprojects/FSharp.Interop.Dynamic)
-
 # FSharp.Interop.Dynamic [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.Dynamic/)
 
 
-The F# Dynamic Operator, powered by the DLR. Available on .NET Standard 1.6, .NET Framework 4.0 and Portable Class Library Profile 47 (WinRT, .NET 4.5, Silverlight 5)
+The F# Dynamic Operator, powered by the DLR. Compiled for .NET Standard 2.0, .NET Standard 1.6, .NET Framework 4.5
 
 Install from [NuGet](https://nuget.org/packages/FSharp.Interop.Dynamic/)
 ```
@@ -15,9 +12,8 @@ PM> Install-Package FSharp.Interop.Dynamic
 
 Platofrm | Status
 -------- | ------
-Windows | [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832/branch/master)
-Mac     | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/2)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic)
-Linux   | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/1)](https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic)
+Nuget Deployment | [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832/branch/master)
+Mac/Linux/Windows | [![Action Status](https://github.com/fsprojects/FSharp.Interop.Dynamic/workflows/.NET%20Core%20CI/badge.svg)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions?workflow=.NET+Core+CI)
 Coverage| [![codecov](https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic/branch/master/graph/badge.svg)](https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic) [![Coverage Status](https://coveralls.io/repos/github/fsprojects/FSharp.Interop.Dynamic/badge.svg?branch=master)](https://coveralls.io/github/fsprojects/FSharp.Interop.Dynamic?branch=master)
  
  
