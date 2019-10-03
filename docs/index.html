@@ -35,10 +35,8 @@
       <div class="row">
         <div class="span9" id="main">
           
-<p><a href="http://issuestats.com/github/fsprojects/FSharp.Interop.Dynamic"><img src="http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/issue" alt="Issue Stats" /></a>
-<a href="http://issuestats.com/github/fsprojects/FSharp.Interop.Dynamic"><img src="http://issuestats.com/github/fsprojects/FSharp.Dynamic/badge/pr" alt="Issue Stats" /></a></p>
 <h1>FSharp.Interop.Dynamic <a href="https://www.nuget.org/packages/FSharp.Interop.Dynamic/"><img src="http://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat" alt="NuGet Status" /></a></h1>
-<p>The F# Dynamic Operator, powered by the DLR. Available on .NET Standard 1.6, .NET Framework 4.0 and Portable Class Library Profile 47 (WinRT, .NET 4.5, Silverlight 5)</p>
+<p>The F# Dynamic Operator, powered by the DLR. Compiled for .NET Standard 2.0, .NET Standard 1.6, .NET Framework 4.5</p>
 <p>Install from <a href="https://nuget.org/packages/FSharp.Interop.Dynamic/">NuGet</a></p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 </pre></td>
@@ -50,24 +48,20 @@
 <table>
 <thead>
 <tr class="header">
-<th><p>Platofrm</p></th>
+<th><p>Platform</p></th>
 <th><p>Status</p></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><p>Windows</p></td>
+<td><p>Nuget Deployment</p></td>
 <td><p><a href="https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832/branch/master"><img src="https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master?svg=true" alt="Build status" /></a></p></td>
 </tr>
 <tr class="even">
-<td><p>Mac</p></td>
-<td><p><a href="https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic"><img src="https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/2" alt="Build Status" /></a></p></td>
+<td><p>Mac/Linux/Windows</p></td>
+<td><p><a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/actions?workflow=.NET+Core+CI"><img src="https://github.com/fsprojects/FSharp.Interop.Dynamic/workflows/.NET%20Core%20CI/badge.svg" alt="Action Status" /></a></p></td>
 </tr>
 <tr class="odd">
-<td><p>Linux</p></td>
-<td><p><a href="https://travis-ci.org/fsprojects/FSharp.Interop.Dynamic"><img src="https://travis-matrix-badges.herokuapp.com/repos/fsprojects/FSharp.Interop.Dynamic/branches/master/1" alt="Build Status" /></a></p></td>
-</tr>
-<tr class="even">
 <td><p>Coverage</p></td>
 <td><p><a href="https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic"><img src="https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic/branch/master/graph/badge.svg" alt="codecov" /></a> <a href="https://coveralls.io/github/fsprojects/FSharp.Interop.Dynamic?branch=master"><img src="https://coveralls.io/repos/github/fsprojects/FSharp.Interop.Dynamic/badge.svg?branch=master" alt="Coverage Status" /></a></p></td>
 </tr>
@@ -93,31 +87,83 @@
 </code></pre></td>
 </tr>
 </table>
-<h3>SignalR</h3>
+<h3>MVC ViewBag</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="o">x</span><span class="pn">.</span><span class="id">ViewBag</span><span class="o">?</span><span class="id">Name</span><span class="k">&lt;-</span><span class="s">&quot;George&quot;</span>
+</code></pre></td>
+</tr>
+</table>
+<h3>Dynamitey</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 12)" onmouseover="showTip(event, 'fs3', 12)" class="id">Dynamic</span>
+<span class="k">open</span> <span class="id">Dynamitey</span><span class="pn">.</span><span class="id">DynamicObjects</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">ComBinder</span> <span class="o">=</span> <span class="id">LateType</span><span class="pn">(</span><span class="s">&quot;System.Dynamic.ComBinder, System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a&quot;</span><span class="pn">)</span>
+
+<span class="k">let</span> <span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="fn">getPropertyNames</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs7', 15)" onmouseover="showTip(event, 'fs7', 15)" class="id">target</span><span class="pn">:</span><span onmouseout="hideTip(event, 'fs8', 16)" onmouseover="showTip(event, 'fs8', 16)" class="rt">obj</span><span class="pn">)</span> <span class="o">=</span>
+  <span onmouseout="hideTip(event, 'fs9', 17)" onmouseover="showTip(event, 'fs9', 17)" class="k">seq</span> <span class="pn">{</span>
+    <span class="k">yield!</span> <span onmouseout="hideTip(event, 'fs7', 18)" onmouseover="showTip(event, 'fs7', 18)" class="fn">target</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs10', 19)" onmouseover="showTip(event, 'fs10', 19)" class="id">GetType</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">GetTypeInfo</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">GetProperties</span><span class="pn">(</span><span class="pn">)</span><span class="pn">.</span><span class="id">Select</span><span class="pn">(</span><span class="k">fun</span> <span class="id">it</span> <span class="k">-&gt;</span> <span class="id">it</span><span class="pn">.</span><span class="id">Name</span><span class="pn">)</span>
+    <span class="k">if</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs5', 20)" onmouseover="showTip(event, 'fs5', 20)" class="id">ComBinder</span><span class="pn">.</span><span class="id">IsAvailable</span><span class="pn">)</span> <span class="k">then</span>
+      <span class="k">yield!</span> <span onmouseout="hideTip(event, 'fs5', 21)" onmouseover="showTip(event, 'fs5', 21)" class="id">ComBinder</span><span class="o">?</span><span class="id">GetDynamicDataMemberNames</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs7', 22)" onmouseover="showTip(event, 'fs7', 22)" class="id">target</span><span class="pn">)</span>
+  <span class="pn">}</span>
+</code></pre></td>
+</tr>
+</table>
+<h3>Python Interop</h3>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span class="id">Python</span><span class="pn">.</span><span class="id">Runtime</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 23)" onmouseover="showTip(event, 'fs1', 23)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 24)" onmouseover="showTip(event, 'fs2', 24)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 25)" onmouseover="showTip(event, 'fs3', 25)" class="id">Dynamic</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 26)" onmouseover="showTip(event, 'fs1', 26)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 27)" onmouseover="showTip(event, 'fs2', 27)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 28)" onmouseover="showTip(event, 'fs3', 28)" class="id">Dynamic</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs11', 29)" onmouseover="showTip(event, 'fs11', 29)" class="id">Operators</span>
+<span class="k">do</span>
+  <span class="k">use</span> <span onmouseout="hideTip(event, 'fs12', 30)" onmouseover="showTip(event, 'fs12', 30)" class="id">__</span> <span class="o">=</span> <span class="id">Py</span><span class="pn">.</span><span class="id">GIL</span><span class="pn">(</span><span class="pn">)</span>
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs13', 31)" onmouseover="showTip(event, 'fs13', 31)" class="id">math</span> <span class="o">=</span> <span class="id">Py</span><span class="pn">.</span><span class="id">Import</span><span class="pn">(</span>
+  <span onmouseout="hideTip(event, 'fs13', 32)" onmouseover="showTip(event, 'fs13', 32)" class="id">math</span><span class="o">?</span><span onmouseout="hideTip(event, 'fs14', 33)" onmouseover="showTip(event, 'fs14', 33)" class="id">cos</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs13', 34)" onmouseover="showTip(event, 'fs13', 34)" class="id">math</span><span class="o">?</span><span class="id">pi</span> <span class="o">?*?</span> <span class="n">2</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs15', 35)" onmouseover="showTip(event, 'fs15', 35)" class="fn">printfn</span> 
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs16', 36)" onmouseover="showTip(event, 'fs16', 36)" class="id">sin</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs13', 37)" onmouseover="showTip(event, 'fs13', 37)" class="id">math</span><span class="o">?</span><span onmouseout="hideTip(event, 'fs16', 38)" onmouseover="showTip(event, 'fs16', 38)" class="id">sin</span>
+  <span onmouseout="hideTip(event, 'fs16', 39)" onmouseover="showTip(event, 'fs16', 39)" class="fn">sin</span> <span class="n">5</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs15', 40)" onmouseover="showTip(event, 'fs15', 40)" class="fn">printfn</span> 
+  <span class="id">math</span><span class="o">?</span><span onmouseout="hideTip(event, 'fs14', 41)" onmouseover="showTip(event, 'fs14', 41)" class="id">cos</span><span class="pn">(</span><span class="n">5</span><span class="pn">)</span> <span class="o">?+?</span> <span onmouseout="hideTip(event, 'fs16', 42)" onmouseover="showTip(event, 'fs16', 42)" class="id">sin</span><span class="pn">(</span><span class="n">5</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs15', 43)" onmouseover="showTip(event, 'fs15', 43)" class="id">printfn</span> 
+</code></pre></td>
+</tr>
+</table>
+<h3>SignalR (.net framework version)</h3>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
 <span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 10)" onmouseover="showTip(event, 'fs1', 10)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 11)" onmouseover="showTip(event, 'fs2', 11)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 12)" onmouseover="showTip(event, 'fs3', 12)" class="id">Dynamic</span>
-<span class="k">type</span> <span class="rt">MyHub</span> <span class="o">=</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs1', 44)" onmouseover="showTip(event, 'fs1', 44)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs2', 45)" onmouseover="showTip(event, 'fs2', 45)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 46)" onmouseover="showTip(event, 'fs3', 46)" class="id">Dynamic</span>
+<span class="k">type</span> <span class="id">MyHub</span> <span class="o">=</span>
     <span class="k">inherit</span> <span class="id">Hub</span>
-    <span class="k">member</span> <span onmouseout="hideTip(event, 'fs5', 13)" onmouseover="showTip(event, 'fs5', 13)" class="id">x</span><span class="pn">.</span><span class="fn">Send</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs6', 14)" onmouseover="showTip(event, 'fs6', 14)" class="id">name</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs7', 15)" onmouseover="showTip(event, 'fs7', 15)" class="rt">string</span><span class="pn">)</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs8', 16)" onmouseover="showTip(event, 'fs8', 16)" class="id">message</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs7', 17)" onmouseover="showTip(event, 'fs7', 17)" class="rt">string</span><span class="pn">)</span> <span class="o">=</span>
-        <span class="k">base</span><span class="pn">.</span><span class="id">Clients</span><span class="pn">.</span><span class="id">All</span><span class="o">?</span><span class="id">addMessage</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs6', 18)" onmouseover="showTip(event, 'fs6', 18)" class="id">name</span><span class="pn">,</span><span onmouseout="hideTip(event, 'fs8', 19)" onmouseover="showTip(event, 'fs8', 19)" class="id">message</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs9', 20)" onmouseover="showTip(event, 'fs9', 20)" class="fn">ignore</span>
-</code></pre></td>
-</tr>
-</table>
-<h3>MVC ViewBag</h3>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span onmouseout="hideTip(event, 'fs5', 21)" onmouseover="showTip(event, 'fs5', 21)" class="o">x</span><span class="pn">.</span><span class="id">ViewBag</span><span class="o">?</span><span class="id">Name</span><span class="k">&lt;-</span><span class="s">&quot;George&quot;</span>
+    <span class="k">member</span> <span class="id">x</span><span class="pn">.</span><span class="id">Send</span> <span class="pn">(</span><span class="id">name</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs17', 47)" onmouseover="showTip(event, 'fs17', 47)" class="id">string</span><span class="pn">)</span> <span class="pn">(</span><span class="id">message</span> <span class="pn">:</span> <span onmouseout="hideTip(event, 'fs17', 48)" onmouseover="showTip(event, 'fs17', 48)" class="id">string</span><span class="pn">)</span> <span class="o">=</span>
+        <span class="k">base</span><span class="pn">.</span><span class="id">Clients</span><span class="pn">.</span><span class="id">All</span><span class="o">?</span><span class="id">addMessage</span><span class="pn">(</span><span class="id">name</span><span class="pn">,</span><span class="id">message</span><span class="pn">)</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs18', 49)" onmouseover="showTip(event, 'fs18', 49)" class="id">ignore</span>
 </code></pre></td>
 </tr>
 </table>
 <h1>Caveats:</h1>
 <p>The <code>DLR</code> is incompatible with interface explicit members, so are these operators, <a href="http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c">just like C#'s <code>dynamic</code> keyword</a>.</p>
-<p><a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11">.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.</a>. You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ are unaffected.</p>
+<p><a href="https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11">.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.</a>. You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ and later are unaffected.</p>
 <h2>Maintainer(s)</h2>
 <ul>
 <li><a href="https://github.com/jbtule">@jbtule</a></li>
@@ -129,11 +175,20 @@
 <div class="tip" id="fs2">namespace FSharp.Interop</div>
 <div class="tip" id="fs3">namespace FSharp.Interop.Dynamic</div>
 <div class="tip" id="fs4">val ex1 : obj</div>
-<div class="tip" id="fs5">val x : MyHub</div>
-<div class="tip" id="fs6">val name : string</div>
-<div class="tip" id="fs7">Multiple items<br />val string : value:&#39;T -&gt; string<br /><br />--------------------<br />type string = System.String</div>
-<div class="tip" id="fs8">val message : string</div>
-<div class="tip" id="fs9">val ignore : value:&#39;T -&gt; unit</div>
+<div class="tip" id="fs5">val ComBinder : obj</div>
+<div class="tip" id="fs6">val getPropertyNames : target:obj -&gt; seq&lt;&#39;a&gt;</div>
+<div class="tip" id="fs7">val target : obj</div>
+<div class="tip" id="fs8">type obj = System.Object</div>
+<div class="tip" id="fs9">Multiple items<br />val seq : sequence:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;<br /><br />--------------------<br />type seq&lt;&#39;T&gt; = System.Collections.Generic.IEnumerable&lt;&#39;T&gt;</div>
+<div class="tip" id="fs10">System.Object.GetType() : System.Type</div>
+<div class="tip" id="fs11">module Operators<br /><br />from FSharp.Interop.Dynamic</div>
+<div class="tip" id="fs12">val __ : &#39;a (requires &#39;a :&gt; System.IDisposable)</div>
+<div class="tip" id="fs13">val math : &#39;a</div>
+<div class="tip" id="fs14">val cos : value:&#39;T -&gt; &#39;T (requires member Cos)</div>
+<div class="tip" id="fs15">val printfn : format:Printf.TextWriterFormat&lt;&#39;T&gt; -&gt; &#39;T</div>
+<div class="tip" id="fs16">val sin : value:&#39;T -&gt; &#39;T (requires member Sin)</div>
+<div class="tip" id="fs17">Multiple items<br />val string : value:&#39;T -&gt; string<br /><br />--------------------<br />type string = System.String</div>
+<div class="tip" id="fs18">val ignore : value:&#39;T -&gt; unit</div>
 
         </div>
         <div class="span3">
