@@ -40,7 +40,7 @@ deploy:
     symbol_server: https://www.myget.org/F/dynamitey-ci/symbols/api/v2/package
     artifact: /.*\.nupkg/
   - provider: GitHub
-    artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
+    artifact: /.*\.[s]?nupkg/           # upload all NuGet packages to release assets
     tag: v$(PACKAGE_VERSION)
     description: 'Release description'
     auth_token: 
