@@ -38,7 +38,45 @@ ex1?Test<-"Hi"//Set Dynamic Property
 ex1?Test //Get Dynamic
 ```
 
-### SignalR
+### MVC ViewBag
+
+```fsharp
+x.ViewBag?Name<-"George"
+```
+
+### Dynamitey
+
+```fsharp
+open FSharp.Interop.Dynamic
+open Dynamitey.DynamicObjects
+
+let ComBinder = LateType("System.Dynamic.ComBinder, System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")
+
+let getPropertyNames (target:obj) =
+  seq {
+    yield! target.GetType().GetTypeInfo().GetProperties().Select(fun it -> it.Name)
+    if (ComBinder.IsAvailable) then
+      yield! ComBinder?GetDynamicDataMemberNames(target)
+  }
+
+```
+
+
+### Python Interop
+```fsharp
+open Python.Runtime
+open FSharp.Interop.Dynamic
+open FSharp.Interop.Dynamic.Operators
+do
+  use __ = Py.GIL()
+  let math = Py.Import(“math”)
+  math?cos(math?pi ?*? 2) |> printfn “%O”
+  let sin = math?sin
+  sin 5 |> printfn “%O”
+  math?cos(5) ?+? sin(5) |> printfn “%O”
+```
+
+### SignalR (.net framework version)
 
 ```fsharp
 open FSharp.Interop.Dynamic
@@ -47,17 +85,12 @@ type MyHub =
     member x.Send (name : string) (message : string) =
         base.Clients.All?addMessage(name,message) |> ignore
 ```
-### MVC ViewBag
-
-```fsharp
-x.ViewBag?Name<-"George"
-```
 
 # Caveats:
 
 The `DLR` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
 
-[.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11). You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ are unaffected.
+[.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11). You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ and later are unaffected.
 
 ## Maintainer(s)
 
