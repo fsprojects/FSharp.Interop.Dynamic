@@ -63,17 +63,46 @@ let getPropertyNames (target:obj) =
 
 
 ### Python Interop
+
+Translated from this example C# code: https://github.com/SciSharp/pythonnet#example
+
 ```fsharp
 open Python.Runtime
 open FSharp.Interop.Dynamic
 open FSharp.Interop.Dynamic.Operators
+
 do
   use __ = Py.GIL()
-  let math = Py.Import(“math”)
-  math?cos(math?pi ?*? 2) |> printfn “%O”
-  let sin = math?sin
-  sin 5 |> printfn “%O”
-  math?cos(5) ?+? sin(5) |> printfn “%O”
+
+  let math = Py.Import("numpy")
+  np?cos(np?pi ?*? 2)
+  |> printfn "%O"
+
+  let sin: obj -> obj = np?sin
+  sin 5 |> printfn "%O"
+
+  np?cos 5 ?+? sin 5
+  |> printfn "%O"
+
+  let a: obj = np?array([| 1.; 2.; 3. |])
+  printfn "%O" a?dtype
+
+  let b: obj = np?array([| 6.; 5.; 4. |], Dyn.namedArg "dtype" np?int32)
+  printfn "%O" b?dtype
+
+  a ?*? b
+  |> printfn "%O"
+```
+
+Output
+
+```
+1.0
+-0.9589242746631385
+-0.6752620891999122
+float64
+int32
+[ 6. 10. 12.]
 ```
 
 ### SignalR (.net framework version)
