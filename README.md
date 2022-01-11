@@ -74,7 +74,7 @@ open FSharp.Interop.Dynamic.Operators
 do
   use __ = Py.GIL()
 
-  let math = Py.Import("numpy")
+  let np = Py.Import("numpy")
   np?cos(np?pi ?*? 2)
   |> printfn "%O"
 
