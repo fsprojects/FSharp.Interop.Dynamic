@@ -1,0 +1,9 @@
+name: FSharp.Interop.Dynamic CodeQL configuration
+
+# CodeQL has no F# extractor. This config is for the Actions language
+# pack (workflow YAML). F# source is scanned by DevSkim instead.
+#
+# Tests/ stay ignored so a future language pack cannot flag DLR tests
+# that exist to prove dynamic calls the analyzer would call invalid.
+paths-ignore:
+  - Tests/**
