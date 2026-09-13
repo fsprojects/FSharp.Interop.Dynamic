@@ -7,7 +7,7 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 ### Breaking
 
 - Target frameworks are now `netstandard2.0` and `net10.0`. `net45` and `netstandard1.6` are dropped; `netstandard2.0` still covers .NET Framework 4.6.1+ and modern .NET.
-- Minimum dependency versions are raised: FSharp.Core 10.1.401 (was 4.2), Dynamitey 3.0.3 (was 2.0), Microsoft.CSharp 4.7.0 (was 4.6.0).
+- Minimum dependency versions are raised: FSharp.Core 4.7.2 (was 4.2), Dynamitey 3.0.3 (was 2.0), Microsoft.CSharp 4.7.0 (was 4.6.0). FSharp.Core is kept deliberately low so consumers on older F# toolchains can still use the package (#80).
 
 ### Added
 
