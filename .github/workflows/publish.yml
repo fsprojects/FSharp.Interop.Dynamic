@@ -21,6 +21,8 @@ jobs:
   publish:
     name: Pack and push to nuget.org
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # create the GitHub release
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -45,6 +47,21 @@ jobs:
             exit 1
           fi
           echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Extract release notes
+        shell: bash
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          awk -v v="$VERSION" '
+            index($0, "## [" v "]") == 1 { found = 1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+          if ! grep -q '[^[:space:]]' release-notes.md; then
+            echo "::error::CHANGELOG.md has no '## [$VERSION]' section."
+            exit 1
+          fi
 
       - name: Restore
         run: dotnet restore --locked-mode
@@ -75,3 +92,17 @@ jobs:
             --api-key "$NUGET_PUBLISH_KEY" \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate
+
+      - name: Create GitHub release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          prerelease=""
+          case "$VERSION" in *-*) prerelease="--prerelease" ;; esac
+          gh release create "$GITHUB_REF_NAME" ./nupkgs/* \
+            --verify-tag \
+            --title "$VERSION" \
+            --notes-file release-notes.md \
+            $prerelease

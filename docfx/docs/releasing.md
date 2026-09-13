@@ -8,7 +8,7 @@ NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`.
 
 ## Cut 6.0.0
 
-On `master`, after CI is green:
+First make sure [`CHANGELOG.md`](https://github.com/fsprojects/FSharp.Interop.Dynamic/blob/master/CHANGELOG.md) has a `## [6.0.0]` section that describes the release. Then, on `master`, after CI is green:
 
 ```bash
 git tag v6.0.0
@@ -17,11 +17,13 @@ git push origin v6.0.0
 
 The Publish workflow will:
 
-1. Restore, build `-warnaserror`, test
-2. Pack `FSharp.Interop.Dynamic` at `6.0.0` (nupkg + snupkg)
-3. `dotnet nuget push` to nuget.org with `--skip-duplicate`
+1. Extract the `## [6.0.0]` section of `CHANGELOG.md`, and fail if there isn't one
+2. Restore, build `-warnaserror`, test
+3. Pack `FSharp.Interop.Dynamic` at `6.0.0` (nupkg + snupkg)
+4. `dotnet nuget push` to nuget.org with `--skip-duplicate`
+5. Create the GitHub release `v6.0.0` with those notes and the packages attached. A version with a `-` suffix is marked as a prerelease.
 
-`workflow_dispatch` with a version input does the same without a tag. Prefer the tag.
+`workflow_dispatch` with a version input does steps 1–4 without a tag and creates no GitHub release. Prefer the tag.
 
 Pull requests never publish.
 
