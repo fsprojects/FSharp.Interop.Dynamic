@@ -152,11 +152,15 @@ module Dyn =
         invocation target (Member propertyName)
 
     let tryGet (propertyName:string) (target:obj) : 'T option =
-        try
-            Some (get propertyName target)
-        with
-        | :? RuntimeBinderException -> None
-        | _ -> reraise()
+        let found =
+            try
+                Some (Dynamic.InvokeGet(target, propertyName))
+            with
+            | :? RuntimeBinderException -> None
+            | _ -> reraise()
+        match found with
+        | None -> None
+        | Some value -> Some (invocation value Direct)
 
     let exists (propertyName:string) (target:obj) : bool =
         try

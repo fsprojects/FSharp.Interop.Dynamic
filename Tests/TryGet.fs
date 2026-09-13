@@ -64,3 +64,18 @@ module TryGet =
     let ``a throwing getter is not reported as missing by exists`` () =
         (fun () -> PropThrows() |> Dyn.exists "Bad" |> ignore)
         |> should throw typeof<InvalidOperationException>
+
+    [<Fact>]
+    let ``tryGet does not treat a conversion failure as missing`` () =
+        let o = ExpandoObject()
+        o |> Dyn.set "myProp" "hi"
+        (fun () ->
+            let _: int option = o |> Dyn.tryGet "myProp"
+            ())
+        |> should throw typeof<InvalidCastException>
+
+    [<Fact>]
+    let ``tryGet returns None for a missing member even when the result type is a function`` () =
+        let o = ExpandoObject()
+        let missing: (int -> int) option = o |> Dyn.tryGet "nope"
+        missing |> should equal None
