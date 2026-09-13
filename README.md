@@ -2,7 +2,12 @@
 
 [![NuGet](https://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.Dynamic/)
 [![CI](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml/badge.svg)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml)
+[![Tests](https://img.shields.io/badge/tests-101%20passed-brightgreen.svg?style=flat)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml)
+[![Line coverage](https://img.shields.io/badge/line%20coverage-79.4%25-brightgreen.svg?style=flat)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml)
+[![Branch coverage](https://img.shields.io/badge/branch%20coverage-100%25-brightgreen.svg?style=flat)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](License.txt)
+
+Test and coverage badges are the last green CI run on `master`. CI fails the PR if any test is skipped, line coverage drops below 77%, or branch coverage drops below 100%.
 
 F# operators for the Dynamic Language Runtime. `target?Name`, `target?Name <- value`, and `!?target` are the F# spelling of C# `dynamic`, with piping and `'T option` lookups.
 
