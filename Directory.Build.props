@@ -7,6 +7,8 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <RepositoryUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <!-- Next release is 6.0.0: net45 and netstandard1.6 were dropped. -->
+    <VersionPrefix>6.0.0</VersionPrefix>
 
     <!-- SDK Roslyn analyzers (CA*). F# has no C# AST, so Roslynator/Sonar C#
          would be silent; these IL-level rules still fire. -->

@@ -1,0 +1,77 @@
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version without a v prefix (example: 6.0.0)'
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Pack and push to nuget.org
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Resolve version
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            version="${{ github.event.inputs.version }}"
+          else
+            version="${GITHUB_REF_NAME#v}"
+          fi
+          if ! echo "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-].*)?$'; then
+            echo "::error::Refusing to publish with version '$version'."
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release -warnaserror -p:Version=${{ steps.version.outputs.version }}
+
+      - name: Test
+        run: dotnet test Tests/Tests.fsproj --configuration Release --no-build
+
+      - name: Pack
+        run: >
+          dotnet pack FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj
+          --configuration Release
+          --no-build
+          -p:Version=${{ steps.version.outputs.version }}
+          --output ./nupkgs
+
+      - name: Push to nuget.org
+        env:
+          NUGET_PUBLISH_KEY: ${{ secrets.NUGET_PUBLISH_KEY }}
+        run: |
+          if [ -z "$NUGET_PUBLISH_KEY" ]; then
+            echo "::error::NUGET_PUBLISH_KEY is not set."
+            exit 1
+          fi
+          dotnet nuget push ./nupkgs/*.nupkg \
+            --api-key "$NUGET_PUBLISH_KEY" \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
