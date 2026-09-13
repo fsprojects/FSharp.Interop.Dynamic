@@ -1,0 +1,39 @@
+name: OSV-Scanner
+
+# Scans the committed packages.lock.json files against OSV.dev, which
+# aggregates more advisory sources than the GitHub Advisory Database used
+# by NuGet audit and dependency review.
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  schedule:
+    - cron: '41 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: osv-scanner-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan-pr:
+    name: OSV-Scanner (new vulnerabilities)
+    if: github.event_name == 'pull_request'
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@6e4298ebc4db23e847df9b2e2de2939d6f066c67 # v2.5.1
+
+  scan:
+    name: OSV-Scanner (full)
+    if: github.event_name != 'pull_request'
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@6e4298ebc4db23e847df9b2e2de2939d6f066c67 # v2.5.1
