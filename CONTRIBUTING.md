@@ -12,7 +12,7 @@ All changes reach `master` through a pull request, squash-merged.
 
 1. Open the PR. CI runs the build, tests, coverage, analyzers, the docs build, and the security scans.
 2. Copilot code review runs on the PR. Work through every comment: take the fix (Copilot can usually make it), or reply with why it is a false positive and resolve it.
-3. A maintainer other than the author approves, and the PR is merged.
+3. Once CI is green and every Copilot comment is addressed or answered, the PR is merged. A maintainer review is welcome but not required.
 
 ## Requirements for a pull request
 
