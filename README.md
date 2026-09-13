@@ -151,6 +151,14 @@ Release: tag `v6.0.0` and push. [Releasing](https://fsprojects.github.io/FSharp.
 
 ---
 
+## Feedback and contributing
+
+- **Bugs and feature requests:** [open an issue](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/new). Include the F# and .NET versions and a minimal snippet.
+- **Security problems:** do not open a public issue. Follow [SECURITY.md](SECURITY.md).
+- **Code and docs:** pull requests are welcome. [CONTRIBUTING.md](CONTRIBUTING.md) covers the process and what a PR needs before it merges.
+
+---
+
 ## Maintainers
 
 - [@AtwoodTM](https://github.com/AtwoodTM)
