@@ -162,3 +162,6 @@ CoverageReport/
 TestResults/
 ionide.sarif
 tools/
+docfx/_site/
+docfx/api/*.yml
+docfx/api/.manifest

@@ -7,6 +7,7 @@
     <Copyright>Copyright 2011-2019 Ekon Benefits</Copyright>
     <PackageProjectUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic</PackageProjectUrl>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>fsharp dynamic dlr</PackageTags>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -32,6 +33,10 @@
   <PropertyGroup>
     <FSharpAnalyzersOtherFlags>--analyzers-path "$(PkgIonide_Analyzers)/analyzers/dotnet/fs"</FSharpAnalyzersOtherFlags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="SymbolicString.fs" />
