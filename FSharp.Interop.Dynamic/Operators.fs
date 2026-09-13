@@ -1,7 +1,6 @@
 namespace FSharp.Interop.Dynamic
 
 module Operators=
-    open System
     open Dynamitey
     open System.Linq.Expressions
     let (?%?) (left:obj) (right: obj) : 'TResult =    

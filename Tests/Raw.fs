@@ -1,7 +1,6 @@
 namespace Tests
 
 open FSharp.Interop.Dynamic
-open FSharp.Interop.Dynamic.Operators
 open FSharp.Interop.Dynamic.SymbolicString
 
 open Xunit
@@ -10,7 +9,6 @@ open System.Linq
 open System
 open System.Collections.Generic
 open System.Dynamic
-open Dynamitey
 
 
 type FieldObj (i:int) as this=
@@ -71,7 +69,6 @@ module Raw =
         Symbol.typeOf(Enumerable.Empty) |> should equal typeof<IEnumerable<_>>
     [<Fact>]
     let ``Name of DU`` ()=
-        let x = 0
         Symbol.nameOf(Option.Some) |> should equal "Some"
         Symbol.typeOf(Option.Some) |> should equal typeof<Option<_>>
     [<Fact>]

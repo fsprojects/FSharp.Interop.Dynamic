@@ -124,8 +124,12 @@ module Dyn =
                             try
                                 fsharpInvoke target memberName arg
                             with
-                                | :? RuntimeBinderException as e2
-                                   -> AggregateException(e, e2) |> raise
+                                | :? RuntimeBinderException as e2 ->
+                                    AggregateException(e, e2) |> raise
+                                | _ ->
+                                    reraise()
+                        | _ ->
+                            reraise()
                 match returnType with
                 | Action | NoConversion -> result
                 | _____________________ -> result |> finalConvertResult returnType
@@ -148,13 +152,14 @@ module Dyn =
         invocation target (Member propertyName)
 
     let getChain (chainOfMembers:string seq) (target:obj) : 'TResult =
-        let chainOfMembers' = String.concat "." chainOfMembers 
-        Dynamic.InvokeGetChain(target, chainOfMembers') |> invocation <| Direct
- 
-   
+        let chainOfMembers' = String.concat "." chainOfMembers
+        let value = Dynamic.InvokeGetChain(target, chainOfMembers')
+        invocation value Direct
+
     let getIndexer (indexers: 'T seq) (target:obj): 'TResult =
-        let indexes = indexers |> Seq.map box  |> Seq.toArray
-        Dynamic.InvokeGetIndex(target, indexes) |> invocation <| Direct
+        let indexes = indexers |> Seq.map box |> Seq.toArray
+        let value = Dynamic.InvokeGetIndex(target, indexes)
+        invocation value Direct
 
     let set (propertyName:string) (value:obj) (target:obj) =
         Dynamic.InvokeSet(target, propertyName, value) |> ignore
