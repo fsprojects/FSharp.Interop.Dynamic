@@ -11,15 +11,11 @@ updates:
       # FSharp.Core in Directory.Packages.props is the published floor, not a
       # version to keep current (issue 80).
       - dependency-name: "FSharp.Core"
-      # xunit.v3 4.x requires Microsoft Testing Platform, which the VSTest-based
-      # CI and coverlet collector do not use yet (issue 82).
-      - dependency-name: "xunit.v3"
-        update-types: ["version-update:semver-major"]
     groups:
       test:
         patterns:
           - "xunit*"
-          - "Microsoft.NET.Test.Sdk"
+          - "Microsoft.Testing.*"
           - "FsUnit*"
           - "coverlet*"
     labels:

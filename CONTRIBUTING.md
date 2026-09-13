@@ -29,7 +29,7 @@ Requires the .NET 10 SDK.
 ```bash
 dotnet restore
 dotnet build -c Release -warnaserror
-dotnet test Tests/Tests.fsproj -c Release
+dotnet test --project Tests/Tests.fsproj -c Release
 ```
 
 The suite must be 0 failed, 0 skipped. Coverage floors are 77% line and 100% branch on `FSharp.Interop.Dynamic`.

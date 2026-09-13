@@ -76,7 +76,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release -warnaserror "-p:Version=$VERSION"
 
       - name: Test
-        run: dotnet test Tests/Tests.fsproj --configuration Release --no-build
+        run: dotnet test --project Tests/Tests.fsproj --configuration Release --no-build
 
       - name: Pack
         env:
