@@ -124,8 +124,12 @@ module Dyn =
                             try
                                 fsharpInvoke target memberName arg
                             with
-                                | :? RuntimeBinderException as e2
-                                   -> AggregateException(e, e2) |> raise
+                                | :? RuntimeBinderException as e2 ->
+                                    AggregateException(e, e2) |> raise
+                                | _ ->
+                                    reraise()
+                        | _ ->
+                            reraise()
                 match returnType with
                 | Action | NoConversion -> result
                 | _____________________ -> result |> finalConvertResult returnType

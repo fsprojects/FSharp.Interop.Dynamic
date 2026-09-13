@@ -30,27 +30,27 @@ type TestEvent()=
 
 
 (***hide***)
-    type TestFuncs()=
-        static member Plus3:Func<int,int> =
-          Return<int>.Arguments<int>(fun x-> x + 3)
+type TestFuncs()=
+    static member Plus3:Func<int,int> =
+      Return<int>.Arguments<int>(fun x-> x + 3)
 (***hide***)
-    type DynamicOperatorMock()=
-        inherit DynamicObject()
-        override __.TryBinaryOperation(binder, arg, result) =
-            result <- binder.Operation
-            true
+type DynamicOperatorMock()=
+    inherit DynamicObject()
+    override __.TryBinaryOperation(binder, arg, result) =
+        result <- binder.Operation
+        true
 (***hide***)
-    type DynamicWeirdFlakyIndexer()=
-        inherit DynamicObject()
-        let stuff = Dictionary<obj * obj, obj>()
+type DynamicWeirdFlakyIndexer()=
+    inherit DynamicObject()
+    let stuff = Dictionary<obj * obj, obj>()
 
-        override __.TryGetIndex(_, indexes, result) =
-            result <- stuff.[(indexes.[0], indexes.[1])]
-            true
-        
-        override __.TrySetIndex(_, indexes, value) =
-            stuff.Add((indexes.[0], indexes.[1]),value)
-            true
+    override __.TryGetIndex(_, indexes, result) =
+        result <- stuff.[(indexes.[0], indexes.[1])]
+        true
+
+    override __.TrySetIndex(_, indexes, value) =
+        stuff.Add((indexes.[0], indexes.[1]),value)
+        true
             
 module Tests =
 

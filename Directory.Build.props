@@ -1,5 +1,11 @@
 <Project>
-    <PropertyGroup>
-        <WithoutCrossCompile Condition="'$(GITHUB_ACTION)' != '' OR '$(LGTM_SRC)' != ''">True</WithoutCrossCompile>
-    </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <TreatWarningsAsErrors Condition="'$(CI)' == 'true' or '$(GITHUB_ACTIONS)' == 'true'">true</TreatWarningsAsErrors>
+    <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <RepositoryUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
 </Project>

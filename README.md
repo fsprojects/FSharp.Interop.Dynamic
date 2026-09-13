@@ -1,25 +1,12 @@
-# FSharp.Interop.Dynamic [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.Dynamic/)
+# FSharp.Interop.Dynamic [![NuGet Status](https://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.Dynamic/) [![CI](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml/badge.svg)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml)
 
 
-The F# Dynamic Operator, powered by the DLR. Compiled for .NET Standard 2.0, .NET Standard 1.6, .NET Framework 4.5
+The F# Dynamic Operator, powered by the DLR. Compiled for .NET Standard 2.0 and .NET 10.
 
 Install from [NuGet](https://nuget.org/packages/FSharp.Interop.Dynamic/)
 ```
-PM> Install-Package FSharp.Interop.Dynamic
+dotnet add package FSharp.Interop.Dynamic
 ```
-
-# Build Status
-
-Platform | Status
--------- | ------
-Nuget Deployment | [![Build status](https://ci.appveyor.com/api/projects/status/tbw9put64a0p3j9o/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-dynamic-832/branch/master)
-Mac/Linux/Windows | [![Action Status](https://github.com/fsprojects/FSharp.Interop.Dynamic/workflows/.NET%20Core%20CI/badge.svg)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions?workflow=.NET+Core+CI)
-Coverage| [![codecov](https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic/branch/master/graph/badge.svg)](https://codecov.io/gh/fsprojects/FSharp.Interop.Dynamic) [![Coverage Status](https://coveralls.io/repos/github/fsprojects/FSharp.Interop.Dynamic/badge.svg?branch=master)](https://coveralls.io/github/fsprojects/FSharp.Interop.Dynamic?branch=master)
- 
- 
-# Bleeding edge feed on MyGet
-
-[![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/FSharp.Interop.Dynamic.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/FSharp.Interop.Dynamic)
 
 # Usage
 
@@ -117,12 +104,13 @@ type MyHub =
 
 # Caveats:
 
-The `DLR` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](http://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
+The `DLR` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](https://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
 
 [.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11). You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ and later are unaffected.
 
 ## Maintainer(s)
 
+- [@AtwoodTM](https://github.com/AtwoodTM)
 - [@jbtule](https://github.com/jbtule)
 - [@forki](https://github.com/forki)
 

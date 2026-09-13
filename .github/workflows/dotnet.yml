@@ -1,35 +1,84 @@
-name: .NET Core CI
+name: CI
 
-on: [push]
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    name: ${{ matrix.os }}/dotnet ${{ matrix.dotnet }}
+  build-test:
+    name: Build and test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-         os: [ubuntu-latest, windows-latest, macOS-latest]
-         dotnet: [2.1.802, 3.0.100]
-         include:
-            - dotnet: 2.1.802
-              target: netcoreapp2.1
-            - dotnet: 3.0.100
-              target: netcoreapp3.0
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ matrix.dotnet }}
-    - name: Restore NuGet
-      env:
-        TestingTarget: ${{ matrix.target }}
-      run: dotnet restore
-    - name: Build with dotnet ${{ matrix.dotnet }}
-      env:
-        TestingTarget: ${{ matrix.target }}
-      run: dotnet build
-    - name: Test with xUnit
-      env:
-        TestingTarget: ${{ matrix.target }}
-      run: dotnet test --no-build
+      - uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release -warnaserror
+
+      - name: Test
+        shell: bash
+        run: |
+          set -o pipefail
+          dotnet test Tests/Tests.fsproj \
+            --configuration Release \
+            --no-build \
+            --logger "trx;LogFileName=tests-${{ matrix.os }}.trx" \
+            --results-directory TestResults \
+            | tee test-output.txt
+
+      - name: Report test counts
+        if: always()
+        shell: bash
+        run: |
+          tLine=$(grep -oE 'Failed: +[0-9]+, Passed: +[0-9]+, Skipped: +[0-9]+, Total: +[0-9]+' test-output.txt | tail -1)
+          if [ -z "$tLine" ]; then
+            echo "::error::Could not find a test summary line in the test output."
+            exit 1
+          fi
+
+          tFailed=$(echo "$tLine"  | sed -E 's/.*Failed: +([0-9]+).*/\1/')
+          tPassed=$(echo "$tLine"  | sed -E 's/.*Passed: +([0-9]+).*/\1/')
+          tSkipped=$(echo "$tLine" | sed -E 's/.*Skipped: +([0-9]+).*/\1/')
+          tTotal=$(echo "$tLine"   | sed -E 's/.*Total: +([0-9]+).*/\1/')
+
+          {
+            echo "### Tests (${{ matrix.os }})"
+            echo
+            echo "| Total | Passed | Failed | Skipped |"
+            echo "| ---: | ---: | ---: | ---: |"
+            echo "| $tTotal | $tPassed | $tFailed | $tSkipped |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$tSkipped" -ne 0 ]; then
+            echo "::error::$tSkipped test(s) skipped. The bar is 0 failed and 0 skipped."
+            exit 1
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: test-results-${{ matrix.os }}
+          path: TestResults/*.trx
+          retention-days: 14
