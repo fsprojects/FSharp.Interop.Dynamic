@@ -19,6 +19,7 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 - NuGet publishing runs from a tag-triggered workflow (#45).
 - Added a security policy, code scanning, and OpenSSF Scorecard. Actions are pinned to commit SHAs, and NuGet restore uses lock files (#36, #39, #41, #70).
 - Documentation moved from FAKE and FSharp.Formatting to a DocFX site on GitHub Pages. README examples are compiled as tests (#47, #51, #53).
+- XML documentation on `Dyn`, the operators, and `SymbolicString` so API-reference summaries describe what each member does (#49).
 
 ## [5.0.1.268] - 2019-10-03
 
