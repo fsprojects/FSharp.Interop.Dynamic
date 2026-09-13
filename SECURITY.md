@@ -68,16 +68,48 @@ not vulnerabilities. Reports that it can be made to invoke something it was
 
 ## What is scanned
 
-Every pull request runs:
+This is a one-maintainer fsprojects library. The bar is **automated gates on
+every pull request**, not a second human approver. Direct pushes to `master`
+are blocked. Admins squash-merge their own PRs after Copilot review and the
+required checks below.
 
-- CodeQL (`security-and-quality`) against GitHub Actions workflows (CodeQL
-  has no F# extractor; a csharp job on this tree finds no C# to analyze)
-- OpenSSF Scorecard
-- Microsoft DevSkim
-- a dependency review that blocks known-vulnerable dependencies
-- `dotnet list package --vulnerable --include-transitive`
+### Required on every pull request
 
-Dependabot is enabled for NuGet and GitHub Actions.
+| Check | What it does |
+| --- | --- |
+| Build and test (ubuntu, macOS, Windows) | `dotnet test`, 0 skipped |
+| Code coverage | Coverlet floors on the shipped library (77% line, 100% branch) |
+| F# analyzers | Ionide analyzers via `fsharp-analyzers` |
+| Build the site | DocFX `--warningsAsErrors` |
+| NuGet audit | `dotnet list package --vulnerable --include-transitive` |
+| Dependency review | GitHub dependency-review-action; known-vulnerable diffs fail the PR |
+| CodeQL (`security-and-quality`) | Actions YAML only — CodeQL has no F# extractor |
+| DevSkim | Pattern SAST on F# / YAML / shell (this is what actually reads the library) |
+| OpenSSF Scorecard | Supply-chain checks; SARIF on `master` |
+| zizmor | Static analysis of GitHub Actions workflows |
+| OSV-Scanner (new vulnerabilities) | `packages.lock.json` against OSV.dev |
+| Pack nupkg | `dotnet pack` of the library (does not push to nuget.org) |
+| Copilot code review | Required on the `master` ruleset |
 
-DevSkim reads F# source as text. That is the scanner that actually sees the
-library; CodeQL here is for workflows.
+### Also running
+
+| Check | When |
+| --- | --- |
+| Dependabot | Weekly NuGet and GitHub Actions; 7-day cooldown |
+| OSV-Scanner (full) | `master` only |
+| Scorecard SARIF upload | `master` only |
+| GitHub Pages deploy | `master` only |
+| NuGet publish + Sigstore provenance | Version tags `v*.*.*` only (`NUGET_PUBLISH_KEY`) |
+
+Central Package Management (`Directory.Packages.props`) and
+`packages.lock.json` pin restore. GitHub Actions `uses:` lines are commit SHAs.
+
+### What we will not do
+
+Scorecard “maximal” branch protection, a second human reviewer, an OpenSSF
+**Passing** badge, and retroactive signatures on 2018–2022 GitHub Releases are
+out of scope. This repo has one active maintainer. Those checks would stall
+PRs or rewrite history. See #61, #62, #63, #68.
+
+Reports that `?` / `Dyn.get` will invoke a member name the caller supplied are
+not vulnerabilities; see [Scope](#scope).
