@@ -1,0 +1,3 @@
+# Default owner. Scorecard Branch-Protection requires a CODEOWNERS
+# review on master (#61).
+* @AtwoodTM
