@@ -10,9 +10,9 @@
       },
       "FSharp.Core": {
         "type": "Direct",
-        "requested": "[10.1.301, )",
-        "resolved": "10.1.301",
-        "contentHash": "FwQFuqOA1+qQnFl6Vqg6piS83ZRuKJqXJQxOM52M5tNarT2XQ/pMvw8fOOlnhcOYvdZyje2PJ8rK/J64ZI729Q=="
+        "requested": "[10.1.401, )",
+        "resolved": "10.1.401",
+        "contentHash": "/lvOK51KD8IangBYkfDVna3/HrE/r4VUnX3dI01KDspctoYXmind3POeoYkqWKeXHwiKlf6Hc9TxwSnoSCWcjw=="
       },
       "FsUnit.xUnit": {
         "type": "Direct",
