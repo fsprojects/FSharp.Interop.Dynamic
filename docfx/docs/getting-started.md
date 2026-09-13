@@ -65,6 +65,7 @@ let _: unit = items?Add("x")
 
 ## Where to go next
 
+- [Why this library](why.md) — untyped payloads, optional fields, names as data, C# `dynamic`
 - [Operators](operators.md) — `?`, `?<-`, `!?` in detail
 - [Dyn](dyn.md) — the functions behind those operators
 - [tryGet and exists](tryget.md) — the issue #27 surface

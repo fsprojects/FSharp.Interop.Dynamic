@@ -30,6 +30,8 @@
     <Compile Include="TryGet.fs" />
     <Compile Include="Quotations.fs" />
     <Compile Include="OperatorValues.fs" />
+    <Compile Include="ReadmeExamples.fs" />
+    <Compile Include="WhyExamples.fs" />
   </ItemGroup>
 
   <ItemGroup>
