@@ -1,11 +1,9 @@
 namespace Tests
 
 open FSharp.Interop.Dynamic
-open FSharp.Interop.Dynamic.Operators
 open Xunit
 open FsUnit.Xunit
 open System
-open System.Collections.Generic
 open System.Dynamic
 open Microsoft.CSharp.RuntimeBinder
 

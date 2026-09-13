@@ -7,5 +7,20 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <RepositoryUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+
+    <!-- SDK Roslyn analyzers (CA*). F# has no C# AST, so Roslynator/Sonar C#
+         would be silent; these IL-level rules still fire. -->
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>All</AnalysisMode>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+
+    <!-- FS1182 is off by default. It is the compiler's unused-binding /
+         unused-open check, which is the dead-code signal for F#. -->
+    <WarnOn>1182</WarnOn>
+
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
+    <NuGetAuditLevel>low</NuGetAuditLevel>
   </PropertyGroup>
 </Project>

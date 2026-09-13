@@ -82,3 +82,134 @@ jobs:
           name: test-results-${{ matrix.os }}
           path: TestResults/*.trx
           retention-days: 14
+
+  coverage:
+    name: Code coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release -warnaserror
+
+      - name: Test with coverage
+        run: >
+          dotnet test Tests/Tests.fsproj
+          --configuration Release
+          --no-build
+          --settings coverlet.runsettings
+          --collect:"XPlat Code Coverage"
+          --results-directory TestResults
+
+      - name: Install ReportGenerator
+        run: dotnet tool install --tool-path ./tools --version 5.5.11 dotnet-reportgenerator-globaltool
+
+      - name: Generate report
+        run: >
+          ./tools/reportgenerator
+          -reports:TestResults/**/coverage.cobertura.xml
+          -targetdir:CoverageReport
+          -reporttypes:"MarkdownSummaryGithub;HtmlInline;Cobertura"
+
+      - name: Publish coverage to the job summary
+        shell: bash
+        run: cat CoverageReport/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Enforce coverage floors
+        shell: bash
+        env:
+          MIN_LINE: '77'
+          MIN_BRANCH: '100'
+        run: |
+          tReport=$(find TestResults -name coverage.cobertura.xml | head -1)
+          if [ -z "$tReport" ]; then
+            echo "::error::No cobertura report was produced."
+            exit 1
+          fi
+
+          tHeader=$(grep -oE '^<coverage[^>]*' "$tReport")
+          tLineRate=$(echo "$tHeader"   | grep -oE 'line-rate="[0-9.]+"'   | grep -oE '[0-9.]+')
+          tBranchRate=$(echo "$tHeader" | grep -oE 'branch-rate="[0-9.]+"' | grep -oE '[0-9.]+')
+
+          tLinePct=$(awk -v r="$tLineRate"   'BEGIN { printf "%.1f", r * 100 }')
+          tBranchPct=$(awk -v r="$tBranchRate" 'BEGIN { printf "%.1f", r * 100 }')
+
+          tLinesCovered=$(echo "$tHeader"    | grep -oE 'lines-covered="[0-9]+"'    | grep -oE '[0-9]+')
+          tLinesValid=$(echo "$tHeader"      | grep -oE 'lines-valid="[0-9]+"'      | grep -oE '[0-9]+')
+          tBranchesCovered=$(echo "$tHeader" | grep -oE 'branches-covered="[0-9]+"' | grep -oE '[0-9]+')
+          tBranchesValid=$(echo "$tHeader"   | grep -oE 'branches-valid="[0-9]+"'   | grep -oE '[0-9]+')
+
+          {
+            echo "### Coverage floors"
+            echo
+            echo "| Metric | Covered | Total | Percent | Floor |"
+            echo "| --- | ---: | ---: | ---: | ---: |"
+            echo "| Lines | $tLinesCovered | $tLinesValid | ${tLinePct}% | ${MIN_LINE}% |"
+            echo "| Branches | $tBranchesCovered | $tBranchesValid | ${tBranchPct}% | ${MIN_BRANCH}% |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          tFailed=0
+          if awk -v p="$tLinePct" -v m="$MIN_LINE" 'BEGIN { exit !(p < m) }'; then
+            echo "::error::Line coverage ${tLinePct}% is below the ${MIN_LINE}% floor."
+            tFailed=1
+          fi
+          if awk -v p="$tBranchPct" -v m="$MIN_BRANCH" 'BEGIN { exit !(p < m) }'; then
+            echo "::error::Branch coverage ${tBranchPct}% is below the ${MIN_BRANCH}% floor."
+            tFailed=1
+          fi
+          exit $tFailed
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-report
+          path: CoverageReport
+          retention-days: 14
+
+  analyzers:
+    name: F# analyzers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: |
+          dotnet restore
+          dotnet tool restore
+
+      - name: Run Ionide analyzers
+        run: |
+          analyzer_path="${NUGET_PACKAGES:-$HOME/.nuget/packages}/ionide.analyzers/0.19.0/analyzers/dotnet/fs"
+          if [ ! -d "$analyzer_path" ]; then
+            echo "::error::Ionide analyzer binaries not found at $analyzer_path"
+            exit 1
+          fi
+          dotnet fsharp-analyzers \
+            --project FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj \
+            --analyzers-path "$analyzer_path" \
+            --configuration Release \
+            --verbosity n \
+            --output-format github \
+            --report ionide.sarif
+
+      - name: Upload analyzer SARIF
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ionide-sarif
+          path: ionide.sarif
+          retention-days: 14

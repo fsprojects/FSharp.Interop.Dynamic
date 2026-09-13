@@ -6,7 +6,6 @@ namespace Tests
 
 open FSharp.Interop.Dynamic
 open FSharp.Interop.Dynamic.Operators
-open FSharp.Interop.Dynamic.SymbolicString
 (***hide***)
 open Xunit
 open FsUnit.Xunit
@@ -15,7 +14,6 @@ open Dynamitey
 open System.Dynamic
 open System.Collections.Generic
 open System.Xml.Linq
-open System.Numerics
 open Microsoft.CSharp.RuntimeBinder
 
 open System.Linq.Expressions
@@ -36,7 +34,7 @@ type TestFuncs()=
 (***hide***)
 type DynamicOperatorMock()=
     inherit DynamicObject()
-    override __.TryBinaryOperation(binder, arg, result) =
+    override __.TryBinaryOperation(binder, _, result) =
         result <- binder.Operation
         true
 (***hide***)

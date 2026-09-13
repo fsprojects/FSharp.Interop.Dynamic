@@ -5,7 +5,6 @@ open Xunit
 open FsUnit.Xunit
 open Tests
 open System
-open System.Dynamic
  
 #nowarn "44"
 
