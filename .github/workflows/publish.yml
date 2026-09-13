@@ -23,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write # create the GitHub release
+      id-token: write # sign the build provenance with Sigstore
+      attestations: write # store the build provenance attestation
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -80,6 +82,12 @@ jobs:
           -p:Version=${{ steps.version.outputs.version }}
           --output ./nupkgs
 
+      - name: Attest build provenance
+        id: attest
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: ./nupkgs/*
+
       - name: Push to nuget.org
         env:
           NUGET_PUBLISH_KEY: ${{ secrets.NUGET_PUBLISH_KEY }}
@@ -98,10 +106,13 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
+          BUNDLE: ${{ steps.attest.outputs.bundle-path }}
         run: |
           prerelease=""
           case "$VERSION" in *-*) prerelease="--prerelease" ;; esac
-          gh release create "$GITHUB_REF_NAME" ./nupkgs/* \
+          provenance="FSharp.Interop.Dynamic.$VERSION.intoto.jsonl"
+          cp "$BUNDLE" "$provenance"
+          gh release create "$GITHUB_REF_NAME" ./nupkgs/* "$provenance" \
             --verify-tag \
             --title "$VERSION" \
             --notes-file release-notes.md \
