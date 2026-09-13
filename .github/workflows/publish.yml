@@ -38,13 +38,15 @@ jobs:
       - name: Resolve version
         id: version
         shell: bash
+        env:
+          INPUT_VERSION: ${{ github.event.inputs.version }}
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            version="${{ github.event.inputs.version }}"
+          if [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ]; then
+            version="$INPUT_VERSION"
           else
             version="${GITHUB_REF_NAME#v}"
           fi
-          if ! echo "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-].*)?$'; then
+          if ! echo "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'; then
             echo "::error::Refusing to publish with version '$version'."
             exit 1
           fi
@@ -69,17 +71,21 @@ jobs:
         run: dotnet restore --locked-mode
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release -warnaserror -p:Version=${{ steps.version.outputs.version }}
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: dotnet build --no-restore --configuration Release -warnaserror "-p:Version=$VERSION"
 
       - name: Test
         run: dotnet test Tests/Tests.fsproj --configuration Release --no-build
 
       - name: Pack
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: >
           dotnet pack FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj
           --configuration Release
           --no-build
-          -p:Version=${{ steps.version.outputs.version }}
+          "-p:Version=$VERSION"
           --output ./nupkgs
 
       - name: Attest build provenance
