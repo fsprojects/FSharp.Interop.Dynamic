@@ -188,7 +188,7 @@ jobs:
 
       - name: Restore
         run: |
-          dotnet restore
+          dotnet restore --locked-mode
           dotnet tool restore
 
       - name: Run Ionide analyzers
