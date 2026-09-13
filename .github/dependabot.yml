@@ -7,6 +7,10 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    ignore:
+      # FSharp.Core in Directory.Packages.props is the published floor, not a
+      # version to keep current (issue 80).
+      - dependency-name: "FSharp.Core"
     groups:
       test:
         patterns:

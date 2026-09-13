@@ -215,7 +215,7 @@
         "type": "Project",
         "dependencies": {
           "Dynamitey": "[3.0.3, )",
-          "FSharp.Core": "[10.1.401, )"
+          "FSharp.Core": "[4.7.2, )"
         }
       },
       "Dynamitey": {
