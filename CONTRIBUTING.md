@@ -4,6 +4,23 @@
 
 - Small fixes: open a pull request.
 - Anything larger: open an issue first.
+- Security problems: follow [SECURITY.md](SECURITY.md), not a public issue.
+
+## How a change gets merged
+
+All changes reach `master` through a pull request, squash-merged.
+
+1. Open the PR. CI runs the build, tests, coverage, analyzers, the docs build, and the security scans.
+2. Copilot code review runs on the PR. Work through every comment: take the fix (Copilot can usually make it), or reply with why it is a false positive and resolve it.
+3. A maintainer other than the author approves, and the PR is merged.
+
+## Requirements for a pull request
+
+- **CI is green.** The build uses `-warnaserror` on Linux, Windows, and macOS, with the .NET analyzers at `AnalysisMode=All`, the Ionide F# analyzers, and FS1182 (unused bindings) on. Fix warnings; do not suppress them.
+- **Behavior changes come with tests** in `Tests/` (xUnit + FsUnit). The suite must be 0 failed, 0 skipped, and must stay above the coverage floors below.
+- **Docs follow the code.** Public API changes update the XML doc comments and any affected page under `docfx/`. README code samples are compiled by `Tests/ReadmeExamples.fs`, so keep the two in step.
+- **Style matches the surrounding code.** No formatter is enforced; follow the naming, layout, and comment density of the file you are editing.
+- **Dependencies are pinned.** Versions live in `Directory.Packages.props`. When you change one, regenerate the lock files with `dotnet restore --force-evaluate` and commit the updated `packages.lock.json` files. CI restores with `--locked-mode` and fails on a stale lock file.
 
 ## Building
 
