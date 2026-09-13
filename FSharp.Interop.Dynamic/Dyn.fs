@@ -151,6 +151,21 @@ module Dyn =
     let get (propertyName:string) (target:obj) : 'TResult =
         invocation target (Member propertyName)
 
+    let tryGet (propertyName:string) (target:obj) : 'T option =
+        try
+            Some (get propertyName target)
+        with
+        | :? RuntimeBinderException -> None
+        | _ -> reraise()
+
+    let exists (propertyName:string) (target:obj) : bool =
+        try
+            Dynamic.InvokeGet(target, propertyName) |> ignore
+            true
+        with
+        | :? RuntimeBinderException -> false
+        | _ -> reraise()
+
     let getChain (chainOfMembers:string seq) (target:obj) : 'TResult =
         let chainOfMembers' = String.concat "." chainOfMembers
         let value = Dynamic.InvokeGetChain(target, chainOfMembers')
