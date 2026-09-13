@@ -41,28 +41,29 @@ jobs:
       - name: Test
         shell: bash
         run: |
-          set -o pipefail
-          dotnet test Tests/Tests.fsproj \
+          dotnet test --project Tests/Tests.fsproj \
             --configuration Release \
             --no-build \
-            --logger "trx;LogFileName=tests-${{ matrix.os }}.trx" \
-            --results-directory TestResults \
-            | tee test-output.txt
+            --report-trx \
+            --report-trx-filename "tests-${{ matrix.os }}.trx" \
+            --results-directory TestResults
 
       - name: Report test counts
         if: always()
         shell: bash
         run: |
-          tLine=$(grep -oE 'Failed: +[0-9]+, Passed: +[0-9]+, Skipped: +[0-9]+, Total: +[0-9]+' test-output.txt | tail -1)
-          if [ -z "$tLine" ]; then
-            echo "::error::Could not find a test summary line in the test output."
+          tTrx="TestResults/tests-${{ matrix.os }}.trx"
+          tCounters=$(grep -oE '<Counters [^>]*' "$tTrx" 2>/dev/null | head -1)
+          if [ -z "$tCounters" ]; then
+            echo "::error::Could not find test counters in $tTrx."
             exit 1
           fi
 
-          tFailed=$(echo "$tLine"  | sed -E 's/.*Failed: +([0-9]+).*/\1/')
-          tPassed=$(echo "$tLine"  | sed -E 's/.*Passed: +([0-9]+).*/\1/')
-          tSkipped=$(echo "$tLine" | sed -E 's/.*Skipped: +([0-9]+).*/\1/')
-          tTotal=$(echo "$tLine"   | sed -E 's/.*Total: +([0-9]+).*/\1/')
+          counter() { echo "$tCounters" | grep -oE " $1=\"[0-9]+\"" | grep -oE '[0-9]+'; }
+          tTotal=$(counter total)
+          tPassed=$(counter passed)
+          tFailed=$(counter failed)
+          tSkipped=$(counter notExecuted)
 
           {
             echo "### Tests (${{ matrix.os }})"
@@ -106,11 +107,13 @@ jobs:
 
       - name: Test with coverage
         run: >
-          dotnet test Tests/Tests.fsproj
+          dotnet test --project Tests/Tests.fsproj
           --configuration Release
           --no-build
-          --settings coverlet.runsettings
-          --collect:"XPlat Code Coverage"
+          --coverlet
+          --coverlet-output-format cobertura
+          --coverlet-include "[FSharp.Interop.Dynamic]*"
+          --coverlet-exclude "[Tests]*"
           --results-directory TestResults
 
       - name: Install ReportGenerator
@@ -119,7 +122,7 @@ jobs:
       - name: Generate report
         run: >
           ./tools/reportgenerator
-          -reports:TestResults/**/coverage.cobertura.xml
+          -reports:TestResults/**/coverage.cobertura*.xml
           -targetdir:CoverageReport
           -reporttypes:"MarkdownSummaryGithub;HtmlInline;Cobertura"
 
@@ -133,7 +136,7 @@ jobs:
           MIN_LINE: '77'
           MIN_BRANCH: '100'
         run: |
-          tReport=$(find TestResults -name coverage.cobertura.xml | head -1)
+          tReport=$(find TestResults -name 'coverage.cobertura*.xml' | head -1)
           if [ -z "$tReport" ]; then
             echo "::error::No cobertura report was produced."
             exit 1

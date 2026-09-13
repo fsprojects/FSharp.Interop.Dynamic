@@ -142,7 +142,7 @@ Requires the .NET 10 SDK.
 ```bash
 dotnet restore
 dotnet build -c Release -warnaserror
-dotnet test Tests/Tests.fsproj -c Release
+dotnet test --project Tests/Tests.fsproj -c Release
 ```
 
 Docs: `dotnet tool install -g docfx --version 2.78.5`, then `dotnet build FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj -c Release && docfx docfx/docfx.json`.
