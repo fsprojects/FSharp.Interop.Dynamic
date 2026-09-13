@@ -174,7 +174,7 @@ Set a property with dlr, Expando only responds to the dlr.
         buildObj?Two |> should equal 2
 
 (**
-Use the dlr to call the explict operator with a reflected type
+Use the dlr to call the explicit operator with a reflected type
 *)
     [<Fact>]
     let ``Test dynamic Explicit Conversion`` ()=
@@ -182,7 +182,7 @@ Use the dlr to call the explict operator with a reflected type
         ele |> Dyn.explicitConvertTo typeof<Int32> |> should equal 50
 
 (**
-Use the dlr to call the implict operato rwith a reflected type
+Use the dlr to call the implicit operator with a reflected type
 *)
     [<Fact>]
     let ``Test dynamic Implicit Conversion`` ()=
@@ -191,7 +191,7 @@ Use the dlr to call the implict operato rwith a reflected type
         actual |> should equal 50M
 
 (**
-Use the dlr to call the explict operator with inferred type from usage
+Use the dlr to call the explicit operator with inferred type from usage
 *)
     [<Fact>]
     let ``Test Explicit Conversion`` ()=
