@@ -99,7 +99,7 @@ required checks below.
 | OSV-Scanner (full) | `master` only |
 | Scorecard SARIF upload | `master` only |
 | GitHub Pages deploy | `master` only |
-| NuGet publish + Sigstore provenance | Version tags `v*.*.*` only (`NUGET_PUBLISH_KEY`) |
+| NuGet publish + Sigstore provenance | Version tags `v*.*.*` only (Trusted Publishing / `NuGet/login`) |
 
 Central Package Management (`Directory.Packages.props`) and
 `packages.lock.json` pin restore. GitHub Actions `uses:` lines are commit SHAs.
