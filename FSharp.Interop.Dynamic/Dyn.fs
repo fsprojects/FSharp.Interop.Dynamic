@@ -204,7 +204,7 @@ module Dyn =
     let addAssignMember (target:obj) (memberName:string) (value:obj)  =
         target |> memberAddAssign memberName value
     
-    [<Obsolete>]
+    [<Obsolete("Replaced with partial application version `memberSubtractAssign`")>]
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         target |> memberSubtractAssign memberName value
 
