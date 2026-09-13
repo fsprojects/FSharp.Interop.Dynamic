@@ -1,6 +1,6 @@
 # Releasing
 
-NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`. The API key is the repo secret `NUGET_PUBLISH_KEY` (installed in #28).
+NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`. It authenticates with nuget.org **Trusted Publishing** (`NuGet/login` + OIDC), not a long-lived API key. The nuget.org policy must name this repository and `publish.yml`. The GitHub secret `NUGET_USER` is the nuget.org profile name.
 
 ## Version
 

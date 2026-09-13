@@ -132,16 +132,22 @@ jobs:
         with:
           subject-path: ./nupkgs/*
 
+      - name: NuGet login (OIDC)
+        id: login
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
       - name: Push to nuget.org
         env:
-          NUGET_PUBLISH_KEY: ${{ secrets.NUGET_PUBLISH_KEY }}
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
         run: |
-          if [ -z "$NUGET_PUBLISH_KEY" ]; then
-            echo "::error::NUGET_PUBLISH_KEY is not set."
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "::error::NuGet/login did not return NUGET_API_KEY. Set NUGET_USER and a nuget.org Trusted Publishing policy for publish.yml."
             exit 1
           fi
           dotnet nuget push ./nupkgs/*.nupkg \
-            --api-key "$NUGET_PUBLISH_KEY" \
+            --api-key "$NUGET_API_KEY" \
             --source https://api.nuget.org/v3/index.json \
             --skip-duplicate
 
