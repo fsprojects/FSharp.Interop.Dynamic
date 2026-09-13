@@ -24,5 +24,14 @@
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
+
+    <!-- Scorecard Pinned-Dependencies counts a restore as pinned only when it
+         passes locked-mode, which needs a committed lock file (issue 55). -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <!-- The SDK adds its bundled FSharp.Core library-packs folder as a restore
+         source. That nupkg hashes differently from nuget.org's, so the lock
+         file broke (NU1403) whenever the SDK version changed. Restore from
+         nuget.org only. -->
+    <_FSharpCoreLibraryPacksFolder>$(MSBuildThisFileDirectory).no-library-packs/</_FSharpCoreLibraryPacksFolder>
   </PropertyGroup>
 </Project>
