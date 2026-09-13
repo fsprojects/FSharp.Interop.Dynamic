@@ -21,10 +21,6 @@
          unused-open check, which is the dead-code signal for F#. -->
     <WarnOn>1182</WarnOn>
 
-    <!-- Scorecard Pinned-Dependencies: nuget restore is pinned when a lock
-         file exists and CI restore uses locked-mode (issue 55). -->
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-
     <NuGetAudit>true</NuGetAudit>
     <NuGetAuditMode>all</NuGetAuditMode>
     <NuGetAuditLevel>low</NuGetAuditLevel>
