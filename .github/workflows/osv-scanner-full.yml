@@ -1,0 +1,26 @@
+name: OSV-Scanner (full)
+
+# Full-repo OSV scan. Not on pull_request: PRs run osv-scanner.yml instead.
+
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: '41 4 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: osv-scanner-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  scan:
+    name: OSV-Scanner (full)
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@6e4298ebc4db23e847df9b2e2de2939d6f066c67 # v2.5.1
