@@ -78,21 +78,21 @@ module Raw =
         actual |> should equal "Hello"
         
     [<Fact>]
-    let ``implict convert null`` () =
+    let ``implicit convert null`` () =
         let actual:string = (null |> Dyn.implicitConvertTo typeof<string>)
         actual |> should equal null
         
     [<Fact>]
-    let ``implict convert null option`` () =
+    let ``implicit convert null option`` () =
         let actual:string option = (null |> Dyn.implicitConvertTo typeof<string option>)
         actual |> should equal None 
     [<Fact>]
-    let ``implict convert null fail`` () =
+    let ``implicit convert null fail`` () =
         let actual ():int = null |> Dyn.implicitConvertTo typeof<int>
         actual >> ignore |> shouldFail 
         
     [<Fact>]
-    let ``implict convert null fail fsharp type`` () =
+    let ``implicit convert null fail fsharp type`` () =
         let actual ():Calling = (null |> Dyn.implicitConvertTo typeof<Calling>)
         actual >> ignore |> shouldFail 
        
