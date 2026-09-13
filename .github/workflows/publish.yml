@@ -20,10 +20,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Scorecard Packaging looks for a successful run of a workflow whose steps
-  # match nuget.*push. The nuget.org job only runs on tags, so it has never
-  # succeeded. This job packs on master/PRs and pushes to a local folder
-  # (no nuget.org). That is enough for Scorecard to see packaging (#67).
+  # Scorecard Packaging needs (1) nuget.*push in this workflow file and
+  # (2) a successful run of the file. The nuget.org job (tags and
+  # workflow_dispatch) already has the push; this job gives the file a
+  # successful run on master/PRs without publishing.
   pack:
     name: Pack nupkg
     if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
@@ -47,11 +47,6 @@ jobs:
           --configuration Release
           --no-restore
           --output ./nupkgs
-
-      - name: Push to a local feed
-        run: |
-          mkdir -p local-feed
-          dotnet nuget push ./nupkgs/*.nupkg --source "$PWD/local-feed" --skip-duplicate
 
       - name: Upload nupkg
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
