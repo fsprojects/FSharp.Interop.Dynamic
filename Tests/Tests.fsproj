@@ -18,6 +18,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="FsUnit.Xunit" />
+    <PackageReference Include="FsCheck" />
     <PackageReference Include="coverlet.collector">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -34,6 +35,7 @@
     <Compile Include="OperatorValues.fs" />
     <Compile Include="ReadmeExamples.fs" />
     <Compile Include="WhyExamples.fs" />
+    <Compile Include="Properties.fs" />
   </ItemGroup>
 
   <ItemGroup>
