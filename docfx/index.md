@@ -10,7 +10,7 @@ F# operators and helpers for the Dynamic Language Runtime. `target?Name`, `targe
 This is the fsprojects library that sits on [Dynamitey](https://www.nuget.org/packages/Dynamitey/) 3.0.3. It is not Dynamitey itself; it is the F# surface.
 
 > [!IMPORTANT]
-> nuget.org still serves **5.0.1.268** (the 2022 package). `master` is **6.0.0**: `netstandard2.0` and `net10.0`, GitHub Actions CI, `Dyn.tryGet` / `Dyn.exists`. It publishes when someone tags `v6.0.0`. Until then `dotnet add package FSharp.Interop.Dynamic` still gets 5.0.1.268.
+> **6.0.0** is the current package (`netstandard2.0` and `net10.0`). **5.0.1.268** was the last package that still targeted `net45` / `netstandard1.6`.
 
 ## Where to start
 

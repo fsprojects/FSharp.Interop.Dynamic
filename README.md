@@ -21,10 +21,7 @@ F# has no `dynamic` keyword. Use this when the member is not known at compile ti
 
 ## Version story
 
-> **nuget.org still serves 5.0.1.268** (2022: `net45`, `netstandard1.6`, `netstandard2.0`).
-> `master` is **6.0.0**: `netstandard2.0` + `net10.0`, `Dyn.tryGet` / `Dyn.exists`, GitHub Actions CI and publish. It reaches nuget.org when someone pushes the tag `v6.0.0`. Until then `dotnet add package FSharp.Interop.Dynamic` installs 5.0.1.268.
-
-6.0.0 is a TFM break. `netstandard2.0` still covers current .NET Framework and .NET.
+**6.0.0** is the current package: `netstandard2.0` + `net10.0`, `Dyn.tryGet` / `Dyn.exists`. That is a TFM break from **5.0.1.268** (`net45` / `netstandard1.6` / `netstandard2.0`). `netstandard2.0` still covers current .NET Framework and .NET.
 
 ---
 

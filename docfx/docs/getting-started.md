@@ -3,7 +3,7 @@
 ## Installing
 
 > [!IMPORTANT]
-> nuget.org's latest is **5.0.1.268**. That package still targets `net45` / `netstandard1.6` / `netstandard2.0`. `master` is 6.0.0 (`netstandard2.0` + `net10.0`) and is not on nuget.org until a `v6.0.0` tag. The snippets below are 6.0.0.
+> Install **6.0.0** (`netstandard2.0` + `net10.0`). **5.0.1.268** is the previous TFM set (`net45` / `netstandard1.6` / `netstandard2.0`).
 
 ```bash
 dotnet add package FSharp.Interop.Dynamic

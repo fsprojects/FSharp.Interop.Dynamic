@@ -4,15 +4,15 @@ NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`.
 
 ## Version
 
-`VersionPrefix` is **6.0.0**. That is the TFM break (`net45` / `netstandard1.6` dropped). nuget.org's last version is 5.0.1.268.
+`VersionPrefix` is **6.0.0**. That was the TFM break (`net45` / `netstandard1.6` dropped). The next release is `v6.0.1` (or `v6.1.0` / `v7.0.0`), not another 5.x.
 
-## Cut 6.0.0
+## Cut a release
 
-First make sure [`CHANGELOG.md`](https://github.com/fsprojects/FSharp.Interop.Dynamic/blob/master/CHANGELOG.md) has a `## [6.0.0]` section that describes the release. Then, on `master`, after CI is green:
+First make sure [`CHANGELOG.md`](https://github.com/fsprojects/FSharp.Interop.Dynamic/blob/master/CHANGELOG.md) has a `## [version]` section that describes the release. Then, on `master`, after CI is green:
 
 ```bash
-git tag v6.0.0
-git push origin v6.0.0
+git tag vX.Y.Z
+git push origin vX.Y.Z
 ```
 
 The Publish workflow will:
