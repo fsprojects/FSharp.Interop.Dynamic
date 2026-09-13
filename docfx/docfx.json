@@ -1,0 +1,49 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../FSharp.Interop.Dynamic/bin/Release/net10.0",
+          "files": [ "FSharp.Interop.Dynamic.dll" ]
+        }
+      ],
+      "dest": "api",
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": [ "api/**.yml", "api/index.md" ]
+      },
+      {
+        "files": [ "**.md", "**/toc.yml", "toc.yml", "*.md" ],
+        "exclude": [ "_site/**", "api/**" ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [ "images/**" ]
+      }
+    ],
+    "output": "_site",
+    "template": [ "default", "modern" ],
+    "globalMetadata": {
+      "_appName": "FSharp.Interop.Dynamic",
+      "_appTitle": "FSharp.Interop.Dynamic",
+      "_appLogoPath": "images/logo.png",
+      "_appFooter": "FSharp.Interop.Dynamic is licensed under Apache-2.0. Copyright 2011-2019 Ekon Benefits; copyright 2026 the maintainers.",
+      "_enableSearch": true,
+      "_disableContribution": false,
+      "_gitContribute": {
+        "repo": "https://github.com/fsprojects/FSharp.Interop.Dynamic",
+        "branch": "master"
+      },
+      "pdf": false
+    },
+    "sitemap": {
+      "baseUrl": "https://fsprojects.github.io/FSharp.Interop.Dynamic/"
+    }
+  }
+}

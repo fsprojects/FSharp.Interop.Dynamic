@@ -1,57 +1,137 @@
-# FSharp.Interop.Dynamic [![NuGet Status](https://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.Dynamic/) [![CI](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml/badge.svg)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml)
+# FSharp.Interop.Dynamic
 
+[![NuGet](https://img.shields.io/nuget/v/FSharp.Interop.Dynamic.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.Dynamic/)
+[![CI](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml/badge.svg)](https://github.com/fsprojects/FSharp.Interop.Dynamic/actions/workflows/dotnet.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](License.txt)
 
-The F# Dynamic Operator, powered by the DLR. Compiled for .NET Standard 2.0 and .NET 10.
+F# operators for the Dynamic Language Runtime. `target?Name`, `target?Name <- value`, and `!?target` are the F# spelling of C# `dynamic`, with piping and `'T option` lookups.
 
-Install from [NuGet](https://nuget.org/packages/FSharp.Interop.Dynamic/)
-```
+**Docs:** [fsprojects.github.io/FSharp.Interop.Dynamic](https://fsprojects.github.io/FSharp.Interop.Dynamic/)
+
+This library sits on [Dynamitey](https://www.nuget.org/packages/Dynamitey/) 3.0.3. It is the F# surface, not Dynamitey itself.
+
+---
+
+## Version story
+
+> **nuget.org still serves 5.0.1.268** (2022: `net45`, `netstandard1.6`, `netstandard2.0`).
+> `master` is **6.0.0**: `netstandard2.0` + `net10.0`, `Dyn.tryGet` / `Dyn.exists`, GitHub Actions CI and publish. It reaches nuget.org when someone pushes the tag `v6.0.0`. Until then `dotnet add package FSharp.Interop.Dynamic` installs 5.0.1.268.
+
+6.0.0 is a TFM break. `netstandard2.0` still covers current .NET Framework and .NET.
+
+---
+
+## Install (6.0.0)
+
+```bash
 dotnet add package FSharp.Interop.Dynamic
 ```
 
-# Usage
-
-`target?Property`, `target?Property<-value`, and `target?Method(arg,arg2)` allow you to dynamically get/set properties and call methods
-
-Also `Dyn.implicitConvert`,`Dyn.explicitConvert`, comparison operators and more.
-
-
-# Examples:
-
-### System.Dynamic
 ```fsharp
 open FSharp.Interop.Dynamic
-let ex1 = ExpandoObject()
-ex1?Test<-"Hi"//Set Dynamic Property
-ex1?Test //Get Dynamic
+open FSharp.Interop.Dynamic.Operators   // optional: ?+?, ?=?, …
 ```
 
-### MVC ViewBag
+---
+
+## Quick start
 
 ```fsharp
-x.ViewBag?Name<-"George"
-```
-
-### Dynamitey
-
-```fsharp
+open System.Dynamic
 open FSharp.Interop.Dynamic
-open Dynamitey.DynamicObjects
 
-let ComBinder = LateType("System.Dynamic.ComBinder, System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")
+let o = ExpandoObject()
+o?Name <- "Ada"
+let name: string = o?Name
 
-let getPropertyNames (target:obj) =
-  seq {
-    yield! target.GetType().GetTypeInfo().GetProperties().Select(fun it -> it.Name)
-    if (ComBinder.IsAvailable) then
-      yield! ComBinder?GetDynamicDataMemberNames(target)
-  }
-
+let hello: string = "HelloWorld"?Substring(0, 5)
 ```
 
+Annotate the result type when F# cannot infer it. Void CLR methods need `unit`:
 
-### Python Interop
+```fsharp
+let items = ResizeArray<string>()
+let _: unit = items?Add("x")
+```
 
-Translated from this example C# code: https://github.com/SciSharp/pythonnet#example
+### Check a member without throwing
+
+```fsharp
+let present: string option = o |> Dyn.tryGet "Name"     // Some "Ada"
+let missing: string option = o |> Dyn.tryGet "NoSuch"   // None
+o |> Dyn.exists "Name"    // true
+o |> Dyn.exists "NoSuch"  // false
+```
+
+Lookup is Dynamitey `InvokeGet`. A present null is still present. A present value that cannot convert to `'T` still throws — that is not a miss.
+
+### Pipe through `Dyn`
+
+```fsharp
+o |> Dyn.set "Name" "Ada"
+let name: string = o |> Dyn.get "Name"
+let hello: string = "HelloWorld" |> Dyn.invokeMember "Substring" (0, 5)
+```
+
+Target is last so piping works.
+
+### Binary operators
+
+```fsharp
+open FSharp.Interop.Dynamic.Operators
+
+let n: int = 5 ?+? 4
+let f: float = 5 ?+? 3.5
+let s: string = "Hello" ?+? " World"
+[1; 2; 3; 4] |> List.reduce (?+?)
+```
+
+### Direct invoke
+
+```fsharp
+let add3: int -> int = !?(+) 3
+add3 4  // 7
+```
+
+---
+
+## What `?` does
+
+| You write | DLR |
+| --- | --- |
+| `target?Name` when `'T` is not a function | `InvokeGet` |
+| `target?Name` when `'T` is a function, then apply | `InvokeMember` |
+| `target?Name <- value` | `InvokeSet` |
+| `!?target` | `Invoke` on the target itself |
+
+That is why `target?Foo(1, 2)` is a method call: application forces a function type.
+
+More: [Operators](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/operators.html), [Dyn](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/dyn.html), [tryGet](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/tryget.html).
+
+---
+
+## Dynamitey
+
+6.0.0 references **Dynamitey 3.0.3**. `tryGet` / `exists` do not wait on Dynamitey 4.0.0. The community continuation of Dynamitey is [dynamitey-community/dynamitey](https://github.com/dynamitey-community/dynamitey); switching this package to it is [#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29).
+
+You can still `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dictionary`.
+
+---
+
+## Caveats
+
+- The DLR cannot see **explicit interface members** (same as C# `dynamic`).
+- **Not trim-safe or NativeAOT-safe.**
+- Do not build member names from untrusted input. [SECURITY.md](SECURITY.md).
+- Historical: .NET Core 2.0.0–2.0.2 broke `dynamic` on nested types inside generics ([#11](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11)). Current TFMs are fine.
+
+Full list: [Caveats](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/caveats.html).
+
+---
+
+## Examples that used to live only in the old site
+
+**pythonnet**
 
 ```fsharp
 open Python.Runtime
@@ -60,58 +140,43 @@ open FSharp.Interop.Dynamic.Operators
 
 do
   use __ = Py.GIL()
-
   let np = Py.Import("numpy")
   np?cos(np?pi ?*? 2)
-  |> printfn "%O"
-
   let sin: obj -> obj = np?sin
-  sin 5 |> printfn "%O"
-
-  np?cos 5 ?+? sin 5
-  |> printfn "%O"
-
-  let a: obj = np?array([| 1.; 2.; 3. |])
-  printfn "%O" a?dtype
-
-  let b: obj = np?array([| 6.; 5.; 4. |], Dyn.namedArg "dtype" np?int32)
-  printfn "%O" b?dtype
-
-  a ?*? b
-  |> printfn "%O"
+  np?array([| 6.; 5.; 4. |], Dyn.namedArg "dtype" np?int32)
 ```
 
-Output
-
-```
-1.0
--0.9589242746631385
--0.6752620891999122
-float64
-int32
-[ 6. 10. 12.]
-```
-
-### SignalR (.net framework version)
+**SignalR (.NET Framework client)**
 
 ```fsharp
-open FSharp.Interop.Dynamic
 type MyHub =
     inherit Hub
-    member x.Send (name : string) (message : string) =
-        base.Clients.All?addMessage(name,message) |> ignore
+    member x.Send (name: string) (message: string) =
+        base.Clients.All?addMessage(name, message) |> ignore
 ```
 
-# Caveats:
+---
 
-The `DLR` is incompatible with interface explicit members, so are these operators, [just like C#'s `dynamic` keyword](https://stackoverflow.com/questions/22514892/iterate-through-a-dictionary-inserted-in-a-asp-net-mvc4-pages-viewdata-via-f-c).
+## Build
 
-[.NET Core 2.0.0 to 2.0.2 had a major bug in the C# dynamic keyword with nested classes inside of generic classes.](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11). You will know it from a substring argument length exception. .NET Framework 4.0+, .NET Core 1.x and .NET Core 2.0.3+ and later are unaffected.
+Requires the .NET 10 SDK.
 
-## Maintainer(s)
+```bash
+dotnet restore
+dotnet build -c Release -warnaserror
+dotnet test Tests/Tests.fsproj -c Release
+```
+
+Docs: `dotnet tool install -g docfx --version 2.78.5`, then `dotnet build FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj -c Release && docfx docfx/docfx.json`.
+
+Release: tag `v6.0.0` and push. [Releasing](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/releasing.html).
+
+---
+
+## Maintainers
 
 - [@AtwoodTM](https://github.com/AtwoodTM)
 - [@jbtule](https://github.com/jbtule)
 - [@forki](https://github.com/forki)
 
-The default maintainer account for projects under "fsprojects" is [@fsprojectsgit](https://github.com/fsprojectsgit) - F# Community Project Incubation Space (repo management)
+fsprojects default: [@fsprojectsgit](https://github.com/fsprojectsgit).
