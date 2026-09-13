@@ -38,7 +38,8 @@ namespace FSharp.Interop.Dynamic
       memberName:string ->
         typeArgs:seq<System.Type> -> value:'a -> target:obj -> 'TResult
     val get : propertyName:string -> target:obj -> 'TResult
-    /// Like `get`, but `None` when the DLR binder cannot find the member.
+    /// Like `get`, but `None` when `InvokeGet` cannot find the member.
+    /// Conversion failures still throw; they are not treated as missing.
     val tryGet : propertyName:string -> target:obj -> 'T option
     /// True when `InvokeGet` succeeds. A present null is still present.
     val exists : propertyName:string -> target:obj -> bool
