@@ -28,11 +28,12 @@
       }
     ],
     "output": "_site",
-    "template": [ "default", "modern" ],
+    "template": [ "default", "modern", "template" ],
     "globalMetadata": {
       "_appName": "FSharp.Interop.Dynamic",
       "_appTitle": "FSharp.Interop.Dynamic",
-      "_appLogoPath": "images/logo.png",
+      "_appLogoPath": "images/logo.svg",
+      "_appFaviconPath": "images/favicon.svg",
       "_appFooter": "FSharp.Interop.Dynamic is licensed under Apache-2.0. Copyright 2011-2019 Ekon Benefits; copyright 2026 the maintainers.",
       "_enableSearch": true,
       "_disableContribution": false,

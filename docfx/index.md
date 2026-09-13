@@ -40,6 +40,21 @@ let name: string = o?Name
 
 That is a DLR get/set. The compiler does not need to know `Name`. The same operators work on ViewBag, COM, pythonnet, SignalR clients, and ordinary CLR objects.
 
+## What this library is for
+
+F# has no `dynamic` keyword. This library is that keyword, plus piping and an option-returning lookup.
+
+- **The call is in F#.** `?` / `?<-` / `!?` are the spelling.
+- **The name is data.** `Dyn.get name` takes a string; `o?Name` still writes `Name` in source.
+- **You want an option, not an exception.** [`Dyn.tryGet`](docs/tryget.md) / `Dyn.exists` catch binder misses. C# `dynamic` has no equivalent.
+- **You want F# piping.** Target is last on `Dyn.*` so `o |> Dyn.get "Name"` works.
+
+Reach for ordinary F# when the member is known at compile time. Reach for this library when it is not.
+
 ## Supported frameworks
 
-`netstandard2.0` and `net10.0`. The `netstandard2.0` target is the one that still reaches .NET Framework 4.6.2+ and modern .NET from a single package. 6.0.0 dropped `net45` and `netstandard1.6`.
+`netstandard2.0` and `net10.0`. The `netstandard2.0` target is kept deliberately — it is the only target reaching both .NET Framework 4.6.2+ and modern .NET from a single package. 6.0.0 dropped `net45` and `netstandard1.6`.
+
+## A word on trimming and AOT
+
+This library is DLR-based and will never be trim-safe or NativeAOT-safe. Members it resolves at runtime can disappear under the trimmer. See [Caveats](docs/caveats.md).

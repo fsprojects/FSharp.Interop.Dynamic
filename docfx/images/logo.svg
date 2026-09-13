@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="FSharp.Interop.Dynamic">
+  <defs>
+    <linearGradient id="fid-a" x1="4" y1="4" x2="20" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#5EC8E8"/>
+      <stop offset="1" stop-color="#2A8BB8"/>
+    </linearGradient>
+    <linearGradient id="fid-b" x1="12" y1="4" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7ED7F0"/>
+      <stop offset="1" stop-color="#30B4DC"/>
+    </linearGradient>
+  </defs>
+  <!-- Two overlapping diamonds: the F# mark, drawn here rather than taken from
+       a raster FAKE leftover so it holds at 16px in the navbar. -->
+  <path d="M4 16 L16 4 L16 16 L4 28 Z" fill="url(#fid-a)"/>
+  <path d="M16 16 L28 4 L28 16 L16 28 Z" fill="url(#fid-b)"/>
+</svg>

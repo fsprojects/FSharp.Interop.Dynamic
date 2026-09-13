@@ -1,0 +1,310 @@
+/*
+ * FSharp.Interop.Dynamic documentation theme.
+ *
+ * Same shape as the Dynamitey Community theme: Bootstrap 5 custom properties,
+ * a dark header, one accent, measured prose. The accent is F#-adjacent cyan
+ * rather than Dynamitey's amber so the two sites read as related, not cloned.
+ */
+
+/* ---------------------------------------------------------------- palette */
+
+:root {
+  --fid-cyan-300: #7ec8e8;
+  --fid-cyan-500: #30b4dc;
+  --fid-cyan-700: #1a7aa3;
+  --fid-cyan-800: #145e7e;
+
+  --fid-slate-950: #0f1216;
+  --fid-slate-900: #14181f;
+  --fid-slate-800: #1b212a;
+  --fid-slate-700: #252c37;
+  --fid-slate-400: #8a94a3;
+  --fid-slate-200: #dfe3e9;
+  --fid-slate-100: #eef0f4;
+  --fid-slate-50: #f7f8fa;
+
+  --fid-radius: 8px;
+}
+
+/* ------------------------------------------------------------ light theme */
+
+[data-bs-theme="light"] {
+  --bs-body-bg: #ffffff;
+  --bs-body-color: #1b1f26;
+  --bs-emphasis-color: #0d1015;
+  --bs-secondary-bg: var(--fid-slate-50);
+  --bs-tertiary-bg: var(--fid-slate-100);
+  --bs-border-color: var(--fid-slate-200);
+
+  --bs-link-color: var(--fid-cyan-700);
+  --bs-link-hover-color: var(--fid-cyan-800);
+  --bs-primary: var(--fid-cyan-700);
+  --bs-primary-rgb: 26, 122, 163;
+
+  --bs-code-color: #0f5f7a;
+
+  --fid-header-bg: var(--fid-slate-900);
+  --fid-header-color: #f2f4f7;
+  --fid-header-muted: #a7b0bd;
+  --fid-shadow: 0 1px 2px rgba(15, 18, 22, 0.06), 0 8px 24px rgba(15, 18, 22, 0.06);
+}
+
+/* ------------------------------------------------------------- dark theme */
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--fid-slate-950);
+  --bs-body-color: #dde2e9;
+  --bs-emphasis-color: #f4f6f9;
+  --bs-secondary-bg: var(--fid-slate-900);
+  --bs-tertiary-bg: var(--fid-slate-800);
+  --bs-border-color: var(--fid-slate-700);
+
+  --bs-link-color: #6ec4e4;
+  --bs-link-hover-color: var(--fid-cyan-300);
+  --bs-primary: #6ec4e4;
+  --bs-primary-rgb: 110, 196, 228;
+
+  --bs-code-color: var(--fid-cyan-300);
+
+  --fid-header-bg: #0b0e12;
+  --fid-header-color: #eef1f5;
+  --fid-header-muted: #98a2b0;
+  --fid-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* ------------------------------------------------------------ typography */
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+article h1,
+article h2,
+article h3,
+article h4 {
+  color: var(--bs-emphasis-color);
+  font-weight: 650;
+  letter-spacing: -0.011em;
+}
+
+article h1 {
+  font-size: 2.1rem;
+  line-height: 1.2;
+  margin-bottom: 0.6rem;
+}
+
+article h2 {
+  font-size: 1.5rem;
+  margin-top: 2.4rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+article h3 {
+  font-size: 1.18rem;
+  margin-top: 1.8rem;
+}
+
+article > p,
+article > ul,
+article > ol,
+article > blockquote {
+  max-width: 46rem;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.navbar {
+  background-color: var(--fid-header-bg) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .navbar-nav .nav-link {
+  color: var(--fid-header-color);
+}
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus {
+  color: var(--fid-cyan-300);
+}
+
+.navbar .navbar-brand {
+  font-weight: 640;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.navbar .navbar-brand img,
+.navbar .navbar-brand svg,
+#logo {
+  height: 26px;
+  width: 26px;
+}
+
+.navbar .form-control {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: var(--fid-header-color);
+}
+
+.navbar .form-control::placeholder {
+  color: var(--fid-header-muted);
+}
+
+.navbar .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.13);
+  border-color: var(--fid-cyan-500);
+  box-shadow: 0 0 0 0.2rem rgba(48, 180, 220, 0.25);
+  color: var(--fid-header-color);
+}
+
+/* ------------------------------------------------------- code and syntax */
+
+code {
+  font-family: "SFMono-Regular", "JetBrains Mono", Consolas, "Liberation Mono",
+    Menlo, monospace;
+  font-size: 0.875em;
+}
+
+:not(pre) > code {
+  background-color: var(--bs-tertiary-bg);
+  border-radius: 4px;
+  padding: 0.12em 0.36em;
+}
+
+pre {
+  background-color: var(--bs-secondary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--fid-radius);
+  padding: 1rem 1.1rem;
+  line-height: 1.55;
+}
+
+/* ------------------------------------------------------ tables and notes */
+
+article table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--fid-radius);
+  overflow: hidden;
+  width: 100%;
+}
+
+article table th {
+  background-color: var(--bs-secondary-bg);
+  font-weight: 620;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+}
+
+article table th,
+article table td {
+  border-top: 1px solid var(--bs-border-color);
+  padding: 0.6rem 0.85rem;
+  vertical-align: top;
+}
+
+article table thead th {
+  border-top: 0;
+}
+
+.alert {
+  border: 1px solid var(--bs-border-color);
+  border-left: 3px solid var(--bs-primary);
+  border-radius: var(--fid-radius);
+  background-color: var(--bs-secondary-bg);
+  color: var(--bs-body-color);
+}
+
+.alert.WARNING,
+.alert.CAUTION {
+  border-left-color: #d94f2b;
+}
+
+.alert.IMPORTANT {
+  border-left-color: var(--fid-cyan-500);
+}
+
+.alert > p:last-child {
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------- sidebar and in-page */
+
+.sidetoc,
+#affix {
+  font-size: 0.925rem;
+}
+
+.toc .nav > li > a,
+#affix .nav > li > a {
+  color: var(--bs-body-color);
+  opacity: 0.82;
+  border-radius: 5px;
+  padding: 0.22rem 0.5rem;
+}
+
+.toc .nav > li > a:hover,
+#affix .nav > li > a:hover {
+  opacity: 1;
+  background-color: var(--bs-tertiary-bg);
+  color: var(--bs-link-color);
+}
+
+.toc .nav > li.active > a,
+#affix .nav > li.active > a {
+  opacity: 1;
+  color: var(--bs-link-color);
+  font-weight: 600;
+  background-color: var(--bs-secondary-bg);
+  box-shadow: inset 2px 0 0 var(--bs-primary);
+}
+
+/* ------------------------------------------------------------- landing page */
+
+.hero,
+article > h1:first-child {
+  scroll-margin-top: 5rem;
+}
+
+/* ------------------------------------------------------------------ misc */
+
+a {
+  text-underline-offset: 0.15em;
+}
+
+article a:hover {
+  text-decoration-thickness: 2px;
+}
+
+footer {
+  background-color: var(--bs-secondary-bg);
+  border-top: 1px solid var(--bs-border-color) !important;
+  color: var(--bs-body-color);
+  font-size: 0.9rem;
+}
+
+footer .container-xxl {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.pagination a,
+.next-article a {
+  color: var(--bs-link-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
