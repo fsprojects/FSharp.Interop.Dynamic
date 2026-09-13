@@ -1,5 +1,7 @@
 - name: Getting started
   href: getting-started.md
+- name: Why this library
+  href: why.md
 - name: Operators
   href: operators.md
 - name: Dyn

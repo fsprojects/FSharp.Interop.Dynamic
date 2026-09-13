@@ -16,6 +16,7 @@ This is the fsprojects library that sits on [Dynamitey](https://www.nuget.org/pa
 
 | If you want to | Read |
 | --- | --- |
+| Know when to reach for this | [Why this library](docs/why.md) |
 | Install and make the first `?` call | [Getting started](docs/getting-started.md) |
 | Get, set, and invoke through the operators | [Operators](docs/operators.md) |
 | Pipe through `Dyn.get` / `Dyn.invokeMember` | [Dyn](docs/dyn.md) |

@@ -10,6 +10,8 @@ F# operators for the Dynamic Language Runtime. `target?Name`, `target?Name <- va
 
 This library sits on [Dynamitey](https://www.nuget.org/packages/Dynamitey/) 3.0.3. It is the F# surface, not Dynamitey itself.
 
+F# has no `dynamic` keyword. Use this when the member is not known at compile time: Expando/JSON bags, optional fields, method names from config, C# APIs that return `dynamic`, pythonnet, COM. Use ordinary F# when the type is in your project. Full argument: [Why this library](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/why.html).
+
 ---
 
 ## Version story
@@ -129,31 +131,7 @@ Full list: [Caveats](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/ca
 
 ---
 
-## Examples that used to live only in the old site
-
-**pythonnet**
-
-```fsharp
-open Python.Runtime
-open FSharp.Interop.Dynamic
-open FSharp.Interop.Dynamic.Operators
-
-do
-  use __ = Py.GIL()
-  let np = Py.Import("numpy")
-  np?cos(np?pi ?*? 2)
-  let sin: obj -> obj = np?sin
-  np?array([| 6.; 5.; 4. |], Dyn.namedArg "dtype" np?int32)
-```
-
-**SignalR (.NET Framework client)**
-
-```fsharp
-type MyHub =
-    inherit Hub
-    member x.Send (name: string) (message: string) =
-        base.Clients.All?addMessage(name, message) |> ignore
-```
+Every F# snippet above is a test in `Tests/ReadmeExamples.fs`. pythonnet and SignalR sketches live on the [why](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/why.html) page and are not compiled here.
 
 ---
 
