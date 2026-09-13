@@ -1,17 +1,9 @@
 name: FSharp.Interop.Dynamic CodeQL configuration
 
-# CodeQL analyzes the shipped library and GitHub Actions workflows.
+# CodeQL has no F# extractor. This config is for the Actions language
+# pack (workflow YAML). F# source is scanned by DevSkim instead.
 #
-# Tests/ are excluded deliberately. This library's purpose is runtime
-# dispatch through the DLR, so its tests do things static analysis is
-# obliged to flag and cannot model. Tests do not ship to consumers.
-#
-# For the csharp language this file alone is not enough. CodeQL analyzes
-# whatever the build extracts, so the workflow also builds only
-# FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj rather than the
-# whole solution.
-#
-# CodeQL has no F# extractor. The csharp job may produce a thin database;
-# that is expected, not a misconfiguration.
+# Tests/ stay ignored so a future language pack cannot flag DLR tests
+# that exist to prove dynamic calls the analyzer would call invalid.
 paths-ignore:
   - Tests/**

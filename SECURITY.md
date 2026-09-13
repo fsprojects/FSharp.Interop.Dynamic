@@ -70,8 +70,8 @@ not vulnerabilities. Reports that it can be made to invoke something it was
 
 Every pull request runs:
 
-- CodeQL (`security-and-quality`) against the shipped library and against
-  GitHub Actions workflows
+- CodeQL (`security-and-quality`) against GitHub Actions workflows (CodeQL
+  has no F# extractor; a csharp job on this tree finds no C# to analyze)
 - OpenSSF Scorecard
 - Microsoft DevSkim
 - a dependency review that blocks known-vulnerable dependencies
@@ -79,6 +79,5 @@ Every pull request runs:
 
 Dependabot is enabled for NuGet and GitHub Actions.
 
-CodeQL has no F# extractor. The csharp job still builds the shipped project so
-any extractable IL/C# surface is queried; the Actions job is the part that is
-guaranteed to see this repository's YAML. DevSkim reads F# source as text.
+DevSkim reads F# source as text. That is the scanner that actually sees the
+library; CodeQL here is for workflows.

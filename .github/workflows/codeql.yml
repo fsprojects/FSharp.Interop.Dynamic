@@ -18,45 +18,27 @@ concurrency:
 
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
+    name: Analyze (actions)
     runs-on: ubuntu-latest
     permissions:
       security-events: write
       actions: read
       contents: read
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - language: csharp
-            build-mode: manual
-          - language: actions
-            build-mode: none
 
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up .NET
-        if: matrix.build-mode == 'manual'
-        uses: actions/setup-dotnet@v6
-        with:
-          dotnet-version: '10.0.x'
-
+      # CodeQL has no F# extractor. csharp on this tree fails with
+      # "could not process any code written in C#". Actions YAML is the
+      # language CodeQL can actually see here; DevSkim covers F# source.
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
-          languages: ${{ matrix.language }}
-          build-mode: ${{ matrix.build-mode }}
+          languages: actions
           queries: security-and-quality
           config-file: ./.github/codeql/codeql-config.yml
-
-      # Only the shipped library is built, and therefore only the shipped library
-      # is extracted. Tests/ stay out of the csharp database.
-      - name: Build
-        if: matrix.build-mode == 'manual'
-        run: dotnet build FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj --configuration Release
 
       - name: Analyze
         uses: github/codeql-action/analyze@v4
         with:
-          category: /language:${{ matrix.language }}
+          category: /language:actions
