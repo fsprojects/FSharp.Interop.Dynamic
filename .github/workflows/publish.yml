@@ -5,7 +5,6 @@ on:
     branches: [master]
     tags:
       - 'v*.*.*'
-  pull_request:
   workflow_dispatch:
     inputs:
       version:
@@ -23,10 +22,11 @@ jobs:
   # Scorecard Packaging needs (1) nuget.*push in this workflow file and
   # (2) a successful run of the file. The nuget.org job (tags and
   # workflow_dispatch) already has the push; this job gives the file a
-  # successful run on master/PRs without publishing.
+  # successful run on master without publishing. Pull requests pack in pack.yml
+  # so this workflow is not triggered on PRs (no skipped nuget-push check).
   pack:
     name: Pack nupkg
-    if: github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

@@ -1,16 +1,17 @@
-# Builds the DocFX site on pull requests. Master deploys in docs-pages.yml.
-name: Documentation
+# Deploys the DocFX site to GitHub Pages. Pull requests build in docs.yml.
+name: Documentation pages
 
 on:
-  pull_request:
+  push:
+    branches: [master]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: docs-${{ github.ref }}
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -37,3 +38,24 @@ jobs:
 
       - name: Build the documentation
         run: docfx docfx/docfx.json --warningsAsErrors
+
+      - name: Upload the Pages artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: docfx/_site
+
+  deploy:
+    name: Deploy to Pages
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
