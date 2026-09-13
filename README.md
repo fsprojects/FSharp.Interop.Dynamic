@@ -147,7 +147,7 @@ dotnet test Tests/Tests.fsproj -c Release
 
 Docs: `dotnet tool install -g docfx --version 2.78.5`, then `dotnet build FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj -c Release && docfx docfx/docfx.json`.
 
-Release: tag `v6.0.0` and push. [Releasing](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/releasing.html).
+Release: add the version's section to [CHANGELOG.md](CHANGELOG.md), then tag `v6.0.0` and push. [Releasing](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/releasing.html).
 
 ---
 
