@@ -32,7 +32,7 @@ jobs:
         run: dotnet tool install -g docfx --version 2.78.5
 
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore --locked-mode
 
       - name: Build the library
         run: dotnet build FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj -c Release --no-restore -warnaserror
