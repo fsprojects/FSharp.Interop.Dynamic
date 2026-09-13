@@ -27,6 +27,7 @@
     <Compile Include="Raw.fs" />
     <Compile Include="Obsolete.fs" />
     <Compile Include="Invocation.fs" />
+    <Compile Include="TryGet.fs" />
     <Compile Include="Quotations.fs" />
     <Compile Include="OperatorValues.fs" />
   </ItemGroup>
