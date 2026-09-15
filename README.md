@@ -163,8 +163,8 @@ Release: add the version's section to [CHANGELOG.md](CHANGELOG.md), then tag `v6
 
 ## Maintainers
 
+- [@jbtule](https://github.com/jbtule), original author
 - [@AtwoodTM](https://github.com/AtwoodTM)
-- [@jbtule](https://github.com/jbtule)
 - [@forki](https://github.com/forki)
 
 fsprojects default: [@fsprojectsgit](https://github.com/fsprojectsgit).
