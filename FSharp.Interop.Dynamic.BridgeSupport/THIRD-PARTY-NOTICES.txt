@@ -35,6 +35,8 @@ Modifications made in this repository:
     going through FluentRegex and CoerceConvert.
   - Invocations with more than 14 arguments build their delegate type with
     Expression.GetDelegateType instead of ImpromptuInterface's emitter.
-  - Return<T>.Arguments factory fields replaced with plain lambdas.
+  - The static factory fields (InvokeContext.CreateStatic, InvokeArg.Create,
+    InvokeMemberName.Create, ...) are plain lambdas. Upstream built them with
+    Return<T>.Arguments, and Return<T> is not vendored.
   - Util is internal; unused members removed.
   - Each file carries a header line naming its upstream source.

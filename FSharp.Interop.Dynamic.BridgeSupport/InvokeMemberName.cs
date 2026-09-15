@@ -15,8 +15,8 @@
 //
 // Vendored from Dynamitey v3.0.3 (https://github.com/ekonbenefits/dynamitey,
 // commit 38fcb82). Trimmed to what FSharp.Interop.Dynamic calls; see
-// THIRD-PARTY-NOTICES.txt. Changed: Return<T>.Arguments factories replaced
-// with plain lambdas.
+// THIRD-PARTY-NOTICES.txt. Changed: the static factory fields are plain
+// lambdas; upstream built them with Return<T>.Arguments, which is not vendored.
 
 using System;
 using System.ComponentModel;

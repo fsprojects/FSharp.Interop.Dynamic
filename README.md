@@ -67,7 +67,7 @@ o |> Dyn.exists "Name"    // true
 o |> Dyn.exists "NoSuch"  // false
 ```
 
-Lookup is Dynamitey `InvokeGet`. A present null is still present. A present value that cannot convert to `'T` still throws — that is not a miss.
+Lookup is the DLR's `InvokeGet`, the same call `?` makes. A present null is still present. A present value that cannot convert to `'T` still throws — that is not a miss.
 
 ### Pipe through `Dyn`
 

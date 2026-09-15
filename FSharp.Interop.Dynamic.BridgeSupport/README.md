@@ -8,7 +8,7 @@ You do not reference this package directly; `FSharp.Interop.Dynamic` depends on 
 
 Two types show up in the F# API and are supported:
 
-- `InvokeContext` / `StaticContext` — returned by `Dyn.staticContext` and `Dyn.staticTarget`, so `?` can call static members of a type.
+- `InvokeContext` — returned by `Dyn.staticContext` and `Dyn.staticTarget`, so `?` can call static members of a type. `StaticContext` is a convenience subclass; `Dyn` never returns it.
 - `InvokeArg` — returned by `Dyn.namedArg`, so an argument can be passed by name.
 
 Everything else (`Dynamic`, `Invocation`, `InvocationKind`, `InvokeMemberName`) is public because F# needs to call it, but it is hidden from IntelliSense and may change without notice.
