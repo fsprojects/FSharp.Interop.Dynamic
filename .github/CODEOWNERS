@@ -1,3 +1,3 @@
-# Default owner. Scorecard Branch-Protection requires a CODEOWNERS
+# Default owners. Scorecard Branch-Protection requires a CODEOWNERS
 # review on master (#61).
-* @AtwoodTM
+* @jbtule @AtwoodTM
