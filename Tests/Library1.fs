@@ -86,9 +86,10 @@ Set a property with dlr, Expando only responds to the dlr.
 (***hide***)
     [<Fact>]
     let ``Test Direct Invoke`` ()=
-        // Dynamitey's Curry wants Dynamitey's own context type; Dyn.staticTarget
-        // returns FSharp.Interop.Dynamic.BridgeSupport.InvokeContext, which it
-        // would treat as a plain object.
+        // Dynamitey's Curry stores its target and later dispatches through
+        // Dynamitey's own InvokeMember, which only unwraps Dynamitey's
+        // InvokeContext. Dyn.staticTarget returns BridgeSupport's, so hand
+        // Curry a Dynamitey StaticContext.
         !?Dynamic.Curry(StaticContext(typeof<string>))?Format("Test {0} {1}") (1,2) |>
             should equal "Test 1 2"
 
@@ -178,14 +179,16 @@ so they can be passed in any order.
         described |> should equal "one=1 two=2"
 
 (**
-Dynamitey's own `Build`, `Dynamic.Invoke` and `InvokeArg` still work side by side
-with this library; the result is an ordinary dynamic object for `?`.
+`!?` will invoke without a name, dynamic function or the like. Here it invokes
+Dynamitey's `Build<_>.NewObject` with `Dyn.namedArg`; the names travel as DLR
+named arguments, so Dynamitey never needs to see this library's `InvokeArg` type.
 *)
     [<Fact>]
-    let ``Test Build With Dynamitey InvokeArg`` ()=
-        let buildObj = Dynamic.Invoke(Build<ExpandoObject>.NewObject,
-                                      InvokeArg("One", 1),
-                                      InvokeArg("Two", 2))
+    let ``Test NamedArgs With Build`` ()=
+        let buildObj = !?Build<ExpandoObject>.NewObject (
+                                                            Dyn.namedArg "One" 1,
+                                                            Dyn.namedArg "Two" 2
+                                                        )
         buildObj?One |> should equal 1
         buildObj?Two |> should equal 2
 
