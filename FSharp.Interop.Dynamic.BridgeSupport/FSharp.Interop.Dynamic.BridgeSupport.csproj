@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net10.0</TargetFrameworks>
+    <RootNamespace>FSharp.Interop.Dynamic.BridgeSupport</RootNamespace>
+    <Description>Vendored subset of Dynamitey 3.0.3 that backs FSharp.Interop.Dynamic. Not a general-purpose API.</Description>
+    <Company>Ekon Benefits</Company>
+    <Authors>Jay Tuley</Authors>
+    <Copyright>Copyright 2010-2019 Ekon Benefits</Copyright>
+    <PackageProjectUrl>https://github.com/fsprojects/FSharp.Interop.Dynamic</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>fsharp dynamic dlr dynamitey</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <!-- Upstream Dynamitey is not nullable-annotated; keep the vendored code diffable. -->
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="THIRD-PARTY-NOTICES.txt" Pack="true" PackagePath="\" />
+  </ItemGroup>
+</Project>

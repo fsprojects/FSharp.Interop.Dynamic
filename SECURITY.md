@@ -31,7 +31,9 @@ You will be credited in the advisory unless you ask not to be.
 
 ## Supported versions
 
-The published artefact is the `FSharp.Interop.Dynamic` package on nuget.org.
+The published artefacts are the `FSharp.Interop.Dynamic` and
+`FSharp.Interop.Dynamic.BridgeSupport` packages on nuget.org. They are
+versioned and released together.
 
 | Version | Support |
 | --- | --- |
@@ -39,11 +41,12 @@ The published artefact is the `FSharp.Interop.Dynamic` package on nuget.org.
 | `master` | Reports accepted; this is where fixes land |
 | Older NuGet versions | Reports accepted; fixes ship in a new release, not as a patch of an old TFM |
 
-This repository cannot issue fixes for **Dynamitey**. A vulnerability in that
-dependency should be reported to
+`FSharp.Interop.Dynamic.BridgeSupport` is a vendored subset of **Dynamitey**
+3.0.3, so fixes to that code land in this repository. If the flaw is also
+present upstream, please report it to
 [`dynamitey-community/dynamitey`](https://github.com/dynamitey-community/dynamitey)
-(the continuation) or, for the original package, its publishers. Reports about
-*this* library's use of Dynamitey are still welcome here.
+(the continuation) as well. The `Dynamitey` package itself is only a test
+dependency here.
 
 ## Scope
 

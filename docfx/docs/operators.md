@@ -51,12 +51,13 @@ On a non-callable, both binders fail and you get `AggregateException` wrapping t
 
 ## Named arguments
 
-Dynamitey `InvokeArg` via `Dyn.namedArg`:
+`Dyn.namedArg` wraps a value in a `FSharp.Interop.Dynamic.BridgeSupport.InvokeArg`, so it can be passed to any dynamic call in any order:
 
 ```fsharp
-open Dynamitey
-let o = Build<ExpandoObject>.NewObject(Dyn.namedArg "One" 1)
+let described: string = target?Describe(Dyn.namedArg "two" 2, Dyn.namedArg "one" 1)
 ```
+
+If you also use the Dynamitey package, its APIs (`Build<_>.NewObject`, `Dynamic.Invoke`) want Dynamitey's own `InvokeArg`, not this one.
 
 pythonnet:
 

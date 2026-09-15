@@ -23,7 +23,7 @@ type Calling =
     | Direct
 
 module Dyn =
-    open Dynamitey
+    open FSharp.Interop.Dynamic.BridgeSupport
     open Microsoft.CSharp.RuntimeBinder
     open FSharp.Reflection
 

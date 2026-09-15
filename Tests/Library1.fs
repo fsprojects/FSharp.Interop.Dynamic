@@ -28,6 +28,10 @@ type TestEvent()=
 
 
 (***hide***)
+type NamedArgTarget()=
+    member __.Describe(one:int, two:int) = sprintf "one=%d two=%d" one two
+
+(***hide***)
 type TestFuncs()=
     static member Plus3:Func<int,int> =
       Return<int>.Arguments<int>(fun x-> x + 3)
@@ -82,7 +86,10 @@ Set a property with dlr, Expando only responds to the dlr.
 (***hide***)
     [<Fact>]
     let ``Test Direct Invoke`` ()=
-        !?Dynamic.Curry(Dyn.staticTarget<string>)?Format("Test {0} {1}") (1,2) |>
+        // Dynamitey's Curry wants Dynamitey's own context type; Dyn.staticTarget
+        // returns FSharp.Interop.Dynamic.BridgeSupport.InvokeContext, which it
+        // would treat as a plain object.
+        !?Dynamic.Curry(StaticContext(typeof<string>))?Format("Test {0} {1}") (1,2) |>
             should equal "Test 1 2"
 
 (***hide***)
@@ -161,15 +168,24 @@ Set a property with dlr, Expando only responds to the dlr.
         !refBool |> should equal false
 
 (**
-`!?` will invoke without a name, dynamic function or the like. 
-`Dyn.namedArg` allows you to wrap your arguments with names as part of the invocation.
+`Dyn.namedArg` allows you to wrap your arguments with names as part of the invocation,
+so they can be passed in any order.
 *)
     [<Fact>]
     let ``Test NamedArgs`` ()=
-        let buildObj = !?Build<ExpandoObject>.NewObject (
-                                                            Dyn.namedArg "One" 1,
-                                                            Dyn.namedArg "Two" 2
-                                                        )
+        let target = NamedArgTarget()
+        let described:string = target?Describe(Dyn.namedArg "two" 2, Dyn.namedArg "one" 1)
+        described |> should equal "one=1 two=2"
+
+(**
+Dynamitey's own `Build`, `Dynamic.Invoke` and `InvokeArg` still work side by side
+with this library; the result is an ordinary dynamic object for `?`.
+*)
+    [<Fact>]
+    let ``Test Build With Dynamitey InvokeArg`` ()=
+        let buildObj = Dynamic.Invoke(Build<ExpandoObject>.NewObject,
+                                      InvokeArg("One", 1),
+                                      InvokeArg("Two", 2))
         buildObj?One |> should equal 1
         buildObj?Two |> should equal 2
 

@@ -32,7 +32,7 @@ jobs:
 
       - name: Pack
         run: >
-          dotnet pack FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj
+          dotnet pack FSharp.Interop.Dynamic.sln
           --configuration Release
           --no-restore
           --output ./nupkgs

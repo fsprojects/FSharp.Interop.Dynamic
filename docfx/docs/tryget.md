@@ -2,7 +2,6 @@
 
 [#27](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/27): unstructured objects, check `o?myProp` without eating a `RuntimeBinderException`.
 
-These ship on Dynamitey **3.0.3**. They do not need Dynamitey 4.0.0.
 
 ## `Dyn.tryGet`
 
@@ -41,4 +40,4 @@ True when `InvokeGet` succeeds. A present null is still present. A throwing gett
 
 ## Do not use `GetMemberNames` for this
 
-Dynamitey exposes `Dynamic.GetMemberNames`. It lists names; it is not the same test as `o?myProp`. COM, some `IDynamicMetaObjectProvider` implementations, and binder tricks can succeed on a get whose name is not in that list. `tryGet` / `exists` use the same `InvokeGet` as `?`.
+Dynamitey exposes `Dynamic.GetMemberNames` (not vendored into BridgeSupport). It lists names; it is not the same test as `o?myProp`. COM, some `IDynamicMetaObjectProvider` implementations, and binder tricks can succeed on a get whose name is not in that list. `tryGet` / `exists` use the same `InvokeGet` as `?`.

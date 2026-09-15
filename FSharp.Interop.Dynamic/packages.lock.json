@@ -2,15 +2,6 @@
   "version": 2,
   "dependencies": {
     ".NETStandard,Version=v2.0": {
-      "Dynamitey": {
-        "type": "Direct",
-        "requested": "[3.0.3, )",
-        "resolved": "3.0.3",
-        "contentHash": "ocF4rRKgnmBkblk8RrgRP9YxxeJBvoaoCNLXgmUMgQCjZRw2v6Rtqxt5Kni6/TtbvICeWVN9X/69G5jltUEnbQ==",
-        "dependencies": {
-          "Microsoft.CSharp": "4.7.0"
-        }
-      },
       "FSharp.Analyzers.Build": {
         "type": "Direct",
         "requested": "[0.5.0, )",
@@ -48,15 +39,15 @@
         "type": "Transitive",
         "resolved": "1.1.0",
         "contentHash": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A=="
+      },
+      "fsharp.interop.dynamic.bridgesupport": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.CSharp": "[4.7.0, )"
+        }
       }
     },
     "net10.0": {
-      "Dynamitey": {
-        "type": "Direct",
-        "requested": "[3.0.3, )",
-        "resolved": "3.0.3",
-        "contentHash": "ocF4rRKgnmBkblk8RrgRP9YxxeJBvoaoCNLXgmUMgQCjZRw2v6Rtqxt5Kni6/TtbvICeWVN9X/69G5jltUEnbQ=="
-      },
       "FSharp.Analyzers.Build": {
         "type": "Direct",
         "requested": "[0.5.0, )",
@@ -80,6 +71,9 @@
         "requested": "[4.7.0, )",
         "resolved": "4.7.0",
         "contentHash": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA=="
+      },
+      "fsharp.interop.dynamic.bridgesupport": {
+        "type": "Project"
       }
     }
   }

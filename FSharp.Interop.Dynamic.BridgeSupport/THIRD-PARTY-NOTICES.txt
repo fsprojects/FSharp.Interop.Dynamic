@@ -1,0 +1,40 @@
+FSharp.Interop.Dynamic.BridgeSupport contains code derived from Dynamitey.
+
+  Dynamitey
+  https://github.com/ekonbenefits/dynamitey
+  Version 3.0.3, tag v3.0.3, commit 38fcb821e560c9a146eb2ab3c6c58b66dc2a3385
+  Copyright 2010-2011 Ekon Benefits
+  Licensed under the Apache License, Version 2.0.
+  The full license text is in License.txt at the root of this repository
+  and at http://www.apache.org/licenses/LICENSE-2.0.
+
+Files derived from Dynamitey (upstream path in parentheses):
+
+  Dynamic.cs                        (Dynamitey/Dynamic.cs)
+  Invocation.cs                     (Dynamitey/Invocation.cs)
+  InvokeArg.cs                      (Dynamitey/InvokeArg.cs)
+  InvokeContext.cs                  (Dynamitey/InvokeContext.cs)
+  InvokeMemberName.cs               (Dynamitey/InvokeMemberName.cs)
+  Internal/BinderHash.cs            (Dynamitey/Internal/Optimization/BinderHash.cs)
+  Internal/InvokeHelper.cs          (Dynamitey/Internal/Optimization/InvokeHelper.cs)
+  Internal/InvokeHelper.Regular.cs  (Dynamitey/Internal/Optimization/InvokeHelper-Regular.cs)
+  Internal/Util.cs                  (Dynamitey/Internal/Optimization/Util.cs)
+
+Modifications made in this repository:
+
+  - Namespace renamed from Dynamitey / Dynamitey.Internal.Optimization to
+    FSharp.Interop.Dynamic.BridgeSupport / .Internal.
+  - Trimmed to the members FSharp.Interop.Dynamic calls: the invoke, get,
+    set, index, chain, convert, binary-operator, add/subtract-assign and
+    is-event paths. Constructors, unary operators, Curry, CoerceConvert,
+    CoerceToDelegate, InvokeSetAll, Linq, GetMemberNames, FastDynamicInvoke,
+    the COM / ImpromptuInterface / TypeDescriptor late-bound hooks,
+    DynamicObjects, Builder, Return<T>/ThisFunc delegate helpers, PartialApply,
+    Tupler, FluentRegex and BareBonesList are not included.
+  - InvokeGetChain / InvokeSetChain read the Regex groups directly instead of
+    going through FluentRegex and CoerceConvert.
+  - Invocations with more than 14 arguments build their delegate type with
+    Expression.GetDelegateType instead of ImpromptuInterface's emitter.
+  - Return<T>.Arguments factory fields replaced with plain lambdas.
+  - Util is internal; unused members removed.
+  - Each file carries a header line naming its upstream source.

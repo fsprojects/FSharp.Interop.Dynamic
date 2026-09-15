@@ -16,7 +16,7 @@ All changes reach `master` through a pull request, squash-merged.
 
 ## Requirements for a pull request
 
-- **CI is green.** The build uses `-warnaserror` on Linux, Windows, and macOS, with the .NET analyzers at `AnalysisMode=All`, the Ionide F# analyzers, and FS1182 (unused bindings) on. Fix warnings; do not suppress them.
+- **CI is green.** The build uses `-warnaserror` on Linux, Windows, and macOS, with the .NET analyzers at `AnalysisMode=All`, the Ionide F# analyzers, and FS1182 (unused bindings) on. Fix warnings; do not suppress them. The one carve-out is `FSharp.Interop.Dynamic.BridgeSupport/`, vendored C# from Dynamitey: its `.editorconfig` demotes a short, commented list of API-shape rules so the files stay diffable against upstream. Keep changes there minimal, and when you touch a file update the header line naming its upstream source and `THIRD-PARTY-NOTICES.txt`.
 - **Behavior changes come with tests** in `Tests/` (xUnit + FsUnit). The suite must be 0 failed, 0 skipped, and must stay above the coverage floors below.
 - **Docs follow the code.** Public API changes update the XML doc comments and any affected page under `docfx/`. README code samples are compiled by `Tests/ReadmeExamples.fs`, so keep the two in step.
 - **Style matches the surrounding code.** No formatter is enforced; follow the naming, layout, and comment density of the file you are editing.

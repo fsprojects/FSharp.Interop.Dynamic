@@ -1,7 +1,7 @@
 namespace FSharp.Interop.Dynamic
 
 module Operators=
-    open Dynamitey
+    open FSharp.Interop.Dynamic.BridgeSupport
     open System.Linq.Expressions
     let (?%?) (left:obj) (right: obj) : 'TResult =    
         (Dynamic.InvokeBinaryOperator(left, ExpressionType.Modulo, right)) :?> 'TResult
