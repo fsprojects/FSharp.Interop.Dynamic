@@ -118,7 +118,7 @@ More: [Operators](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/opera
 
 6.0.0 no longer depends on the `Dynamitey` package. The DLR plumbing the operators call is vendored from Dynamitey 3.0.3 (Apache-2.0) into **FSharp.Interop.Dynamic.BridgeSupport**, a package this one depends on; see its `THIRD-PARTY-NOTICES.txt`. Only the members the F# API uses are included, and invocations with more than 14 arguments now work without ImpromptuInterface.
 
-`Dyn.namedArg`, `Dyn.staticTarget` and `Dyn.staticContext` return `FSharp.Interop.Dynamic.BridgeSupport.InvokeArg` / `InvokeContext`, not the Dynamitey types. You can still reference Dynamitey and `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dictionary`; the two coexist, but pass Dynamitey its own `InvokeArg` / `StaticContext`. Refreshing the vendored subset from the community continuation, [dynamitey-community/dynamitey](https://github.com/dynamitey-community/dynamitey), is [#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29).
+You can still reference Dynamitey and `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dictionary`; the two coexist. `Dyn.namedArg` and `Dyn.staticTarget` are for the `Dyn` functions and operators; give Dynamitey's own APIs their own `InvokeArg` / `StaticContext`. Refreshing the vendored subset from the community continuation, [dynamitey-community/dynamitey](https://github.com/dynamitey-community/dynamitey), is [#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29).
 
 ---
 
