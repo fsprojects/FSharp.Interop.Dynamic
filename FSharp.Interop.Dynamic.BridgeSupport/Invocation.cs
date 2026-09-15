@@ -16,7 +16,8 @@
 // Vendored from Dynamitey v3.0.3 (https://github.com/ekonbenefits/dynamitey,
 // commit 38fcb82, Dynamitey/Invocation.cs). Trimmed to what FSharp.Interop.Dynamic calls; see
 // THIRD-PARTY-NOTICES.txt. Dropped: the Constructor case of Invoke
-// (Dynamic.InvokeConstructor is not vendored).
+// (Dynamic.InvokeConstructor is not vendored). Changed: GetHashCode no
+// longer mixes in the Args array identity, so it agrees with Equals.
 
 using System;
 using System.ComponentModel;
@@ -36,7 +37,7 @@ namespace FSharp.Interop.Dynamic.BridgeSupport
         /// </summary>
         NotSet = 0,
         /// <summary>
-        /// Convert Implicit or Explicity
+        /// Convert Implicit or Explicit
         /// </summary>
         Convert,
         /// <summary>
@@ -198,9 +199,11 @@ namespace FSharp.Interop.Dynamic.BridgeSupport
         {
             unchecked
             {
+                // Upstream mixed in Args.GetHashCode(), the array's identity,
+                // while Equals compares Args element-wise; equal values could
+                // hash differently. Kind and Name are enough for consistency.
                 int result = Kind.GetHashCode();
                 result = (result * 397) ^ (Name != null ? Name.GetHashCode() : 0);
-                result = (result * 397) ^ (Args != null ? Args.GetHashCode() : 0);
                 return result;
             }
         }
