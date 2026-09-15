@@ -51,11 +51,21 @@ On a non-callable, both binders fail and you get `AggregateException` wrapping t
 
 ## Named arguments
 
-Dynamitey `InvokeArg` via `Dyn.namedArg`:
+`Dyn.namedArg` wraps a value so it is passed as a DLR named argument, in any order:
+
+```fsharp
+type Greeter() =
+    member _.Describe(one: int, two: int) = sprintf "one=%d two=%d" one two
+
+let described: string = Greeter()?Describe(Dyn.namedArg "two" 2, Dyn.namedArg "one" 1)
+// "one=1 two=2"
+```
+
+That works on any target `?` or `!?` can reach, including Dynamitey's `Build`:
 
 ```fsharp
 open Dynamitey
-let o = Build<ExpandoObject>.NewObject(Dyn.namedArg "One" 1)
+let o = !?Build<ExpandoObject>.NewObject(Dyn.namedArg "One" 1, Dyn.namedArg "Two" 2)
 ```
 
 pythonnet:

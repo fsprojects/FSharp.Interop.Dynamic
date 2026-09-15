@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="FSharp.Core" />
-    <PackageReference Include="Dynamitey" />
+    <ProjectReference Include="..\FSharp.Interop.Dynamic.BridgeSupport\FSharp.Interop.Dynamic.BridgeSupport.csproj" />
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="FSharp.Analyzers.Build">
       <PrivateAssets>all</PrivateAssets>

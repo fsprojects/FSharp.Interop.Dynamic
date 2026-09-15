@@ -13,9 +13,9 @@ namespace FSharp.Interop.Dynamic
   /// </summary>
   module Dyn = begin
     /// <summary>Static invoke context for dynamic calls to static members of <paramref name="target"/>.</summary>
-    val staticContext : target:System.Type -> Dynamitey.InvokeContext
+    val staticContext : target:System.Type -> FSharp.Interop.Dynamic.BridgeSupport.InvokeContext
     /// Static invoke context for dynamic calls to static members of the type argument.
-    val staticTarget<'TTarget> : Dynamitey.InvokeContext
+    val staticTarget<'TTarget> : FSharp.Interop.Dynamic.BridgeSupport.InvokeContext
     /// <summary>Implicit conversion of <paramref name="target"/> to <paramref name="convertType"/>.</summary>
     val implicitConvertTo : convertType:System.Type -> target:obj -> 'TResult
     /// <summary>Implicit conversion of <paramref name="target"/> to the inferred result type.</summary>
@@ -26,7 +26,7 @@ namespace FSharp.Interop.Dynamic
     /// <summary>Explicit conversion of <paramref name="target"/> to the inferred result type.</summary>
     val explicitConvert : target:obj -> 'TResult
     /// Marks an argument with a name for DLR named-argument invoke.
-    val namedArg : name:string -> argValue:obj -> Dynamitey.InvokeArg
+    val namedArg : name:string -> argValue:obj -> FSharp.Interop.Dynamic.BridgeSupport.InvokeArg
     /// <summary>Dynamically call <c>+=</c> on the named member (DLR add-assign, including events).</summary>
     val memberAddAssign : memberName:string -> value:obj -> target:obj -> unit
     /// <summary>Dynamically call <c>-=</c> on the named member (DLR subtract-assign, including events).</summary>

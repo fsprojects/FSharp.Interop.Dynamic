@@ -55,7 +55,7 @@ The target type is inferred. `implicitConvertTo` / `explicitConvertTo` take an e
 ## Named arguments and static context
 
 ```fsharp
-Dyn.namedArg "dtype" someValue          // Dynamitey.InvokeArg
+Dyn.namedArg "dtype" someValue          // FSharp.Interop.Dynamic.BridgeSupport.InvokeArg
 Dyn.staticContext typeof<Foo>
 Dyn.staticTarget<Foo>
 ```

@@ -28,6 +28,10 @@ type TestEvent()=
 
 
 (***hide***)
+type NamedArgTarget()=
+    member __.Describe(one:int, two:int) = sprintf "one=%d two=%d" one two
+
+(***hide***)
 type TestFuncs()=
     static member Plus3:Func<int,int> =
       Return<int>.Arguments<int>(fun x-> x + 3)
@@ -82,7 +86,11 @@ Set a property with dlr, Expando only responds to the dlr.
 (***hide***)
     [<Fact>]
     let ``Test Direct Invoke`` ()=
-        !?Dynamic.Curry(Dyn.staticTarget<string>)?Format("Test {0} {1}") (1,2) |>
+        // Dynamitey's Curry stores its target and later dispatches through
+        // Dynamitey's own InvokeMember, which only unwraps Dynamitey's
+        // InvokeContext. Dyn.staticTarget returns BridgeSupport's, so hand
+        // Curry a Dynamitey StaticContext.
+        !?Dynamic.Curry(StaticContext(typeof<string>))?Format("Test {0} {1}") (1,2) |>
             should equal "Test 1 2"
 
 (***hide***)
@@ -161,11 +169,22 @@ Set a property with dlr, Expando only responds to the dlr.
         !refBool |> should equal false
 
 (**
-`!?` will invoke without a name, dynamic function or the like. 
-`Dyn.namedArg` allows you to wrap your arguments with names as part of the invocation.
+`Dyn.namedArg` allows you to wrap your arguments with names as part of the invocation,
+so they can be passed in any order.
 *)
     [<Fact>]
     let ``Test NamedArgs`` ()=
+        let target = NamedArgTarget()
+        let described:string = target?Describe(Dyn.namedArg "two" 2, Dyn.namedArg "one" 1)
+        described |> should equal "one=1 two=2"
+
+(**
+`!?` will invoke without a name, dynamic function or the like. Here it invokes
+Dynamitey's `Build<_>.NewObject` with `Dyn.namedArg`; the names travel as DLR
+named arguments, so Dynamitey never needs to see this library's `InvokeArg` type.
+*)
+    [<Fact>]
+    let ``Test NamedArgs With Build`` ()=
         let buildObj = !?Build<ExpandoObject>.NewObject (
                                                             Dyn.namedArg "One" 1,
                                                             Dyn.namedArg "Two" 2

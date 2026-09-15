@@ -14,6 +14,12 @@
           "Microsoft.Testing.Platform": "2.2.2"
         }
       },
+      "Dynamitey": {
+        "type": "Direct",
+        "requested": "[3.0.3, )",
+        "resolved": "3.0.3",
+        "contentHash": "ocF4rRKgnmBkblk8RrgRP9YxxeJBvoaoCNLXgmUMgQCjZRw2v6Rtqxt5Kni6/TtbvICeWVN9X/69G5jltUEnbQ=="
+      },
       "FsCheck": {
         "type": "Direct",
         "requested": "[3.4.0, )",
@@ -267,15 +273,12 @@
       "fsharp.interop.dynamic": {
         "type": "Project",
         "dependencies": {
-          "Dynamitey": "[3.0.3, )",
-          "FSharp.Core": "[4.7.2, )"
+          "FSharp.Core": "[4.7.2, )",
+          "FSharp.Interop.Dynamic.BridgeSupport": "[6.0.0, )"
         }
       },
-      "Dynamitey": {
-        "type": "CentralTransitive",
-        "requested": "[3.0.3, )",
-        "resolved": "3.0.3",
-        "contentHash": "ocF4rRKgnmBkblk8RrgRP9YxxeJBvoaoCNLXgmUMgQCjZRw2v6Rtqxt5Kni6/TtbvICeWVN9X/69G5jltUEnbQ=="
+      "fsharp.interop.dynamic.bridgesupport": {
+        "type": "Project"
       }
     }
   }

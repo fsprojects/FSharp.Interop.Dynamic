@@ -7,7 +7,7 @@ title: FSharp.Interop.Dynamic
 
 F# operators and helpers for the Dynamic Language Runtime. `target?Name`, `target?Name<-value`, and `!?target` do what C#'s `dynamic` keyword does, with F# inference and piping.
 
-This is the fsprojects library that sits on [Dynamitey](https://www.nuget.org/packages/Dynamitey/) 3.0.3. It is not Dynamitey itself; it is the F# surface.
+This is the fsprojects F# surface over the DLR. The call-site plumbing is `FSharp.Interop.Dynamic.BridgeSupport`, a vendored subset of [Dynamitey](https://github.com/ekonbenefits/dynamitey) 3.0.3; see [Dynamitey and BridgeSupport](docs/dynamitey.md).
 
 > [!IMPORTANT]
 > **6.0.0** is the current package (`netstandard2.0` and `net10.0`). **5.0.1.268** was the last package that still targeted `net45` / `netstandard1.6`.

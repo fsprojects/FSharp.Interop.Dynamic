@@ -1,6 +1,6 @@
 # Releasing
 
-NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`. It authenticates with nuget.org **Trusted Publishing** (`NuGet/login` + OIDC), not a long-lived API key. The nuget.org policy must name this repository and `publish.yml`. The GitHub secret `NUGET_USER` is the nuget.org profile name.
+NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`. It authenticates with nuget.org **Trusted Publishing** (`NuGet/login` + OIDC), not a long-lived API key. The nuget.org policy must name this repository and `publish.yml`, and the profile must own **both** package ids, `FSharp.Interop.Dynamic` and `FSharp.Interop.Dynamic.BridgeSupport`. The GitHub secret `NUGET_USER` is the nuget.org profile name.
 
 ## Version
 
@@ -19,10 +19,10 @@ The Publish workflow will:
 
 1. Extract the `## [6.0.0]` section of `CHANGELOG.md`, and fail if there isn't one
 2. Restore, build `-warnaserror`, test
-3. Pack `FSharp.Interop.Dynamic` at `6.0.0` (nupkg + snupkg)
-4. Attest SLSA build provenance for the nupkg and snupkg, signed with Sigstore through GitHub's OIDC identity
-5. `dotnet nuget push` to nuget.org with `--skip-duplicate`
-6. Create the GitHub release `v6.0.0` with those notes, the packages, and the provenance bundle `FSharp.Interop.Dynamic.6.0.0.intoto.jsonl` attached. A version with a `-` suffix is marked as a prerelease.
+3. Pack `FSharp.Interop.Dynamic` and `FSharp.Interop.Dynamic.BridgeSupport` at `6.0.0` (nupkg + snupkg each)
+4. Attest SLSA build provenance for all four files in one bundle, signed with Sigstore through GitHub's OIDC identity
+5. `dotnet nuget push` both packages to nuget.org with `--skip-duplicate`
+6. Create the GitHub release `v6.0.0` with those notes, all four packages, and the provenance bundle `FSharp.Interop.Dynamic.6.0.0.intoto.jsonl` (it covers BridgeSupport too) attached. A version with a `-` suffix is marked as a prerelease.
 
 `workflow_dispatch` with a version input does steps 1–5 without a tag and creates no GitHub release. Prefer the tag.
 

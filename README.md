@@ -13,7 +13,7 @@ F# operators for the Dynamic Language Runtime. `target?Name`, `target?Name <- va
 
 **Docs:** [fsprojects.github.io/FSharp.Interop.Dynamic](https://fsprojects.github.io/FSharp.Interop.Dynamic/)
 
-This library sits on [Dynamitey](https://www.nuget.org/packages/Dynamitey/) 3.0.3. It is the F# surface, not Dynamitey itself.
+This library is the F# surface over the DLR. The call-site plumbing underneath is `FSharp.Interop.Dynamic.BridgeSupport`, a vendored subset of [Dynamitey](https://github.com/ekonbenefits/dynamitey) 3.0.3 that ships as its own package.
 
 F# has no `dynamic` keyword. Use this when the member is not known at compile time: Expando/JSON bags, optional fields, method names from config, C# APIs that return `dynamic`, pythonnet, COM. Use ordinary F# when the type is in your project. Full argument: [Why this library](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/why.html).
 
@@ -67,7 +67,7 @@ o |> Dyn.exists "Name"    // true
 o |> Dyn.exists "NoSuch"  // false
 ```
 
-Lookup is Dynamitey `InvokeGet`. A present null is still present. A present value that cannot convert to `'T` still throws — that is not a miss.
+Lookup is the DLR's `InvokeGet`, the same call `?` makes. A present null is still present. A present value that cannot convert to `'T` still throws — that is not a miss.
 
 ### Pipe through `Dyn`
 
@@ -116,9 +116,9 @@ More: [Operators](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/opera
 
 ## Dynamitey
 
-6.0.0 references **Dynamitey 3.0.3**. `tryGet` / `exists` do not wait on Dynamitey 4.0.0. The community continuation of Dynamitey is [dynamitey-community/dynamitey](https://github.com/dynamitey-community/dynamitey); switching this package to it is [#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29).
+6.0.0 no longer depends on the `Dynamitey` package. The DLR plumbing the operators call is vendored from Dynamitey 3.0.3 (Apache-2.0) into **FSharp.Interop.Dynamic.BridgeSupport**, a package this one depends on; see its `THIRD-PARTY-NOTICES.txt`. Only the members the F# API uses are included, and invocations with more than 14 arguments now work without ImpromptuInterface.
 
-You can still `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dictionary`.
+You can still reference Dynamitey and `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dictionary`; the two coexist. The rule is: `Dyn` helpers go with `Dyn` functions and the operators, Dynamitey's `InvokeArg` / `StaticContext` go with Dynamitey's `Dynamic.*` calls. Don't mix them. Refreshing the vendored subset from the community continuation, [dynamitey-community/dynamitey](https://github.com/dynamitey-community/dynamitey), is [#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29).
 
 ---
 

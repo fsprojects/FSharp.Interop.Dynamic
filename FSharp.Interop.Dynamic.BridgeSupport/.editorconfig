@@ -1,0 +1,22 @@
+# The .cs files in this directory are vendored from Dynamitey v3.0.3 and kept
+# close to upstream so they can be diffed against it (see THIRD-PARTY-NOTICES.txt).
+# Directory.Build.props turns on every analyzer at warning level and CI builds
+# with warnings as errors; that is the right bar for code written here, not for
+# a third-party API whose public shape we want to keep recognizable. The rules
+# below are demoted to suggestions for this directory only, each because fixing
+# it would change the vendored public surface. Everything else stays enforced.
+root = false
+
+[*.cs]
+# Upstream API shape: InvokeMemberName.GenericArgs / Invocation.Args are arrays.
+dotnet_diagnostic.CA1819.severity = suggestion
+# Upstream API shape: implicit/explicit conversion operators without named alternates.
+dotnet_diagnostic.CA2225.severity = suggestion
+# Upstream type name String_OR_InvokeMemberName.
+dotnet_diagnostic.CA1707.severity = suggestion
+# Upstream type name Dynamic overlaps the FSharp.Interop.Dynamic namespace.
+dotnet_diagnostic.CA1724.severity = suggestion
+# Upstream lets null args flow to the DLR binder; adding guards changes exception types.
+dotnet_diagnostic.CA1062.severity = suggestion
+# Upstream hash codes use string.GetHashCode(); the overload is not on netstandard2.0.
+dotnet_diagnostic.CA1307.severity = suggestion

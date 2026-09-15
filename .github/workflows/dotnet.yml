@@ -114,6 +114,7 @@ jobs:
           --coverlet-output-format cobertura
           --coverlet-include "[FSharp.Interop.Dynamic]*"
           --coverlet-exclude "[Tests]*"
+          --coverlet-exclude "[FSharp.Interop.Dynamic.BridgeSupport]*"
           --results-directory TestResults
 
       - name: Install ReportGenerator
