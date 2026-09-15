@@ -14,7 +14,7 @@
 //    limitations under the License.
 //
 // Vendored from Dynamitey v3.0.3 (https://github.com/ekonbenefits/dynamitey,
-// commit 38fcb82). Trimmed to what FSharp.Interop.Dynamic calls; see
+// commit 38fcb82, Dynamitey/Dynamic.cs). Trimmed to what FSharp.Interop.Dynamic calls; see
 // THIRD-PARTY-NOTICES.txt. Dropped: CreateCallSite, Linq, unary operators,
 // InvokeSetAll, Curry, CoerceToDelegate, CoerceConvert, IsDBNull,
 // ApplyEquivalentType, ConvertAll/ConvertEach, InvokeConstructor,

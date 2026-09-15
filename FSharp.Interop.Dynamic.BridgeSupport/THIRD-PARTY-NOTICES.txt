@@ -5,8 +5,9 @@ FSharp.Interop.Dynamic.BridgeSupport contains code derived from Dynamitey.
   Version 3.0.3, tag v3.0.3, commit 38fcb821e560c9a146eb2ab3c6c58b66dc2a3385
   Copyright 2010-2011 Ekon Benefits
   Licensed under the Apache License, Version 2.0.
-  The full license text is in License.txt at the root of this repository
-  and at http://www.apache.org/licenses/LICENSE-2.0.
+  The full license text is in License.txt alongside this file in the
+  package and at the root of the repository, and at
+  http://www.apache.org/licenses/LICENSE-2.0.
 
 Files derived from Dynamitey (upstream path in parentheses):
 
