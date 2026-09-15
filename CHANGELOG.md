@@ -8,7 +8,7 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 
 - Target frameworks are now `netstandard2.0` and `net10.0`. `net45` and `netstandard1.6` are dropped; `netstandard2.0` still covers .NET Framework 4.6.1+ and modern .NET.
 - Minimum dependency versions are raised: FSharp.Core 4.7.2 (was 4.2), Microsoft.CSharp 4.7.0 (was 4.6.0). FSharp.Core is kept deliberately low so consumers on older F# toolchains can still use the package (#80).
-- The `Dynamitey` package is no longer a dependency. The DLR call-site code the operators use is vendored from Dynamitey 3.0.3 (Apache-2.0) into a new package, `FSharp.Interop.Dynamic.BridgeSupport`, which this package depends on. `Dyn.namedArg`, `Dyn.staticTarget` and `Dyn.staticContext` return that package's `InvokeArg` / `InvokeContext`, which the `Dyn` functions and operators consume as before. Referencing Dynamitey alongside still works, `Dyn.namedArg` included; only `Dynamic.Curry(Dyn.staticTarget<_>)` needs a `Dynamitey.StaticContext` now, because Curry dispatches through Dynamitey's own binder.
+- The `Dynamitey` package is no longer a dependency. The DLR call-site code the operators use is vendored from Dynamitey 3.0.3 (Apache-2.0) into a new package, `FSharp.Interop.Dynamic.BridgeSupport`, which this package depends on. `Dyn.namedArg`, `Dyn.staticTarget` and `Dyn.staticContext` return that package's `InvokeArg` / `InvokeContext`, which the `Dyn` functions and operators consume as before. Referencing Dynamitey alongside still works; use `Dyn` helpers with `Dyn` functions and the operators, and Dynamitey's own `InvokeArg` / `StaticContext` with Dynamitey's `Dynamic.*` calls.
 
 ### Added
 

@@ -21,7 +21,7 @@ BridgeSupport keeps only what the operators call: `InvokeGet`, `InvokeSet`, `Inv
 
 You can still reference the `Dynamitey` package and `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dictionary`, `Return<_>`. The namespaces are different, so nothing clashes.
 
-`Dyn.namedArg` keeps working against Dynamitey targets, because `?` / `!?` turn it into a DLR named argument before Dynamitey sees anything: `!?Build<_>.NewObject(Dyn.namedArg "One" 1)` is fine. What does not work is a Dynamitey API that *stores* the value and dispatches later through Dynamitey's own binder, which only unwraps Dynamitey's types: `Dynamic.Curry(Dyn.staticTarget<_>)` fails with a `RuntimeBinderException` naming `InvokeContext`. Give Curry a `Dynamitey.StaticContext` instead.
+The rule is: `Dyn` helpers (`Dyn.namedArg`, `Dyn.staticTarget`, `Dyn.staticContext`) go with `Dyn` functions and the `?` / `!?` operators; Dynamitey's `InvokeArg` / `StaticContext` go with Dynamitey's `Dynamic.*` calls. Each binder only unwraps its own types, so mixing them fails with a `RuntimeBinderException` rather than silently. Targets are fine to share: `!?Build<_>.NewObject(Dyn.namedArg "One" 1)` invokes a Dynamitey object through our operator, and the names travel as ordinary DLR named arguments.
 
 ## More than 14 arguments
 

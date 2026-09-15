@@ -15,4 +15,4 @@ Everything else (`Dynamic`, `Invocation`, `InvocationKind`, `InvokeMemberName`) 
 
 ## Not Dynamitey
 
-These types live in the `FSharp.Interop.Dynamic.BridgeSupport` namespace, not `Dynamitey`, and the two packages coexist in one process. Going *through* the F# operators they reach Dynamitey targets fine (`!?Build<T>.NewObject(Dyn.namedArg ...)`). Handing them *directly* to a Dynamitey API that dispatches with its own binder (`Dynamitey.Dynamic.Curry`, `Dynamitey.Dynamic.Invoke`) does not work; construct `Dynamitey.StaticContext` / `Dynamitey.InvokeArg` for those.
+These types live in the `FSharp.Interop.Dynamic.BridgeSupport` namespace, not `Dynamitey`, and the two packages coexist in one process. Use them with `Dyn` functions and the F# operators; use Dynamitey's own `InvokeArg` / `StaticContext` with Dynamitey's `Dynamic.*` calls. Each binder unwraps only its own types.
