@@ -18,6 +18,18 @@ Annotate `'T` / `unit` so the binder and the conversion agree.
 
 `Dyn.exists "x"` is true if `InvokeGet` succeeded, including when the value is null. `tryGet` returns `Some null` for a reference type. That is different from missing.
 
+## Null target
+
+`Dyn.tryGet` and `Dyn.exists` on a **null target** throw `NullReferenceException`. That is not a binder miss, so it is not `None` / `false`. Same for `Dyn.set`. A present null *value* is still `Some null` / `exists` true. Changing the null-target contract is [#111](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/111).
+
+## More than 14 arguments
+
+A call with **15 or more** arguments throws `TypeLoadException: Cannot Emit long delegates without ImpromptuInterface installed`. Fourteen arguments work. Dynamitey 3.0.3 never shipped ImpromptuInterface with this package. A fix belongs in a newer Dynamitey, not in a vendor here ([#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29)).
+
+## C# optional parameters
+
+The DLR does not fill CLR optional defaults. `obj?Opt(5)` and `namedArg "a" 5` both fail (`No overload takes 1 arguments`) when `Opt` is `Opt(int a, int b = 0)`. Pass every argument. Named args work when the full set is present.
+
 ## Function-typed results delay the call
 
 If F# infers `'TResult` as a function, `?` / `Dyn.get` / `Dyn.invokeMember` return a callable. A missing member in that mode used to look like `Some (fun …)` until you applied it. `tryGet` does `InvokeGet` first, so a missing member is `None` even when `'T` is a function.

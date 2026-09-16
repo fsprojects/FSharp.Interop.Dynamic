@@ -126,6 +126,9 @@ You can still `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dic
 
 - The DLR cannot see **explicit interface members** (same as C# `dynamic`).
 - **Not trim-safe or NativeAOT-safe.**
+- **15 or more arguments** throw `TypeLoadException` (ImpromptuInterface was never shipped). Fourteen work.
+- **C# optional parameters** must all be passed. The DLR does not fill defaults.
+- `tryGet` / `exists` on a **null target** throw `NullReferenceException` (not `None` / `false`).
 - Do not build member names from untrusted input. [SECURITY.md](SECURITY.md).
 - Historical: .NET Core 2.0.0–2.0.2 broke `dynamic` on nested types inside generics ([#11](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/11)). Current TFMs are fine.
 

@@ -69,4 +69,4 @@ let _: unit = items?Add("x")
 - [Operators](operators.md) — `?`, `?<-`, `!?` in detail
 - [Dyn](dyn.md) — the functions behind those operators
 - [tryGet and exists](tryget.md) — the issue #27 surface
-- [Caveats](caveats.md) — explicit interface members, AOT, conversion vs missing
+- [Caveats](caveats.md) — explicit interface members, AOT, conversion vs missing, 15-arg, optionals, null target

@@ -2,6 +2,12 @@
 
 Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Publish workflow copies that section into the GitHub release, and it fails if the section is missing.
 
+## [Unreleased]
+
+### Docs
+
+- Caveats document 15-argument `TypeLoadException`, C# optional parameters, and `tryGet` / `exists` on a null target (#110).
+
 ## [6.0.0]
 
 ### Breaking
