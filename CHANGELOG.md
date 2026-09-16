@@ -7,6 +7,7 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 ### Docs
 
 - Caveats document 15-argument `TypeLoadException`, C# optional parameters, and `tryGet` / `exists` on a null target (#110).
+- Copilot leftovers from the 6.0.0 docs pass: why.md examples, operators void `Add`, release checklist, XML docs for `Direct` / `!?` / Operators, DocFX theme alerts and link RGB, SECURITY.md triggers, VS Code task, changelog wording (#114–#126).
 
 ## [6.0.0]
 
@@ -17,7 +18,7 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 
 ### Added
 
-- `Dyn.tryGet` and `Dyn.exists`: look up a member as `'T option`, or test for it, without throwing (#42, #43).
+- `Dyn.tryGet` and `Dyn.exists`: look up a member as `'T option`, or test for it, without throwing on a missing-member binder exception. Conversion failures and throwing getters still throw (#42, #43, #118).
 
 ### Build, security, and docs
 
@@ -35,7 +36,9 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 
 ## [5.0.0.25] - 2019-09-11
 
-No release notes were published for this version.
+- Handles more corner cases for dynamic invocation.
+- Rewrite of `Dyn` module functions favoring piping (`|>`).
+- Adds a .NET Standard 2.0 target.
 
 ## [4.0.3.130] - 2018-04-05
 

@@ -1,6 +1,6 @@
 namespace FSharp.Interop.Dynamic
   /// <summary>
-  /// Dynamic DLR binary operators plus an inferred conversion of the result. Not auto-opened; <c>open FSharp.Interop.Dynamic.Operators</c>.
+  /// Dynamic DLR binary operators. Arithmetic and bitwise operators unbox the DLR result (<c>:?&gt;</c>). Comparisons convert that result to <c>bool</c> with <c>Dyn.explicitConvert</c>. Not auto-opened; <c>open FSharp.Interop.Dynamic.Operators</c>.
   /// </summary>
   module Operators = begin
     /// <summary>Dynamically take modulo of <paramref name="left"/> by <paramref name="right"/>.</summary>

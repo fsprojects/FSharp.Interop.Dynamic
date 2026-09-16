@@ -1,6 +1,6 @@
 # Why this library
 
-F# has no `dynamic` keyword. C# does. A lot of .NET still hands you objects whose shape is decided at runtime: `ExpandoObject`, `DynamicObject`, COM, pythonnet, SignalR clients, JSON bags deserialized without a type. From F#, without this library, you write a C# helper, sprinkle `:?` casts, or wrap every access in `try/with` on `RuntimeBinderException`.
+F# has no `dynamic` keyword. C# does. A lot of .NET still hands you objects whose shape is decided at runtime: `ExpandoObject`, `DynamicObject`, COM, pythonnet, SignalR clients, JSON bags deserialized without a type. From F#, without this library, you write a C# helper, sprinkle `:?` type tests, or wrap every access in `try/with` on `RuntimeBinderException`.
 
 This library is the F# spelling of that call: `?`, `?<-`, `!?`, and `Dyn.*`, including `tryGet` / `exists` which C# `dynamic` does not have.
 
@@ -27,8 +27,13 @@ let userId: string = payload?userId
 `?` throws `RuntimeBinderException` when the binder cannot find the member. That is the wrong primitive for optional JSON.
 
 ```fsharp
-let role: string option = payload |> Dyn.tryGet "role"
-let userId: string option = payload |> Dyn.tryGet "userId"
+open System.Dynamic
+open FSharp.Interop.Dynamic
+
+let payload = ExpandoObject()
+payload?userId <- "u-17"
+let role: string option = payload |> Dyn.tryGet "role"     // None
+let userId: string option = payload |> Dyn.tryGet "userId" // Some "u-17"
 ```
 
 `tryGet` is `None` on a miss and `Some` on a hit, including a present null. A present value that cannot convert to `'T` still throws. See [tryGet and exists](tryget.md).
@@ -69,6 +74,8 @@ pythonnet wraps Python objects as DLR objects. Excel/COM does too. The F# you wr
 
 ```fsharp
 // Sketch only — pythonnet is not referenced here.
+// open FSharp.Interop.Dynamic
+// open FSharp.Interop.Dynamic.Operators
 // np?cos(np?pi ?*? 2)
 // np?array([| 6.; 5.; 4. |], Dyn.namedArg "dtype" np?int32)
 ```
