@@ -28,7 +28,9 @@ namespace FSharp.Interop.Dynamic
     /// </summary>
     /// <param name="target">Callable object to invoke.</param>
     /// <returns>
-    /// The converted invoke result, or a callable if the inferred result type is a function.
+    /// If the inferred result type is not a function, <paramref name="target"/> converted
+    /// to that type (no invoke). If it is a function, a callable: applying it invokes
+    /// <paramref name="target"/>.
     /// </returns>
     val ( !? ) : target:obj -> 'TResult
   end

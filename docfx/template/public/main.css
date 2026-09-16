@@ -38,6 +38,8 @@
 
   --bs-link-color: var(--fid-cyan-700);
   --bs-link-hover-color: var(--fid-cyan-800);
+  --bs-link-color-rgb: 26, 122, 163;
+  --bs-link-hover-color-rgb: 20, 94, 126;
   --bs-primary: var(--fid-cyan-700);
   --bs-primary-rgb: 26, 122, 163;
 
@@ -61,6 +63,8 @@
 
   --bs-link-color: #6ec4e4;
   --bs-link-hover-color: var(--fid-cyan-300);
+  --bs-link-color-rgb: 110, 196, 228;
+  --bs-link-hover-color-rgb: 126, 200, 232;
   --bs-primary: #6ec4e4;
   --bs-primary-rgb: 110, 196, 228;
 
@@ -216,6 +220,11 @@ article table thead th {
   border-top: 0;
 }
 
+.NOTE,
+.TIP,
+.WARNING,
+.CAUTION,
+.IMPORTANT,
 .alert {
   border: 1px solid var(--bs-border-color);
   border-left: 3px solid var(--bs-primary);
@@ -224,15 +233,23 @@ article table thead th {
   color: var(--bs-body-color);
 }
 
+.WARNING,
+.CAUTION,
 .alert.WARNING,
 .alert.CAUTION {
   border-left-color: #d94f2b;
 }
 
+.IMPORTANT,
 .alert.IMPORTANT {
   border-left-color: var(--fid-cyan-500);
 }
 
+.NOTE > p:last-child,
+.TIP > p:last-child,
+.WARNING > p:last-child,
+.CAUTION > p:last-child,
+.IMPORTANT > p:last-child,
 .alert > p:last-child {
   margin-bottom: 0;
 }

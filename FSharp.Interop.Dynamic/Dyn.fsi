@@ -41,7 +41,9 @@ namespace FSharp.Interop.Dynamic
     /// <c>Direct</c> to invoke <paramref name="target"/> itself.
     /// </param>
     /// <returns>
-    /// If the inferred result type is not a function, a DLR get converted to that type.
+    /// If the inferred result type is not a function: a DLR get (<c>InvokeGet</c>) for
+    /// <c>Member</c> / <c>GenericMember</c>; for <c>Direct</c>, <paramref name="target"/>
+    /// converted to that type (no get).
     /// If the inferred result type is a function, a callable: applying it does a DLR invoke
     /// (<c>InvokeMember</c> for a named member, <c>Invoke</c> for <c>Direct</c>).
     /// A void CLR method is an <c>unit</c>-returning function.

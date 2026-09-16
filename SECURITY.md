@@ -96,10 +96,10 @@ required checks below.
 | Check | When |
 | --- | --- |
 | Dependabot | Weekly NuGet and GitHub Actions; 7-day cooldown |
-| OSV-Scanner (full) | `master` only |
-| Scorecard SARIF upload | `master` only |
-| GitHub Pages deploy | `master` only |
-| NuGet publish + Sigstore provenance | Version tags `v*.*.*` only (Trusted Publishing / `NuGet/login`) |
+| OSV-Scanner (full) | Push to `master`, weekly schedule, `workflow_dispatch` |
+| Scorecard SARIF upload | Non-PR events (`master` push, schedule, `workflow_dispatch`) |
+| GitHub Pages deploy | Push to `master` |
+| NuGet publish + Sigstore provenance | Version tags `v*.*.*` and `workflow_dispatch` with a version (Trusted Publishing / `NuGet/login`). `workflow_dispatch` does not create a GitHub release |
 
 Central Package Management (`Directory.Packages.props`) and
 `packages.lock.json` pin restore. GitHub Actions `uses:` lines are commit SHAs.

@@ -20,7 +20,7 @@ A void CLR method is an `unit`-returning function:
 
 ```fsharp
 let items = ResizeArray<string>()
-items?Add("1")
+let _: unit = items?Add("1")
 ```
 
 ## `?<-` — set a named member
