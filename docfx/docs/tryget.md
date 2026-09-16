@@ -27,6 +27,7 @@ Lookup is `Dynamic.InvokeGet` only. Then the existing conversion / callable wrap
 | Member present, value cannot convert to `'T` | throws (`InvalidCastException` or a binder exception) — **not** `None` |
 | Member missing, `'T` is a function type | `None` immediately (does not return a lazy callable) |
 | Getter throws something else | that exception propagates |
+| Target is null | `NullReferenceException` (not `None`). [#110](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/110), [#111](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/111) |
 
 ## `Dyn.exists`
 
@@ -35,7 +36,7 @@ o |> Dyn.exists "myProp"   // true
 o |> Dyn.exists "nope"     // false
 ```
 
-True when `InvokeGet` succeeds. A present null is still present. A throwing getter is not reported as missing.
+True when `InvokeGet` succeeds. A present null is still present. A throwing getter is not reported as missing. A **null target** throws `NullReferenceException`, not `false`.
 
 `exists` does not convert the value. That is the difference from `tryGet >> Option.isSome` when conversion would fail: `exists` can be true while `tryGet` as `int` throws.
 
