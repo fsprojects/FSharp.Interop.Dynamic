@@ -28,7 +28,7 @@ A call with **15 or more** arguments throws `TypeLoadException: Cannot Emit long
 
 ## C# optional parameters
 
-The DLR does not fill CLR optional defaults. `obj?Opt(5)` and `namedArg "a" 5` both fail (`No overload takes 1 arguments`) when `Opt` is `Opt(int a, int b = 0)`. Pass every argument. Named args work when the full set is present.
+The DLR does not fill CLR optional defaults. `obj?Opt(5)` and `obj?Opt(Dyn.namedArg "a" 5)` both fail (`No overload takes 1 arguments`) when `Opt` is `Opt(int a, int b = 0)`. `Dyn.namedArg` only builds an `InvokeArg`; the miss is on the call. Pass every argument. Named args work when the full set is present.
 
 ## Function-typed results delay the call
 
