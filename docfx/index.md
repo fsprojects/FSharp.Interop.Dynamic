@@ -10,7 +10,7 @@ F# operators and helpers for the Dynamic Language Runtime. `target?Name`, `targe
 This is the fsprojects library that sits on [Dynamitey.Community](https://www.nuget.org/packages/Dynamitey.Community/) 4.0.0. It is not Dynamitey itself; it is the F# surface.
 
 > [!IMPORTANT]
-> **7.0.0** is the current package (`netstandard2.0` and `net10.0`, Dynamitey.Community 4.0.0). **6.0.0** was the same target frameworks on Dynamitey 3.0.3. **5.0.1.268** was the last package that still targeted `net45` / `netstandard1.6`.
+> **7.0.0** is the current package, and the last one that supports .NET Standard 2.0 (.NET Framework 4.6.1 through 4.8.1) together with `net10.0`. It references Dynamitey.Community 4.0.0. **6.0.0** was the same target frameworks on Dynamitey 3.0.3. **5.0.1.268** was the last package that still targeted `net45` / `netstandard1.6`.
 
 ## Where to start
 
@@ -54,7 +54,7 @@ Reach for ordinary F# when the member is known at compile time. Reach for this l
 
 ## Supported frameworks
 
-`netstandard2.0` and `net10.0`. `netstandard2.0` still reaches .NET Framework 4.6.2+ and modern .NET from one package. 6.0.0 dropped `net45` and `netstandard1.6`. 7.0.0 keeps these targets and references Dynamitey.Community 4.0.0. 8.0.0, later in 2026, drops `netstandard2.0` and targets `net10.0` and `net11.0` ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)).
+7.0.0 targets `netstandard2.0` and `net10.0`. `netstandard2.0` is how a .NET Framework 4.6.1 through 4.8.1 application uses this package. It is also the last release that includes that target. 8.0.0 targets `net10.0` and `net11.0` only ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)), after [Dynamitey.Community 5.0.0](https://github.com/dynamitey-community/dynamitey/issues/95) drops `netstandard2.0`. Framework 4.8.1 stays serviced with Windows and does not gain BCL APIs, so a Framework application stays on 7.0.0.
 
 ## A word on trimming and AOT
 
