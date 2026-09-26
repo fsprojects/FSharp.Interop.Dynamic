@@ -79,3 +79,12 @@ module TryGet =
         let o = ExpandoObject()
         let missing: (int -> int) option = o |> Dyn.tryGet "nope"
         missing |> should equal None
+
+    [<Fact>]
+    let ``tryGet on a null target is None`` () =
+        let missing: string option = (null: obj) |> Dyn.tryGet "X"
+        missing |> should equal None
+
+    [<Fact>]
+    let ``exists on a null target is false`` () =
+        (null: obj) |> Dyn.exists "X" |> should equal false

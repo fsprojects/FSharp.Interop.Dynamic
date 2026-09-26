@@ -4,6 +4,10 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 
 ## [Unreleased]
 
+### Fixed
+
+- `Dyn.tryGet` and `Dyn.exists` on a null target return `None` and `false`. `Dyn.explicitConvert` and `explicitConvertTo` of null follow `implicitConvert` (null for a reference result type; a value type still fails). `Dyn.set` on a null target still throws `NullReferenceException` (#111).
+
 ### Docs
 
 - Caveats document 15-argument `TypeLoadException`, C# optional parameters, and `tryGet` / `exists` on a null target (#110).
