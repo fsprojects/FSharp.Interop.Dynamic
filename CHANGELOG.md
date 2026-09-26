@@ -4,6 +4,10 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 
 ## [Unreleased]
 
+### Docs
+
+- 7.0.0 is documented as the last release that supports .NET Standard 2.0, which covers .NET Framework 4.6.1 through 4.8.1. 8.0.0 follows Dynamitey.Community 5.0.0 and drops that target (#108).
+
 ## [7.0.0]
 
 ### Breaking

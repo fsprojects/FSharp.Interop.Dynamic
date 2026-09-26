@@ -21,11 +21,20 @@ F# has no `dynamic` keyword. Use this when the member is not known at compile ti
 
 ## Version story
 
-**7.0.0** is the current package: `netstandard2.0` + `net10.0`, [Dynamitey.Community 4.0.0](https://www.nuget.org/packages/Dynamitey.Community/4.0.0). The namespace is still `Dynamitey`. The assembly is `Dynamitey.Community`. `Dyn.namedArg`, `Dyn.staticContext`, and `Dyn.staticTarget` return types from that assembly. A project that also references the `Dynamitey` 3.0.3 package gets `CS0433`.
+**7.0.0** is the current package, and the last one that supports .NET Standard 2.0. That target is what reaches .NET Framework 4.6.1 through 4.8.1. It also builds for `net10.0`, on [Dynamitey.Community 4.0.0](https://www.nuget.org/packages/Dynamitey.Community/4.0.0). The namespace is still `Dynamitey`. The assembly is `Dynamitey.Community`. `Dyn.namedArg`, `Dyn.staticContext`, and `Dyn.staticTarget` return types from that assembly. A project that also references the `Dynamitey` 3.0.3 package gets `CS0433`.
 
-**6.0.0** was `netstandard2.0` + `net10.0` on Dynamitey 3.0.3, with `Dyn.tryGet` / `Dyn.exists`. That was a TFM break from **5.0.1.268** (`net45` / `netstandard1.6` / `netstandard2.0`). `netstandard2.0` still covers current .NET Framework and .NET.
+A Framework application stays on 7.0.0. Framework 4.8.1 is still serviced with Windows. It does not get new BCL APIs. .NET Standard 2.0 freezes this library on the Framework 4.6.1 surface. A newer API is either skipped, or written twice. That is the tax. [Dynamitey.Community #95](https://github.com/dynamitey-community/dynamitey/issues/95) is the same decision for the dependency: 4.0.0 is its last `netstandard2.0` release, and 5.0.0 (after .NET 11 is generally available in November 2026) targets `net10.0` and `net11.0` only.
 
-**8.0.0**, later in 2026, drops `netstandard2.0` and targets `net10.0` + `net11.0` ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)).
+**8.0.0** ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)) follows that. It targets `net10.0` and `net11.0` and drops .NET Standard 2.0, once Dynamitey.Community 5.0.0 has dropped the same target. The gains are in that library, and this package takes them by referencing it:
+
+- One copy of Dynamitey's call-site code. The `netstandard2.0` branch, `Guard.NotNull`, and the attribute polyfills go away. `ArgumentNullException.ThrowIfNull` is on every target.
+- Ordinal hashing and `string.Contains(string, StringComparison)`. The Framework build cannot call those overloads, so it uses a different hash and three `IndexOf` calls.
+- `Microsoft.CSharp` and `System.Reflection.Emit` leave Dynamitey's package graph. They are in the shared framework on .NET 10 and .NET 11. The more-than-14-argument path still uses Emit. It stops being a separate package.
+- `[RequiresUnreferencedCode]` and `[RequiresDynamicCode]` are the real framework attributes on every Dynamitey build. The library stays DLR-based. It does not become trim-safe.
+
+A warm dynamic call does not get faster. It is already a cached delegate.
+
+**6.0.0** was `netstandard2.0` + `net10.0` on Dynamitey 3.0.3, with `Dyn.tryGet` / `Dyn.exists`. That was a TFM break from **5.0.1.268** (`net45` / `netstandard1.6` / `netstandard2.0`).
 
 ---
 

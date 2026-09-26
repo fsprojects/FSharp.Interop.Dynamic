@@ -3,7 +3,7 @@
 ## Installing
 
 > [!IMPORTANT]
-> Install **7.0.0** (`netstandard2.0` + `net10.0`, Dynamitey.Community 4.0.0). **6.0.0** was the same target frameworks on Dynamitey 3.0.3. **5.0.1.268** is the previous TFM set (`net45` / `netstandard1.6` / `netstandard2.0`).
+> Install **7.0.0** (`netstandard2.0` + `net10.0`, Dynamitey.Community 4.0.0). This is the last release that supports .NET Standard 2.0, which is .NET Framework 4.6.1 through 4.8.1. **6.0.0** was the same target frameworks on Dynamitey 3.0.3. **5.0.1.268** is the previous TFM set (`net45` / `netstandard1.6` / `netstandard2.0`).
 
 ```bash
 dotnet add package FSharp.Interop.Dynamic
