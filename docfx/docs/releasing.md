@@ -6,7 +6,7 @@ NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`.
 
 `VersionPrefix` is **7.0.0**. That release references Dynamitey.Community 4.0.0 and targets `netstandard2.0` and `net10.0`. It is the last release that supports .NET Standard 2.0, and so the last release a .NET Framework 4.6.1 through 4.8.1 application can take.
 
-**8.0.0** drops `netstandard2.0` and targets `net10.0` and `net11.0` ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)). It follows [Dynamitey.Community 5.0.0](https://github.com/dynamitey-community/dynamitey/issues/95). Not another 5.x.
+**8.0.0** drops `netstandard2.0` and targets `net10.0` and `net11.0` ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108), [milestone](https://github.com/fsprojects/FSharp.Interop.Dynamic/milestone/2)). The target date is 10 November 2026. It follows [Dynamitey.Community 5.0.0](https://github.com/dynamitey-community/dynamitey/issues/95). Not another 5.x.
 
 ## Cut a release
 
@@ -40,4 +40,4 @@ Pull requests never publish.
 
 ## After it lands
 
-Confirm nuget.org lists the new version and that README / getting-started install instructions match it. After 7.0.0, the next planned major is 8.0.0 (drop `netstandard2.0`). Not another 5.x.
+Confirm nuget.org lists the new version and that README / getting-started install instructions match it. After 7.0.0, the next planned major is 8.0.0 on 10 November 2026 (drop `netstandard2.0`). Not another 5.x.

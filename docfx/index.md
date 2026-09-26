@@ -54,7 +54,7 @@ Reach for ordinary F# when the member is known at compile time. Reach for this l
 
 ## Supported frameworks
 
-7.0.0 targets `netstandard2.0` and `net10.0`. `netstandard2.0` is how a .NET Framework 4.6.1 through 4.8.1 application uses this package. It is also the last release that includes that target. 8.0.0 targets `net10.0` and `net11.0` only ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)), after [Dynamitey.Community 5.0.0](https://github.com/dynamitey-community/dynamitey/issues/95) drops `netstandard2.0`. Framework 4.8.1 stays serviced with Windows and does not gain BCL APIs, so a Framework application stays on 7.0.0.
+7.0.0 targets `netstandard2.0` and `net10.0`. `netstandard2.0` is how a .NET Framework 4.6.1 through 4.8.1 application uses this package. It is also the last release that includes that target. 8.0.0 targets `net10.0` and `net11.0` only ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)). The target date is 10 November 2026, on the [8.0.0 milestone](https://github.com/fsprojects/FSharp.Interop.Dynamic/milestone/2), after [Dynamitey.Community 5.0.0](https://github.com/dynamitey-community/dynamitey/issues/95) drops `netstandard2.0`. Framework 4.8.1 stays serviced with Windows and does not gain BCL APIs, so a Framework application stays on 7.0.0.
 
 ## A word on trimming and AOT
 
