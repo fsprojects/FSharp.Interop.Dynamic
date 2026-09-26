@@ -5,7 +5,7 @@ open Xunit
 open FsUnit.Xunit
 open Tests
 open System
- 
+
 #nowarn "44"
 
 module Obsolete =
@@ -41,5 +41,5 @@ module Obsolete =
     [<Fact>]
     let ``Call method off of an object dynamically with variable`` ()=
        let method = "Substring"
-       Dyn.invoke "HelloWorld" (Some method) (0,5) 
+       Dyn.invoke "HelloWorld" (Some method) (0,5)
             |> should equal "Hello"

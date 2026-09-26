@@ -13,12 +13,11 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-
 namespace FSharp.Interop.Dynamic
 open System
 
-type Calling = 
-    | GenericMember of string * Type array 
+type Calling =
+    | GenericMember of string * Type array
     | Member of string
     | Direct
 
@@ -30,22 +29,20 @@ module Dyn =
     let staticContext (target:Type) = InvokeContext.CreateStatic.Invoke(target)
 
     let staticTarget<'TTarget> = InvokeContext.CreateStatic.Invoke(typeof<'TTarget>)
-  
-    let implicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
-        match target with 
+
+    let implicitConvertTo (convertType:Type) (target:obj) : 'TResult  =
+        match target with
         | null -> target
-        | t -> Dynamic.InvokeConvert(t, convertType, explicit = false) 
+        | t -> Dynamic.InvokeConvert(t, convertType, explicit = false)
         |> unbox<'TResult>
-        
-    
+
     let implicitConvert(target:obj) : 'TResult  =
         implicitConvertTo typeof<'TResult> target
 
-   
-    let explicitConvertTo (convertType:Type) (target:obj) : 'TResult  = 
+    let explicitConvertTo (convertType:Type) (target:obj) : 'TResult  =
         Dynamic.InvokeConvert(target, convertType, explicit = true) |> unbox<'TResult>
 
-    let explicitConvert (target:obj) : 'TResult  = 
+    let explicitConvert (target:obj) : 'TResult  =
         explicitConvertTo typeof<'TResult> target
 
     let namedArg (name:string) (argValue:obj) =
@@ -53,12 +50,10 @@ module Dyn =
 
     let memberAddAssign (memberName:string) (value:obj) (target:obj) =
         Dynamic.InvokeAddAssignMember(target, memberName, value)
-    
-    
+
     let memberSubtractAssign (memberName:string) (value:obj) (target:obj) =
         Dynamic.InvokeSubtractAssignMember(target, memberName, value)
 
-  
     let invocation (target:obj) (memberName:Calling)  : 'TResult =
         let resultType = typeof<'TResult>
         //Helper to dynamically call call FSharpFuncs
@@ -70,12 +65,12 @@ module Dyn =
                         | Member name -> Dynamic.InvokeGet(target', name)
                         | Direct -> target'
             Dynamic.InvokeMember(invokeContext(start), invokeName, [|arg'|])
-        let (|NoConversion| Conversion|) t = 
+        let (|NoConversion| Conversion|) t =
             if t = typeof<obj> then NoConversion else Conversion
-        let finalConvertResult finalType result :'TResult = 
+        let finalConvertResult finalType result :'TResult =
             match finalType with
             | x when FSharpType.IsFunction x -> // if return type is a function
-                let rec curriedLambda target type' arg' = 
+                let rec curriedLambda target type' arg' =
                     let result' = fsharpInvoke target Direct arg'
                     let _,retType = FSharpType.GetFunctionElements type'
                     if FSharpType.IsFunction retType then
@@ -101,11 +96,11 @@ module Dyn =
                     | a when FSharpType.IsTuple(a) -> FSharpValue.GetTupleFields(arg)
                     | a when a = typeof<unit>      -> [| |]
                     | ____________________________ -> [|arg|]
-                let invoker k = 
+                let invoker k =
                     let memberName =
                          memberName |> function | GenericMember (name, targs) ->
                                                     InvokeMemberName(name, targs)
-                                                | Member name -> 
+                                                | Member name ->
                                                     InvokeMemberName(name, null)
                                                 | Direct -> null
                     Invocation(k, memberName).Invoke(target, argArray)
@@ -138,10 +133,8 @@ module Dyn =
     let invokeDirect value (target:obj) : 'TResult =
         invocation target Direct value
 
-   
     let invokeMember (memberName:string) value (target:obj) : 'TResult =
         invocation target (Member memberName) value
-
 
     let invokeGeneric (memberName:string) (typeArgs:Type seq) value (target:obj) : 'TResult =
         let typeArgs' = typeArgs |> Array.ofSeq
@@ -184,7 +177,7 @@ module Dyn =
         Dynamic.InvokeSet(target, propertyName, value) |> ignore
 
     let setChain (chainOfMembers: string seq) (value:obj) (target:obj) =
-        let chainOfMembers' = String.concat "." chainOfMembers 
+        let chainOfMembers' = String.concat "." chainOfMembers
         Dynamic.InvokeSetChain(target, chainOfMembers', value) |> ignore
 
     /// dynamically call set index
@@ -203,7 +196,7 @@ module Dyn =
     [<Obsolete("Replaced with partial application version `memberAddAssign`")>]
     let addAssignMember (target:obj) (memberName:string) (value:obj)  =
         target |> memberAddAssign memberName value
-    
+
     [<Obsolete("Replaced with partial application version `memberSubtractAssign`")>]
     let subtractAssignMember (target:obj) (memberName:string) (value:obj)  =
         target |> memberSubtractAssign memberName value

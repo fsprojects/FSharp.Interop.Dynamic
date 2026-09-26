@@ -9,9 +9,9 @@ module SymbolicString =
 
     /// Typed hole for quotations only. Do not evaluate; calling it throws.
     let sym<'TTarget> : 'TTarget = failwith "don't call the sym function, meant for quotations only!"
-    
+
     /// Name, return type, and optional declaring type of a quoted leaf.
-    type LeafInfo = 
+    type LeafInfo =
         { /// Return type of the quoted leaf.
           ReturnType : System.Type
           /// Member, union-case, or value name of the quoted leaf.
@@ -19,7 +19,7 @@ module SymbolicString =
           /// Declaring type when the leaf is a member, field, union case, or call; None for a named value.
           DeclaringType: System.Type option
          }
-    
+
     /// Extracts name and type information from an F# quotation of a member, union case, or value.
     type Symbol =
 
@@ -31,9 +31,9 @@ module SymbolicString =
         static member leafInfoOf([<ReflectedDefinition>] value:Expr<'T>) : LeafInfo =
                     let rec finalName value' =
                         match value' with
-                            | ValueWithName(_, type', name) -> 
+                            | ValueWithName(_, type', name) ->
                                 { ReturnType= type'; Name= name; DeclaringType = None }
-                            | NewUnionCase(caseInfo, _) -> 
+                            | NewUnionCase(caseInfo, _) ->
                                 { ReturnType= caseInfo.DeclaringType
                                   Name= caseInfo.Name
                                   DeclaringType= Some <| caseInfo.DeclaringType }
@@ -53,10 +53,9 @@ module SymbolicString =
                             | Let(_,_, expr) -> finalName expr
                             | ________________________________ -> invalidArg "value" (sprintf "Couldn't figure out how to make '%A' a name" value)
                     finalName value
-                    
+
         /// Member, union-case, or value name of the quoted leaf.
         static member nameOf([<ReflectedDefinition>] value:Expr<'T>) : string = (value |> Symbol.leafInfoOf).Name
-              
+
         /// Return type of the quoted leaf.
         static member typeOf([<ReflectedDefinition>] value:Expr<'T>) : System.Type = (value |> Symbol.leafInfoOf).ReturnType
-                     
