@@ -21,9 +21,9 @@ namespace FSharp.Interop.Dynamic
     /// <summary>Implicit conversion of <paramref name="target"/> to the inferred result type.</summary>
     val implicitConvert : target:obj -> 'TResult
 
-    /// <summary>Explicit conversion of <paramref name="target"/> to <paramref name="convertType"/>.</summary>
+    /// <summary>Explicit conversion of <paramref name="target"/> to <paramref name="convertType"/>. A null <paramref name="target"/> follows <c>implicitConvertTo</c>: null for a reference result type.</summary>
     val explicitConvertTo : convertType:System.Type -> target:obj -> 'TResult
-    /// <summary>Explicit conversion of <paramref name="target"/> to the inferred result type.</summary>
+    /// <summary>Explicit conversion of <paramref name="target"/> to the inferred result type. A null <paramref name="target"/> follows <c>implicitConvert</c>: null for a reference result type.</summary>
     val explicitConvert : target:obj -> 'TResult
     /// Marks an argument with a name for DLR named-argument invoke.
     val namedArg : name:string -> argValue:obj -> Dynamitey.InvokeArg
@@ -72,7 +72,7 @@ namespace FSharp.Interop.Dynamic
     /// <param name="propertyName">Member name to look up.</param>
     /// <param name="target">Object to read from.</param>
     /// <returns>
-    /// <c>None</c> if the binder cannot find the member.
+    /// <c>None</c> if <paramref name="target"/> is null or the binder cannot find the member.
     /// <c>Some</c> value if the member is present and converts to <c>'T</c>
     /// (a present null is <c>Some null</c> for a reference <c>'T</c>).
     /// Throws if the member is present but cannot convert to <c>'T</c>.
@@ -87,7 +87,7 @@ namespace FSharp.Interop.Dynamic
     /// <param name="target">Object to read from.</param>
     /// <returns>
     /// <c>true</c> if <c>InvokeGet</c> succeeds, including when the value is null.
-    /// <c>false</c> if the binder cannot find the member.
+    /// <c>false</c> if <paramref name="target"/> is null or the binder cannot find the member.
     /// Does not convert the value, so this can be <c>true</c> while <c>tryGet</c> as a given type throws.
     /// A getter that throws something other than a binder miss is not reported as missing.
     /// </returns>

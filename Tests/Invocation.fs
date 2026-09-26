@@ -112,6 +112,24 @@ module Invocation =
         toDecimal 50 |> should equal 50M
 
     [<Fact>]
+    let ``explicitConvert of null matches implicitConvert for a reference type`` () =
+        let viaImplicit: string = null |> Dyn.implicitConvert
+        let viaExplicit: string = null |> Dyn.explicitConvert
+        let viaExplicitTo: string = null |> Dyn.explicitConvertTo typeof<string>
+        Assert.Null viaImplicit
+        Assert.Null viaExplicit
+        Assert.Null viaExplicitTo
+
+    [<Fact>]
+    let ``explicitConvert of null to a value type fails like implicitConvert`` () =
+        let implicitFail () : int = null |> Dyn.implicitConvert
+        let explicitFail () : int = null |> Dyn.explicitConvert
+        let explicitToFail () : int = null |> Dyn.explicitConvertTo typeof<int>
+        (fun () -> implicitFail () |> ignore) |> should throw typeof<NullReferenceException>
+        (fun () -> explicitFail () |> ignore) |> should throw typeof<NullReferenceException>
+        (fun () -> explicitToFail () |> ignore) |> should throw typeof<NullReferenceException>
+
+    [<Fact>]
     let ``getChain on a missing link raises a binder exception`` () =
         let target = ExpandoObject()
         (fun () -> target |> Dyn.getChain ["NoSuch"] |> ignore)

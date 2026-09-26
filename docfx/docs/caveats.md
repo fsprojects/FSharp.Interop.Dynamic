@@ -20,7 +20,7 @@ Annotate `'T` / `unit` so the binder and the conversion agree.
 
 ## Null target
 
-`Dyn.tryGet` and `Dyn.exists` on a **null target** throw `NullReferenceException`. That is not a binder miss, so it is not `None` / `false`. Same for `Dyn.set`. A present null *value* is still `Some null` / `exists` true. Changing the null-target contract is [#111](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/111).
+`Dyn.tryGet` on a null target is `None`. `Dyn.exists` is `false`. That is the same answer as a missing member. `Dyn.set` on a null target still throws `NullReferenceException`. A present null *value* is still `Some null` / `exists` true.
 
 ## More than 14 arguments
 

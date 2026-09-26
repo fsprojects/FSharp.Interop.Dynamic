@@ -40,7 +40,10 @@ module Dyn =
         implicitConvertTo typeof<'TResult> target
 
     let explicitConvertTo (convertType:Type) (target:obj) : 'TResult  =
-        Dynamic.InvokeConvert(target, convertType, explicit = true) |> unbox<'TResult>
+        match target with
+        | null -> target
+        | t -> Dynamic.InvokeConvert(t, convertType, explicit = true)
+        |> unbox<'TResult>
 
     let explicitConvert (target:obj) : 'TResult  =
         explicitConvertTo typeof<'TResult> target
@@ -145,23 +148,29 @@ module Dyn =
         invocation target (Member propertyName)
 
     let tryGet (propertyName:string) (target:obj) : 'T option =
-        let found =
-            try
-                Some (Dynamic.InvokeGet(target, propertyName))
-            with
-            | :? RuntimeBinderException -> None
-            | _ -> reraise()
-        match found with
-        | None -> None
-        | Some value -> Some (invocation value Direct)
+        match target with
+        | null -> None
+        | target ->
+            let found =
+                try
+                    Some (Dynamic.InvokeGet(target, propertyName))
+                with
+                | :? RuntimeBinderException -> None
+                | _ -> reraise()
+            match found with
+            | None -> None
+            | Some value -> Some (invocation value Direct)
 
     let exists (propertyName:string) (target:obj) : bool =
-        try
-            Dynamic.InvokeGet(target, propertyName) |> ignore
-            true
-        with
-        | :? RuntimeBinderException -> false
-        | _ -> reraise()
+        match target with
+        | null -> false
+        | target ->
+            try
+                Dynamic.InvokeGet(target, propertyName) |> ignore
+                true
+            with
+            | :? RuntimeBinderException -> false
+            | _ -> reraise()
 
     let getChain (chainOfMembers:string seq) (target:obj) : 'TResult =
         let chainOfMembers' = String.concat "." chainOfMembers
