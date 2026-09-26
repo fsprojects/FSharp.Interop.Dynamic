@@ -12,6 +12,10 @@ open Microsoft.CSharp.RuntimeBinder
 type Echo() =
     member _.Of<'T>(x: 'T) = x
 
+type AddFifteen() =
+    member _.Sum(a: int, b: int, c: int, d: int, e: int, f: int, g: int, h: int, i: int, j: int, k: int, l: int, m: int, n: int, o: int) =
+        a + b + c + d + e + f + g + h + i + j + k + l + m + n + o
+
 type Touch() =
     member val Called = false with get, set
     member this.Go() = this.Called <- true
@@ -156,3 +160,8 @@ module Invocation =
     let ``a throwing getter is not wrapped after a binder failure`` () =
         (fun () -> PropThrows() |> Dyn.invokeMember "Bad" () |> ignore)
         |> should throw typeof<InvalidOperationException>
+
+    [<Fact>]
+    let ``fifteen arguments do not throw TypeLoadException`` () =
+        let n: int = AddFifteen() |> Dyn.invokeMember "Sum" (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+        n |> should equal 15

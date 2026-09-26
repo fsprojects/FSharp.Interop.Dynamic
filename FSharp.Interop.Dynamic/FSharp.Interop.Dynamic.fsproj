@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="FSharp.Core" />
-    <PackageReference Include="Dynamitey" />
+    <PackageReference Include="Dynamitey.Community" />
     <PackageReference Include="Microsoft.CSharp" />
     <PackageReference Include="FSharp.Analyzers.Build">
       <PrivateAssets>all</PrivateAssets>
