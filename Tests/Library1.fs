@@ -1,5 +1,4 @@
-﻿
-(**
+﻿(**
 # Examples of using Dynamic operator and Functions
 *)
 namespace Tests
@@ -26,7 +25,6 @@ type TestEvent()=
     member __.OnEvent(obj:Object, args:EventArgs)=
        event1.Trigger(obj,args)
 
-
 (***hide***)
 type TestFuncs()=
     static member Plus3:Func<int,int> =
@@ -49,18 +47,15 @@ type DynamicWeirdFlakyIndexer()=
     override __.TrySetIndex(_, indexes, value) =
         stuff.Add((indexes.[0], indexes.[1]),value)
         true
-            
+
 module Tests =
-
-
-
 
     (**
     Call a method with dlr (ideally you wouldn't know it was as a string).
     *)
     [<Fact>]
     let ``Call method off of an object dynamically`` ()=
-        "HelloWorld"?Substring(0,5) 
+        "HelloWorld"?Substring(0,5)
         |> should equal "Hello"
 (**
 Call a method with a variable (ideally you wouldn't know it was as a string).
@@ -68,7 +63,7 @@ Call a method with a variable (ideally you wouldn't know it was as a string).
     [<Fact>]
     let ``Call method off of an object dynamically with variable`` ()=
        let method = "Substring"
-       "HelloWorld"?(method)(0,5) 
+       "HelloWorld"?(method)(0,5)
             |> should equal "Hello"
 (**
 Set a property with dlr, Expando only responds to the dlr.
@@ -132,7 +127,7 @@ Set a property with dlr, Expando only responds to the dlr.
     [<Fact>]
     let ``Test FSharp Lambda 4 arg`` ()=
         let dyn = (fun x y z bbq -> x + y - z - bbq) :> obj  in
-        let x = !?dyn 3 2 1 5 
+        let x = !?dyn 3 2 1 5
         x |> should equal -1
 
 (***hide***)
@@ -140,7 +135,7 @@ Set a property with dlr, Expando only responds to the dlr.
     let ``Test FSharp Lambda 5 arg`` ()=
         let unknownfunc = (fun x y z bbq etc -> x + y - z - bbq + etc) :> obj in
         let go = !?unknownfunc
-        let x = go 3 2 1 5 9 
+        let x = go 3 2 1 5 9
         x |> should equal 8
 
 (***hide***)
@@ -161,7 +156,7 @@ Set a property with dlr, Expando only responds to the dlr.
         !refBool |> should equal false
 
 (**
-`!?` will invoke without a name, dynamic function or the like. 
+`!?` will invoke without a name, dynamic function or the like.
 `Dyn.namedArg` allows you to wrap your arguments with names as part of the invocation.
 *)
     [<Fact>]
@@ -208,12 +203,11 @@ Use the dlr to call the implicit operator with inferred type from usage
         let actual:decimal = ele |> Dyn.implicitConvert
         actual |> should equal 50m
 
-
 (***hide***)
     [<Fact>]
     let ``Test Implicit Conversion Fail`` ()=
         let ele = XElement(XName.Get("Test"),"50")
-        (fun () -> Dyn.implicitConvert(ele) = 50 |> ignore) 
+        (fun () -> Dyn.implicitConvert(ele) = 50 |> ignore)
             |> should throw typeof<RuntimeBinderException>
 
 (***hide***)
@@ -228,7 +222,7 @@ Use the dlr to call the implicit operator with inferred type from usage
         archive |> Dyn.getIndexer  [1; 5] |> should equal "A"
         archive |> Dyn.getIndexer  ["Hello"; "World" ] |> should equal "B"
         archive |> Dyn.getIndexer  [box 1; box "World"] |> should equal "C"
-                        
+
 (***hide***)
     [<Fact>]
     let ``Basic Operator Mock Tests`` ()=
@@ -255,31 +249,31 @@ Use operators dynamically (better without knowing the types).
         5 ?+? 4 |> should equal 9
         5 ?-? 3 |> should equal 2
         15 ?/? 5 |> should equal 3
-        
+
         5 ?&&&? 3 |> should equal 1
         5 ?|||? 3 |> should equal 7
         5 ?^^^? 3 |> should equal 6
         23 ?<<<? 2 |> should equal 92
         (-105) ?>>>? 1 |> should equal (-53)
-        
+
         10 ?<=? 5 |> should equal false
         5 ?<=? 10 |> should equal true
         10 ?<=? 10 |> should equal true
-        
+
         10 ?>=? 5 |> should equal true
         5 ?>=? 10 |> should equal false
         10 ?>=? 10 |> should equal true
-        
+
         10 ?<? 5 |> should equal false
         5 ?<? 10 |> should equal true
         10 ?<? 10 |> should equal false
-        
+
         10 ?>? 5 |> should equal true
         5 ?>? 10 |> should equal false
         10 ?>? 10 |> should equal false
-        
+
         10 ?<>? 5 |> should equal true
         10 ?<>? 10 |> should equal false
-        
+
         10 ?=? 5 |> should equal false
         10 ?=? 10 |> should equal true

@@ -7,7 +7,7 @@ namespace FSharp.Interop.Dynamic
     | Member of string
     /// Invoke the target itself, not a named member.
     | Direct
-   
+
   /// <summary>
   /// Function surface behind the operators. Use when you want piping, a name as data, or an operation <c>?</c> does not spell. Target is last on most members so <c>target |> Dyn.get "Name"</c> works; <c>invocation</c> is the exception.
   /// </summary>

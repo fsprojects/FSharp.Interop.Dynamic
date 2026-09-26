@@ -15,7 +15,6 @@
 
 namespace FSharp.Interop.Dynamic
 
-
 [<AutoOpen>]
 module TopLevelOperators=
     let (?)  (target : obj) (name:string)  : 'TResult =
