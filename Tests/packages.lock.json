@@ -267,15 +267,15 @@
       "fsharp.interop.dynamic": {
         "type": "Project",
         "dependencies": {
-          "Dynamitey": "[3.0.3, )",
+          "Dynamitey.Community": "[4.0.0, )",
           "FSharp.Core": "[4.7.2, )"
         }
       },
-      "Dynamitey": {
+      "Dynamitey.Community": {
         "type": "CentralTransitive",
-        "requested": "[3.0.3, )",
-        "resolved": "3.0.3",
-        "contentHash": "ocF4rRKgnmBkblk8RrgRP9YxxeJBvoaoCNLXgmUMgQCjZRw2v6Rtqxt5Kni6/TtbvICeWVN9X/69G5jltUEnbQ=="
+        "requested": "[4.0.0, )",
+        "resolved": "4.0.0",
+        "contentHash": "avIRAxvTkk75sMTg7e8atijRshqDlZgjIj7p2eBWW9MnfY9f6Mtb8hbcEc+2Km5gYZLefASI5Hc7tIUoMNH+ng=="
       }
     }
   }

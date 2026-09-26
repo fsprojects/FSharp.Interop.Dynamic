@@ -4,7 +4,9 @@ NuGet publish is tag-triggered. The workflow is `.github/workflows/publish.yml`.
 
 ## Version
 
-`VersionPrefix` is **6.0.0**. That was the TFM break (`net45` / `netstandard1.6` dropped). The next release is `v6.0.1` (or `v6.1.0` / `v7.0.0`), not another 5.x.
+`VersionPrefix` is **7.0.0**. That release switches the dependency to Dynamitey.Community 4.0.0. Target frameworks stay `netstandard2.0` and `net10.0`.
+
+**8.0.0**, later in 2026, drops `netstandard2.0` and targets `net10.0` and `net11.0` ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)). Not another 5.x.
 
 ## Cut a release
 
@@ -38,4 +40,4 @@ Pull requests never publish.
 
 ## After it lands
 
-Confirm nuget.org lists the new version and that README / getting-started install instructions match it. The next version after 6.0.0 is `v6.0.1` (or `v6.1.0` / `v7.0.0`), not another 5.x.
+Confirm nuget.org lists the new version and that README / getting-started install instructions match it. After 7.0.0, the next planned major is 8.0.0 (drop `netstandard2.0`). Not another 5.x.

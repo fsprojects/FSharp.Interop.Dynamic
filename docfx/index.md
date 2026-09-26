@@ -7,10 +7,10 @@ title: FSharp.Interop.Dynamic
 
 F# operators and helpers for the Dynamic Language Runtime. `target?Name`, `target?Name<-value`, and `!?target` do what C#'s `dynamic` keyword does, with F# inference and piping.
 
-This is the fsprojects library that sits on [Dynamitey](https://www.nuget.org/packages/Dynamitey/) 3.0.3. It is not Dynamitey itself; it is the F# surface.
+This is the fsprojects library that sits on [Dynamitey.Community](https://www.nuget.org/packages/Dynamitey.Community/) 4.0.0. It is not Dynamitey itself; it is the F# surface.
 
 > [!IMPORTANT]
-> **6.0.0** is the current package (`netstandard2.0` and `net10.0`). **5.0.1.268** was the last package that still targeted `net45` / `netstandard1.6`.
+> **7.0.0** is the current package (`netstandard2.0` and `net10.0`, Dynamitey.Community 4.0.0). **6.0.0** was the same target frameworks on Dynamitey 3.0.3. **5.0.1.268** was the last package that still targeted `net45` / `netstandard1.6`.
 
 ## Where to start
 
@@ -23,7 +23,7 @@ This is the fsprojects library that sits on [Dynamitey](https://www.nuget.org/pa
 | Check a member without throwing | [tryGet and exists](docs/tryget.md) |
 | Dynamic `+`, `*`, comparisons | [Binary operators](docs/binary-operators.md) |
 | Turn a quotation into a member name | [Quotations](docs/quotations.md) |
-| How this relates to Dynamitey 3.0.3 / 4.0.0 | [Dynamitey](docs/dynamitey.md) |
+| How this relates to Dynamitey.Community 4.0.0 | [Dynamitey](docs/dynamitey.md) |
 | What the DLR will not do | [Caveats](docs/caveats.md) |
 | Cut a NuGet release | [Releasing](docs/releasing.md) |
 | Look up a specific type or member | [API reference](api/index.md) |
@@ -54,7 +54,7 @@ Reach for ordinary F# when the member is known at compile time. Reach for this l
 
 ## Supported frameworks
 
-`netstandard2.0` and `net10.0`. The `netstandard2.0` target is kept deliberately — it is the only target reaching both .NET Framework 4.6.2+ and modern .NET from a single package. 6.0.0 dropped `net45` and `netstandard1.6`.
+`netstandard2.0` and `net10.0`. `netstandard2.0` still reaches .NET Framework 4.6.2+ and modern .NET from one package. 6.0.0 dropped `net45` and `netstandard1.6`. 7.0.0 keeps these targets and references Dynamitey.Community 4.0.0. 8.0.0, later in 2026, drops `netstandard2.0` and targets `net10.0` and `net11.0` ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)).
 
 ## A word on trimming and AOT
 

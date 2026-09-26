@@ -13,7 +13,7 @@ F# operators for the Dynamic Language Runtime. `target?Name`, `target?Name <- va
 
 **Docs:** [fsprojects.github.io/FSharp.Interop.Dynamic](https://fsprojects.github.io/FSharp.Interop.Dynamic/)
 
-This library sits on [Dynamitey](https://www.nuget.org/packages/Dynamitey/) 3.0.3. It is the F# surface, not Dynamitey itself.
+This library sits on [Dynamitey.Community](https://www.nuget.org/packages/Dynamitey.Community/) 4.0.0. It is the F# surface, not Dynamitey itself.
 
 F# has no `dynamic` keyword. Use this when the member is not known at compile time: Expando/JSON bags, optional fields, method names from config, C# APIs that return `dynamic`, pythonnet, COM. Use ordinary F# when the type is in your project. Full argument: [Why this library](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/why.html).
 
@@ -21,11 +21,15 @@ F# has no `dynamic` keyword. Use this when the member is not known at compile ti
 
 ## Version story
 
-**6.0.0** is the current package: `netstandard2.0` + `net10.0`, `Dyn.tryGet` / `Dyn.exists`. That is a TFM break from **5.0.1.268** (`net45` / `netstandard1.6` / `netstandard2.0`). `netstandard2.0` still covers current .NET Framework and .NET.
+**7.0.0** is the current package: `netstandard2.0` + `net10.0`, [Dynamitey.Community 4.0.0](https://www.nuget.org/packages/Dynamitey.Community/4.0.0). The namespace is still `Dynamitey`. The assembly is `Dynamitey.Community`. `Dyn.namedArg`, `Dyn.staticContext`, and `Dyn.staticTarget` return types from that assembly. A project that also references the `Dynamitey` 3.0.3 package gets `CS0433`.
+
+**6.0.0** was `netstandard2.0` + `net10.0` on Dynamitey 3.0.3, with `Dyn.tryGet` / `Dyn.exists`. That was a TFM break from **5.0.1.268** (`net45` / `netstandard1.6` / `netstandard2.0`). `netstandard2.0` still covers current .NET Framework and .NET.
+
+**8.0.0**, later in 2026, drops `netstandard2.0` and targets `net10.0` + `net11.0` ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)).
 
 ---
 
-## Install (6.0.0)
+## Install (7.0.0)
 
 ```bash
 dotnet add package FSharp.Interop.Dynamic
@@ -116,7 +120,7 @@ More: [Operators](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/opera
 
 ## Dynamitey
 
-6.0.0 references **Dynamitey 3.0.3**. `tryGet` / `exists` do not wait on Dynamitey 4.0.0. The community continuation of Dynamitey is [dynamitey-community/dynamitey](https://github.com/dynamitey-community/dynamitey); switching this package to it is [#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29).
+7.0.0 references [**Dynamitey.Community 4.0.0**](https://www.nuget.org/packages/Dynamitey.Community/4.0.0), from [dynamitey-community/dynamitey](https://github.com/dynamitey-community/dynamitey). The `Dynamitey` package id stopped at 3.0.3 on 8 November 2023. The namespace is still `Dynamitey`. More: [Dynamitey](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/dynamitey.html).
 
 You can still `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dictionary`.
 
@@ -126,7 +130,7 @@ You can still `open Dynamitey` for `Build`, `Dynamic.Curry`, `DynamicObjects.Dic
 
 - The DLR cannot see **explicit interface members** (same as C# `dynamic`).
 - **Not trim-safe or NativeAOT-safe.**
-- **15 or more arguments** throw `TypeLoadException` (ImpromptuInterface was never shipped). Fourteen work.
+- **15 or more arguments** threw `TypeLoadException` on 6.0.0 (Dynamitey 3.0.3). 7.0.0 takes the fix in Dynamitey.Community 4.0.0.
 - **C# optional parameters** must all be passed. The DLR does not fill defaults.
 - `tryGet` / `exists` on a **null target** are `None` / `false`. `Dyn.set` on a null target still throws `NullReferenceException`.
 - Do not build member names from untrusted input. [SECURITY.md](SECURITY.md).
@@ -152,7 +156,7 @@ dotnet test --project Tests/Tests.fsproj -c Release
 
 Docs: `dotnet tool install -g docfx --version 2.78.5`, then `dotnet build FSharp.Interop.Dynamic/FSharp.Interop.Dynamic.fsproj -c Release && docfx docfx/docfx.json`.
 
-Release: add the version's section to [CHANGELOG.md](CHANGELOG.md), then tag `v6.0.0` and push. [Releasing](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/releasing.html).
+Release: add the version's section to [CHANGELOG.md](CHANGELOG.md), then tag `v7.0.0` and push. [Releasing](https://fsprojects.github.io/FSharp.Interop.Dynamic/docs/releasing.html).
 
 ---
 

@@ -24,7 +24,7 @@ Annotate `'T` / `unit` so the binder and the conversion agree.
 
 ## More than 14 arguments
 
-A call with **15 or more** arguments throws `TypeLoadException: Cannot Emit long delegates without ImpromptuInterface installed`. Fourteen arguments work. Dynamitey 3.0.3 never shipped ImpromptuInterface with this package. A fix belongs in a newer Dynamitey, not in a vendor here ([#29](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/29)).
+On 6.0.0 a call with **15 or more** arguments threw `TypeLoadException: Cannot Emit long delegates without ImpromptuInterface installed`. Fourteen arguments worked. Dynamitey 3.0.3 never declared the package that path needed. Dynamitey.Community 4.0.0 builds that call site, and 7.0.0 takes that package.
 
 ## C# optional parameters
 

@@ -4,13 +4,20 @@ Each release has a `## [version]` section. When a `v*.*.*` tag is pushed, the Pu
 
 ## [Unreleased]
 
+## [7.0.0]
+
+### Breaking
+
+- The Dynamitey dependency is [Dynamitey.Community 4.0.0](https://www.nuget.org/packages/Dynamitey.Community/4.0.0). The `Dynamitey` package id stays at 3.0.3. The namespace is still `Dynamitey`. The assembly name is `Dynamitey.Community`. `Dyn.namedArg`, `Dyn.staticContext`, and `Dyn.staticTarget` return types from that assembly. A project that also references `Dynamitey` 3.0.3 gets `CS0433`. Target frameworks stay `netstandard2.0` and `net10.0` (#130).
+
 ### Fixed
 
 - `Dyn.tryGet` and `Dyn.exists` on a null target return `None` and `false`. `Dyn.explicitConvert` and `explicitConvertTo` of null follow `implicitConvert` (null for a reference result type; a value type still fails). `Dyn.set` on a null target still throws `NullReferenceException` (#111).
+- Calls with 15 or more arguments no longer throw `TypeLoadException` from Dynamitey 3.0.3. That call site is fixed in Dynamitey.Community 4.0.0.
 
 ### Docs
 
-- Caveats document 15-argument `TypeLoadException`, C# optional parameters, and `tryGet` / `exists` on a null target (#110).
+- Caveats document 15-argument `TypeLoadException` on 6.0.0, C# optional parameters, and `tryGet` / `exists` on a null target (#110, #111, #130).
 - Copilot leftovers from the 6.0.0 docs pass: why.md examples, operators void `Add`, release checklist, XML docs for `Direct` / `!?` / Operators, DocFX theme alerts and link RGB, SECURITY.md triggers, VS Code task, changelog wording (#114–#126).
 
 ## [6.0.0]

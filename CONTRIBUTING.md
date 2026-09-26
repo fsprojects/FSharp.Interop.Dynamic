@@ -45,6 +45,6 @@ docfx docfx/docfx.json --warningsAsErrors
 
 PRs build the site; only `master` deploys to GitHub Pages.
 
-## `netstandard2.0` is deliberate
+## `netstandard2.0` stays through 7.0.0
 
-It is the TFM that still reaches .NET Framework and modern .NET from one package. Do not drop it to "simplify" to `net10.0` only.
+It is the TFM that still reaches .NET Framework and modern .NET from one package. 7.0.0 keeps it. The dependency is Dynamitey.Community 4.0.0. Dropping `netstandard2.0` is 8.0.0 ([#108](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/108)), later in 2026, when the targets become `net10.0` and `net11.0`. Do not drop it in a 7.x change.

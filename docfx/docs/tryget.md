@@ -2,7 +2,7 @@
 
 [#27](https://github.com/fsprojects/FSharp.Interop.Dynamic/issues/27): unstructured objects, check `o?myProp` without eating a `RuntimeBinderException`.
 
-These ship on Dynamitey **3.0.3**. They do not need Dynamitey 4.0.0.
+These call `InvokeGet`. In 7.0.0 that call goes to Dynamitey.Community 4.0.0.
 
 ## `Dyn.tryGet`
 
