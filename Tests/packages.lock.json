@@ -31,13 +31,14 @@
       },
       "FsUnit.xUnit": {
         "type": "Direct",
-        "requested": "[7.1.1, )",
-        "resolved": "7.1.1",
-        "contentHash": "3uzGb5xRyF29ns++6AUTCD1ixDhEFtdAYRfr+LBZXKU3pyC3tRep7G3x1+DDXxZ9QT05ONLLmevCFL4av/PFUA==",
+        "requested": "[8.0.0, )",
+        "resolved": "8.0.0",
+        "contentHash": "wTq8crwEMNwEnxPq334JxN0At+QyUfWVGPw5xeXas8ixUQxysBUvsZ4FKHzxUp0Y2+R4CJkOivOnFkRJg/Uk9g==",
         "dependencies": {
-          "FSharp.Core": "5.0.2",
+          "FSharp.Core": "6.0.0",
           "NHamcrest": "4.0.0",
-          "xunit.v3": "1.0.0"
+          "xunit.v3.assert": "4.0.2",
+          "xunit.v3.extensibility.core": "4.0.2"
         }
       },
       "Microsoft.Testing.Extensions.TrxReport": {
