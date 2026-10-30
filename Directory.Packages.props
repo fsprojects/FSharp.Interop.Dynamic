@@ -11,7 +11,7 @@
          low: consumers cannot go below it. The library builds against
          4.7.2; Tests override to a current version (issue 80). -->
     <PackageVersion Include="FSharp.Core" Version="4.7.2" />
-    <PackageVersion Include="FsUnit.Xunit" Version="7.1.1" />
+    <PackageVersion Include="FsUnit.Xunit" Version="8.0.0" />
     <PackageVersion Include="Ionide.Analyzers" Version="0.19.0" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.5.1" />
