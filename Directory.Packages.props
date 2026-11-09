@@ -14,7 +14,7 @@
     <PackageVersion Include="FsUnit.Xunit" Version="8.0.0" />
     <PackageVersion Include="Ionide.Analyzers" Version="0.20.0" />
     <PackageVersion Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.5.1" />
+    <PackageVersion Include="Microsoft.Testing.Extensions.TrxReport" Version="2.5.2" />
     <PackageVersion Include="xunit.v3" Version="4.0.2" />
     <PackageVersion Include="xunit.analyzers" Version="2.2.0" />
   </ItemGroup>
